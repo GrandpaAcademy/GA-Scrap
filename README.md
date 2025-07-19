@@ -107,9 +107,9 @@ with SyncGAScrap() as scraper:
 
 *Beautiful • Interactive • Complete*
 
-[![Documentation](https://img.shields.io/badge/Docs-Interactive-brightgreen.svg)](docs/web/index.html)
-[![Examples](https://img.shields.io/badge/Examples-Real%20World-orange.svg)](docs/web/examples.html)
-[![API Reference](https://img.shields.io/badge/API-Complete-blue.svg)](docs/web/api-reference.html)
+[![Documentation](https://img.shields.io/badge/Docs-Interactive-brightgreen.svg)](https://grandpaacademy.github.io/GA-Scrap)
+[![Examples](https://img.shields.io/badge/Examples-Real%20World-orange.svg)](https://grandpaacademy.github.io/GA-Scrap/docs/web/examples.html)
+[![API Reference](https://img.shields.io/badge/API-Complete-blue.svg)](https://grandpaacademy.github.io/GA-Scrap/docs/web/api-reference.html)
 
 </div>
 
@@ -122,9 +122,9 @@ with SyncGAScrap() as scraper:
 ### 👶 **Beginner**
 **New to web scraping?**
 
-📖 [**Getting Started**](docs/web/getting-started.html)
-🎯 [**Basic Examples**](docs/web/examples.html)
-🔧 [**Installation Guide**](docs/web/installation.html)
+📖 [**Getting Started**](https://grandpaacademy.github.io/GA-Scrap/docs/web/getting-started.html)
+🎯 [**Basic Examples**](https://grandpaacademy.github.io/GA-Scrap/docs/web/examples.html)
+🔧 [**Installation Guide**](https://grandpaacademy.github.io/GA-Scrap/docs/web/installation.html)
 
 </td>
 <td width="33%" align="center">
@@ -132,9 +132,9 @@ with SyncGAScrap() as scraper:
 ### 🧪 **Developer**
 **Building scrapers?**
 
-🏖️ [**Sandbox Mode**](docs/web/sandbox-mode.html)
-🔄 [**Sync Interface**](docs/web/sync-interface.html)
-⚡ [**Hot Reload**](docs/web/hot-reload.html)
+🏖️ [**Sandbox Mode**](https://grandpaacademy.github.io/GA-Scrap/docs/web/sandbox-mode.html)
+🔄 [**Sync Interface**](https://grandpaacademy.github.io/GA-Scrap/docs/web/sync-interface.html)
+⚡ [**Hot Reload**](https://grandpaacademy.github.io/GA-Scrap/docs/web/hot-reload.html)
 
 </td>
 <td width="33%" align="center">
@@ -142,9 +142,9 @@ with SyncGAScrap() as scraper:
 ### 🚀 **Advanced**
 **Need full control?**
 
-🎭 [**Playwright API**](docs/web/playwright-api.html)
-🔧 [**Architecture**](docs/web/architecture.html)
-🤝 [**Contributing**](docs/web/contributing.html)
+🎭 [**Playwright API**](https://grandpaacademy.github.io/GA-Scrap/docs/web/playwright-api.html)
+🔧 [**Architecture**](https://grandpaacademy.github.io/GA-Scrap/docs/web/architecture.html)
+🤝 [**Contributing**](https://grandpaacademy.github.io/GA-Scrap/docs/web/contributing.html)
 
 </td>
 </tr>
@@ -328,7 +328,7 @@ with SyncGAScrap(device="iPhone 12") as scraper:
 
 ## 🤝 Contributing
 
-We love contributions! Check out our [Contributing Guide](docs/web/contributing.html) to get started.
+We love contributions! Check out our [Contributing Guide](https://grandpaacademy.github.io/GA-Scrap/docs/web/contributing.html) to get started.
 
 ---
 
@@ -342,6 +342,6 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 **Made with ❤️ by [Grandpa Academy](https://github.com/GrandpaAcademy)**
 
-[⭐ Star us on GitHub](https://github.com/GrandpaAcademy/GA-Scrap) • [📖 Read the Docs](docs/web/index.html) • [🚀 See Examples](docs/web/examples.html) • [🐛 Report Issues](https://github.com/GrandpaAcademy/GA-Scrap/issues)
+[⭐ Star us on GitHub](https://github.com/GrandpaAcademy/GA-Scrap) • [📖 Read the Docs](https://grandpaacademy.github.io/GA-Scrap) • [🚀 See Examples](https://grandpaacademy.github.io/GA-Scrap/docs/web/examples.html) • [🐛 Report Issues](https://github.com/GrandpaAcademy/GA-Scrap/issues)
 
 </div>
