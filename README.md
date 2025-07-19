@@ -74,7 +74,7 @@ with SyncGAScrap() as scraper:
 
 <div align="center">
 
-**[📖 Full Documentation](docs/web/index.html)** • **[🚀 Real-World Examples](docs/web/examples.html)** • **[🔧 API Reference](docs/web/api-reference.html)**
+**[📖 Full Documentation](https://grandpaacademy.github.io/GA-Scrap)** • **[🚀 Real-World Examples](https://grandpaacademy.github.io/GA-Scrap/docs/web/examples.html)** • **[🔧 API Reference](https://grandpaacademy.github.io/GA-Scrap/docs/web/api-reference.html)**
 
 </div>
 
@@ -103,7 +103,7 @@ with SyncGAScrap() as scraper:
 
 <div align="center">
 
-🌐 **[Visit Our Interactive Documentation Site](docs/web/index.html)** 🌐
+🌐 **[Visit Our Interactive Documentation Site](https://grandpaacademy.github.io/GA-Scrap)** 🌐
 
 *Beautiful • Interactive • Complete*
 
