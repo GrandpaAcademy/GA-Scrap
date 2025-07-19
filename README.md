@@ -37,7 +37,7 @@ A powerful Playwright-based scraper helper that makes web scraping easy and enjo
 - **🏖️ Sandbox Mode** - Errors don't shutdown browser, perfect for development
 
 ### 📈 200+ Playwright Features
-See [PLAYWRIGHT_FEATURES.md](PLAYWRIGHT_FEATURES.md) for the complete list of all implemented features.
+See [PLAYWRIGHT_FEATURES.md](docs/PLAYWRIGHT_FEATURES.md) for the complete list of all implemented features.
 
 ### 🎯 Two Interfaces Available
 
@@ -65,8 +65,16 @@ async def scrape():
 result = asyncio.run(scrape())
 ```
 
-See [SYNC_USAGE.md](SYNC_USAGE.md) for complete synchronous interface documentation.
-See [SANDBOX_MODE.md](SANDBOX_MODE.md) for sandbox mode documentation.
+## 📚 Documentation
+
+**📖 [Complete Documentation Index](DOCS_INDEX.md)** - Find the right guide for your needs
+
+### 🎯 Quick Links
+- **[Synchronous Interface Guide](docs/SYNC_USAGE.md)** - Easy, no-async syntax
+- **[Sandbox Mode Guide](docs/SANDBOX_MODE.md)** - Development-friendly error handling
+- **[All Playwright Features](docs/PLAYWRIGHT_FEATURES.md)** - Complete feature list
+- **[Examples Directory](examples/)** - Working code examples
+- **[Tests Directory](tests/)** - Validation and demos
 
 ## 🚀 Quick Start
 

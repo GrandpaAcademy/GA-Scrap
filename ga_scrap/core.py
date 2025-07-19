@@ -1037,6 +1037,8 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
         except Exception as e:
             self.log(f"Could not clear cookies: {e}", "error")
 
+    # ==================== ASYNC CONTEXT MANAGER ====================
+
     async def __aenter__(self):
         """Async context manager entry"""
         return await self.start()
@@ -1044,3 +1046,81 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         """Async context manager exit"""
         await self.stop()
+
+    # ==================== FULL PLAYWRIGHT API ACCESS ====================
+
+    def get_playwright_page(self, page: Optional[Page] = None) -> Page:
+        """
+        Get direct access to Playwright Page object for advanced operations
+
+        Args:
+            page: Specific page to get (default: main page)
+
+        Returns:
+            Playwright Page object with full API access
+        """
+        return page or self.page
+
+    def get_playwright_context(self) -> BrowserContext:
+        """
+        Get direct access to Playwright BrowserContext object
+
+        Returns:
+            Playwright BrowserContext object with full API access
+        """
+        return self.context
+
+    def get_playwright_browser(self) -> Browser:
+        """
+        Get direct access to Playwright Browser object
+
+        Returns:
+            Playwright Browser object with full API access
+        """
+        return self.browser
+
+    def get_playwright_instance(self) -> Playwright:
+        """
+        Get direct access to Playwright instance
+
+        Returns:
+            Playwright instance with full API access
+        """
+        return self.playwright
+
+    async def execute_playwright_method(self, obj_path: str, method_name: str, *args, **kwargs):
+        """
+        Execute any Playwright method directly with sandbox mode support
+
+        Args:
+            obj_path: Path to object ('page', 'context', 'browser', 'playwright')
+            method_name: Method name to execute
+            *args: Method arguments
+            **kwargs: Method keyword arguments
+
+        Returns:
+            Method result or None if error in sandbox mode
+        """
+        async def _execute():
+            # Get the object
+            if obj_path == 'page':
+                obj = self.page
+            elif obj_path == 'context':
+                obj = self.context
+            elif obj_path == 'browser':
+                obj = self.browser
+            elif obj_path == 'playwright':
+                obj = self.playwright
+            else:
+                raise ValueError(f"Unknown object path: {obj_path}")
+
+            # Get the method
+            method = getattr(obj, method_name)
+
+            # Execute the method
+            if asyncio.iscoroutinefunction(method):
+                return await method(*args, **kwargs)
+            else:
+                return method(*args, **kwargs)
+
+        return await self._safe_execute_async(f"{obj_path}.{method_name}", _execute)

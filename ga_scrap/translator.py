@@ -246,6 +246,14 @@ class SyncGAScrap:
         """Wait for network to be idle"""
         self._run_async(self._scraper.wait_for_network_idle(timeout, page))
         return self
+
+    def get_accessibility_tree(self, page=None):
+        """Get accessibility tree"""
+        return self._run_async(self._scraper.get_accessibility_tree(page))
+
+    def check_accessibility(self, page=None):
+        """Check accessibility issues"""
+        return self._run_async(self._scraper.check_accessibility(page))
     
     # ==================== PROPERTIES ====================
     
@@ -301,6 +309,80 @@ class SyncGAScrap:
         self._scraper.log(message, "info")
         input()
         return self
+
+    # ==================== FULL PLAYWRIGHT API ACCESS ====================
+
+    def get_playwright_page(self, page=None):
+        """
+        Get direct access to Playwright Page object for advanced operations
+
+        Args:
+            page: Specific page to get (default: main page)
+
+        Returns:
+            Playwright Page object with full API access
+        """
+        return self._scraper.get_playwright_page(page)
+
+    def get_playwright_context(self):
+        """
+        Get direct access to Playwright BrowserContext object
+
+        Returns:
+            Playwright BrowserContext object with full API access
+        """
+        return self._scraper.get_playwright_context()
+
+    def get_playwright_browser(self):
+        """
+        Get direct access to Playwright Browser object
+
+        Returns:
+            Playwright Browser object with full API access
+        """
+        return self._scraper.get_playwright_browser()
+
+    def get_playwright_instance(self):
+        """
+        Get direct access to Playwright instance
+
+        Returns:
+            Playwright instance with full API access
+        """
+        return self._scraper.get_playwright_instance()
+
+    def execute_playwright_method(self, obj_path: str, method_name: str, *args, **kwargs):
+        """
+        Execute any Playwright method directly with sandbox mode support
+
+        Args:
+            obj_path: Path to object ('page', 'context', 'browser', 'playwright')
+            method_name: Method name to execute
+            *args: Method arguments
+            **kwargs: Method keyword arguments
+
+        Returns:
+            Method result or None if error in sandbox mode
+        """
+        return self._run_async(self._scraper.execute_playwright_method(obj_path, method_name, *args, **kwargs))
+
+    # ==================== ADVANCED PLAYWRIGHT METHODS ====================
+
+    def playwright_page_method(self, method_name: str, *args, **kwargs):
+        """Execute any Page method directly"""
+        return self.execute_playwright_method('page', method_name, *args, **kwargs)
+
+    def playwright_context_method(self, method_name: str, *args, **kwargs):
+        """Execute any BrowserContext method directly"""
+        return self.execute_playwright_method('context', method_name, *args, **kwargs)
+
+    def playwright_browser_method(self, method_name: str, *args, **kwargs):
+        """Execute any Browser method directly"""
+        return self.execute_playwright_method('browser', method_name, *args, **kwargs)
+
+    def playwright_instance_method(self, method_name: str, *args, **kwargs):
+        """Execute any Playwright instance method directly"""
+        return self.execute_playwright_method('playwright', method_name, *args, **kwargs)
 
 
 # Create a simple function-based interface
