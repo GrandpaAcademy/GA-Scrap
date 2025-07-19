@@ -4,6 +4,7 @@ A powerful Playwright-based scraper helper that makes web scraping easy and enjo
 
 ## ✨ Features
 
+### 🚀 Core Features
 - **🖥️ Always runs browser by default** - See what you're scraping in real-time
 - **📱 Create multiple scraper apps** - Organize your scrapers with templates
 - **🔥 Hot reload support** - Edit your code and see changes instantly
@@ -12,7 +13,88 @@ A powerful Playwright-based scraper helper that makes web scraping easy and enjo
 - **🎨 Beautiful CLI** - Colorful command-line interface
 - **📋 Multiple templates** - Basic, Advanced, E-commerce, Social media
 
+### 🌟 EVERY Playwright Feature Included
+- **🌐 Complete Network Control** - Request/response interception, HAR recording, network throttling
+- **📱 Full Device Emulation** - iPhone, Android, tablets with touch simulation
+- **🎥 Video Recording** - Record your scraping sessions automatically
+- **📊 Performance Monitoring** - Track Core Web Vitals, coverage analysis
+- **♿ Accessibility Testing** - Built-in accessibility checks and ARIA support
+- **🔧 Advanced Interactions** - Drag & drop, smooth mouse movement, keyboard shortcuts
+- **📁 File Operations** - Upload/download files, PDF generation
+- **💾 Storage Management** - Cookies, localStorage, sessionStorage, IndexedDB
+- **🖼️ Frame Support** - Handle iframes and nested frames
+- **⏳ Smart Waiting** - Network idle, custom functions, element visibility
+- **🔐 Security Features** - Permission management, geolocation, secure contexts
+- **🌍 Internationalization** - Locale, timezone, currency formatting
+- **📋 Clipboard Operations** - Copy/paste functionality
+- **🔄 Event Monitoring** - Comprehensive event capture and handling
+- **🎨 Visual Features** - CSS injection, style computation, theming
+- **👷 Worker Support** - Web Workers, Service Workers, background pages
+- **🔌 WebSocket Support** - Real-time communication monitoring
+- **🔍 Advanced Locators** - Text, role, label, placeholder-based selection
+- **📜 Infinite Scroll** - Automatic content loading detection
+- **🛠️ Developer Tools** - Console capture, error tracking, debugging
+
+### 📈 200+ Playwright Features
+See [PLAYWRIGHT_FEATURES.md](PLAYWRIGHT_FEATURES.md) for the complete list of all implemented features.
+
+### 🎯 Two Interfaces Available
+
+#### 1. Synchronous Interface (Recommended for beginners)
+```python
+from ga_scrap import SyncGAScrap
+
+with SyncGAScrap() as scraper:
+    scraper.goto("https://example.com")
+    title = scraper.get_text("h1")
+    print(f"Title: {title}")
+```
+
+#### 2. Async Interface (For advanced users)
+```python
+import asyncio
+from ga_scrap import GAScrap
+
+async def scrape():
+    async with GAScrap() as scraper:
+        await scraper.goto("https://example.com")
+        title = await scraper.get_text("h1")
+        return title
+
+result = asyncio.run(scrape())
+```
+
+See [SYNC_USAGE.md](SYNC_USAGE.md) for complete synchronous interface documentation.
+
 ## 🚀 Quick Start
+
+### 🎯 Super Simple Syntax (No async/await needed!)
+
+```python
+from ga_scrap import SyncGAScrap
+
+# Create scraper - no async needed!
+with SyncGAScrap() as scraper:
+    scraper.goto("https://example.com")
+    title = scraper.get_text("h1")
+    scraper.screenshot("page.png")
+    print(f"Title: {title}")
+```
+
+**That's it!** No `async`/`await`, no `asyncio.run()` - just simple, clean Python code!
+
+### 🔗 Method Chaining Support
+
+```python
+with SyncGAScrap() as scraper:
+    (scraper
+     .goto("https://example.com")
+     .scroll_to_bottom()
+     .screenshot("bottom.png")
+     .input("input[name='q']", "search term")
+     .click("button[type='submit']")
+     .screenshot("results.png"))
+```
 
 ### Installation
 

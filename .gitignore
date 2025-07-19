@@ -26,6 +26,8 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+tulya/
+
 # Virtual environments
 venv/
 .venv/
