@@ -61,21 +61,29 @@ class AppManager:
         app_name: str,
         template: str = "basic",
         description: str = "",
-        overwrite: bool = False
+        overwrite: bool = False,
+        workspace_dir: Optional[str] = None
     ) -> bool:
         """
         Create a new scraper app
-        
+
         Args:
             app_name: Name of the app
             template: Template to use ('basic', 'advanced', 'ecommerce', 'social')
             description: App description
             overwrite: Whether to overwrite existing app
-            
+            workspace_dir: Custom workspace directory (optional)
+
         Returns:
             True if app was created successfully
         """
-        app_dir = self.workspace_dir / app_name
+        # Use custom workspace if provided
+        if workspace_dir:
+            target_workspace = Path(workspace_dir)
+            target_workspace.mkdir(parents=True, exist_ok=True)
+            app_dir = target_workspace / app_name
+        else:
+            app_dir = self.workspace_dir / app_name
         
         # Check if app already exists
         if app_dir.exists() and not overwrite:

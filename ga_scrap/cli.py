@@ -10,6 +10,7 @@ from pathlib import Path
 from colorama import Fore, Style, init
 from .app_manager import AppManager
 from .hot_reload import DevServer, run_with_hot_reload
+from .config_manager import config
 
 # Initialize colorama
 init(autoreset=True)
@@ -29,11 +30,26 @@ def print_banner():
 """
     print(banner)
 
+def check_first_run():
+    """Check if this is the first run and offer setup"""
+    if not config.config_file.exists():
+        print(f"{Fore.YELLOW}👋 Welcome to GA-Scrap!{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}It looks like this is your first time using GA-Scrap.{Style.RESET_ALL}")
+
+        if click.confirm("Would you like to run the setup now?", default=True):
+            from .post_install import run_post_install
+            run_post_install()
+        else:
+            print(f"{Fore.YELLOW}💡 You can run 'ga-scrap setup' anytime to configure GA-Scrap{Style.RESET_ALL}")
+
 @click.group()
 @click.version_option(version="1.0.0")
 def cli():
     """GA-Scrap: A powerful Playwright-based scraper helper"""
-    pass
+    # Check for first run on certain commands
+    ctx = click.get_current_context()
+    if ctx.invoked_subcommand in ['new', 'create', 'quick', 'dev']:
+        check_first_run()
 
 @cli.command()
 @click.argument('app_name')
@@ -223,27 +239,23 @@ def examples():
    ga-scrap quick "https://quotes.toscrape.com" ".quote .text" --all
    ga-scrap quick "https://example.com" "h1"
 
-{Fore.CYAN}1. Create a new basic scraper:{Style.RESET_ALL}
-   ga-scrap new my-scraper
+{Fore.CYAN}🛠️  SETUP & CONFIGURATION:{Style.RESET_ALL}
+   ga-scrap setup                    # Set up GA-Scrap environment
+   ga-scrap doctor                   # Check installation health
+   ga-scrap config show              # Show current configuration
+   ga-scrap config set browser.headless true
 
-{Fore.CYAN}2. Create an e-commerce scraper:{Style.RESET_ALL}
+{Fore.CYAN}📱 APP MANAGEMENT:{Style.RESET_ALL}
+   ga-scrap new my-scraper           # Create basic scraper
    ga-scrap new shop-scraper --template ecommerce
+   ga-scrap list                     # List all apps
+   ga-scrap info my-scraper          # Get app details
+   ga-scrap delete my-scraper        # Delete an app
 
-{Fore.CYAN}3. Start development with hot reload:{Style.RESET_ALL}
+{Fore.CYAN}🔥 DEVELOPMENT:{Style.RESET_ALL}
    cd ga_scrap_apps/my-scraper
-   ga-scrap dev
-
-{Fore.CYAN}4. Run any Python script with hot reload:{Style.RESET_ALL}
-   ga-scrap run my_script.py
-
-{Fore.CYAN}5. List all your apps:{Style.RESET_ALL}
-   ga-scrap list
-
-{Fore.CYAN}6. Get app information:{Style.RESET_ALL}
-   ga-scrap info my-scraper
-
-{Fore.CYAN}7. Delete an app:{Style.RESET_ALL}
-   ga-scrap delete my-scraper
+   ga-scrap dev                      # Start with hot reload
+   ga-scrap run my_script.py         # Run any script with hot reload
 
 {Fore.YELLOW}💡 Tips:{Style.RESET_ALL}
 - Use 'ga-scrap quick' for instant scraping
@@ -280,6 +292,123 @@ def quick(url, selector, headless, get_all):
 
     asyncio.run(do_scrape())
 
+@cli.group()
+def config_cmd():
+    """Manage GA-Scrap configuration"""
+    pass
+
+@config_cmd.command('show')
+def config_show():
+    """Show current configuration"""
+    config.show_config()
+
+@config_cmd.command('get')
+@click.argument('key')
+def config_get(key):
+    """Get a configuration value"""
+    value = config.get(key)
+    if value is not None:
+        print(f"{Fore.CYAN}{key}:{Style.RESET_ALL} {value}")
+    else:
+        print(f"{Fore.RED}Key '{key}' not found{Style.RESET_ALL}")
+
+@config_cmd.command('set')
+@click.argument('key')
+@click.argument('value')
+def config_set(key, value):
+    """Set a configuration value"""
+    # Try to parse value as appropriate type
+    if value.lower() in ('true', 'false'):
+        value = value.lower() == 'true'
+    elif value.isdigit():
+        value = int(value)
+    elif value.replace('.', '').isdigit():
+        value = float(value)
+
+    if config.set(key, value):
+        print(f"{Fore.GREEN}✅ Set {key} = {value}{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.RED}❌ Failed to set {key}{Style.RESET_ALL}")
+
+@config_cmd.command('reset')
+@click.confirmation_option(prompt='Are you sure you want to reset all configuration to defaults?')
+def config_reset():
+    """Reset configuration to defaults"""
+    if config.reset_to_defaults():
+        print(f"{Fore.GREEN}✅ Configuration reset to defaults{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.RED}❌ Failed to reset configuration{Style.RESET_ALL}")
+
+@config_cmd.command('validate')
+def config_validate():
+    """Validate current configuration"""
+    config.validate_config()
+
+# Add config command to main CLI
+cli.add_command(config_cmd, name='config')
+
+@cli.command()
+@click.option('--force', is_flag=True, help='Force reinstall browsers and recreate workspace')
+def setup(force):
+    """Set up GA-Scrap environment (browsers, workspace, etc.)"""
+    print_banner()
+
+    print(f"{Fore.GREEN}🚀 Setting up GA-Scrap environment...{Style.RESET_ALL}\n")
+
+    try:
+        # Install Playwright browsers
+        print(f"{Fore.CYAN}📦 Installing Playwright browsers...{Style.RESET_ALL}")
+        import subprocess
+
+        if force:
+            subprocess.check_call([sys.executable, "-m", "playwright", "install", "--force"])
+        else:
+            subprocess.check_call([sys.executable, "-m", "playwright", "install", "chromium"])
+
+        print(f"{Fore.GREEN}✅ Playwright browsers installed{Style.RESET_ALL}")
+
+        # Create workspace directory
+        workspace_dir = config.get_workspace_dir()
+        if force and workspace_dir.exists():
+            import shutil
+            shutil.rmtree(workspace_dir)
+            print(f"{Fore.YELLOW}🗑️  Removed existing workspace{Style.RESET_ALL}")
+
+        if not workspace_dir.exists():
+            workspace_dir.mkdir(parents=True, exist_ok=True)
+            print(f"{Fore.GREEN}✅ Created workspace: {workspace_dir}{Style.RESET_ALL}")
+        else:
+            print(f"{Fore.GREEN}✅ Workspace exists: {workspace_dir}{Style.RESET_ALL}")
+
+        # Create a welcome example if enabled
+        if config.get("auto_setup.create_welcome_app", True):
+            welcome_dir = workspace_dir / "welcome-example"
+            if force or not welcome_dir.exists():
+                manager = AppManager()
+                manager.create_app(
+                    app_name="welcome-example",
+                    template="basic",
+                    description="Welcome example to get you started",
+                    overwrite=force,
+                    workspace_dir=str(workspace_dir)
+                )
+                print(f"{Fore.GREEN}✅ Created welcome example app{Style.RESET_ALL}")
+
+        # Save configuration (this will create the config file if it doesn't exist)
+        if force or not config.config_file.exists():
+            config.save_config()
+            print(f"{Fore.GREEN}✅ Created configuration: {config.config_file}{Style.RESET_ALL}")
+
+        print(f"\n{Fore.GREEN}🎉 Setup complete! Try these commands:{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}   ga-scrap quick 'https://quotes.toscrape.com' '.quote .text' --all{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}   ga-scrap new my-scraper{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}   ga-scrap list{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}   ga-scrap doctor{Style.RESET_ALL}")
+
+    except Exception as e:
+        print(f"{Fore.RED}❌ Setup failed: {e}{Style.RESET_ALL}")
+        print(f"{Fore.YELLOW}💡 Try running with --force or check your internet connection{Style.RESET_ALL}")
+
 @cli.command()
 def doctor():
     """Check GA-Scrap installation and dependencies"""
@@ -295,7 +424,7 @@ def doctor():
         print(f"{Fore.RED}❌ Python {python_version.major}.{python_version.minor}.{python_version.micro} (requires 3.8+){Style.RESET_ALL}")
 
     # Check dependencies
-    dependencies = ['playwright', 'watchdog', 'click', 'colorama', 'pyyaml']
+    dependencies = ['playwright', 'watchdog', 'click', 'colorama', 'yaml']
 
     for dep in dependencies:
         try:
@@ -321,16 +450,25 @@ def doctor():
         print(f"{Fore.RED}❌ Playwright browser check failed: {e}{Style.RESET_ALL}")
 
     # Check workspace
-    workspace = Path("ga_scrap_apps")
+    workspace = config.get_workspace_dir()
     if workspace.exists():
         app_count = len([d for d in workspace.iterdir() if d.is_dir()])
         print(f"{Fore.GREEN}✅ Workspace: {workspace} ({app_count} apps){Style.RESET_ALL}")
     else:
         print(f"{Fore.YELLOW}⚠️  Workspace: {workspace} (will be created when needed){Style.RESET_ALL}")
 
+    # Check config
+    if config.config_file.exists():
+        print(f"{Fore.GREEN}✅ Config: {config.config_file}{Style.RESET_ALL}")
+        # Validate configuration
+        if not config.validate_config():
+            print(f"{Fore.YELLOW}⚠️  Configuration has issues (see above){Style.RESET_ALL}")
+    else:
+        print(f"{Fore.YELLOW}⚠️  Config: {config.config_file} (will be created when needed){Style.RESET_ALL}")
+
     print(f"\n{Fore.CYAN}💡 If you see any issues, try:{Style.RESET_ALL}")
-    print(f"   pip install playwright watchdog click colorama pyyaml")
-    print(f"   playwright install")
+    print(f"   ga-scrap setup --force")
+    print(f"   pip install --upgrade ga-scrap")
 
 def main():
     """Main CLI entry point"""
