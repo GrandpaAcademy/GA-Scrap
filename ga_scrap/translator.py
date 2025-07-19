@@ -40,13 +40,23 @@ class SyncGAScrap:
     def _run_loop(self):
         """Run event loop in background thread"""
         asyncio.set_event_loop(self._loop)
-        self._loop.run_forever()
+        try:
+            self._loop.run_forever()
+        except Exception as e:
+            pass  # Ignore cleanup errors
     
     def _run_async(self, coro):
         """Run async coroutine and return result"""
         self._ensure_loop()
-        future = asyncio.run_coroutine_threadsafe(coro, self._loop)
-        return future.result()
+        try:
+            future = asyncio.run_coroutine_threadsafe(coro, self._loop)
+            return future.result(timeout=60)  # Add timeout to prevent hanging
+        except Exception as e:
+            if self._scraper.sandbox_mode:
+                self.log(f"🏖️ Async operation failed in sandbox mode: {e}", "warning")
+                return None
+            else:
+                raise
     
     # ==================== CORE METHODS ====================
     
@@ -60,14 +70,27 @@ class SyncGAScrap:
     def stop(self):
         """Stop the browser"""
         if self._started:
-            self._run_async(self._scraper.stop())
+            try:
+                self._run_async(self._scraper.stop())
+            except Exception as e:
+                self.log(f"⚠️ Error during browser stop: {e}", "warning")
+
             self._started = False
-            if self._loop and self._loop.is_running():
-                self._loop.call_soon_threadsafe(self._loop.stop)
+
+            # Clean up event loop
+            try:
+                if self._loop and self._loop.is_running():
+                    self._loop.call_soon_threadsafe(self._loop.stop)
+                    if self._thread and self._thread.is_alive():
+                        self._thread.join(timeout=2)  # Wait max 2 seconds
+            except Exception as e:
+                pass  # Ignore cleanup errors
     
     def goto(self, url: str, page=None):
         """Navigate to URL"""
-        self._run_async(self._scraper.goto(url, page))
+        result = self._run_async(self._scraper.goto(url, page))
+        if result is None and self._scraper.sandbox_mode:
+            self.log(f"🏖️ Navigation to {url} failed in sandbox mode. Browser remains active.", "warning")
         return self
     
     def screenshot(self, filename: str = None, page=None, **options):
@@ -83,12 +106,16 @@ class SyncGAScrap:
     
     def click(self, selector: str, page=None):
         """Click an element"""
-        self._run_async(self._scraper.click(selector, page))
+        result = self._run_async(self._scraper.click(selector, page))
+        if result is None and self._scraper.sandbox_mode:
+            self.log(f"🏖️ Click on {selector} failed in sandbox mode. Browser remains active.", "warning")
         return self
     
     def input(self, selector: str, text: str, page=None):
         """Input text into an element"""
-        self._run_async(self._scraper.type_text(selector, text, page))
+        result = self._run_async(self._scraper.type_text(selector, text, page))
+        if result is None and self._scraper.sandbox_mode:
+            self.log(f"🏖️ Input to {selector} failed in sandbox mode. Browser remains active.", "warning")
         return self
     
     def type_text(self, selector: str, text: str, page=None):

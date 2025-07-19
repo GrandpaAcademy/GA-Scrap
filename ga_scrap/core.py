@@ -81,7 +81,9 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
         # Reduced motion
         reduced_motion: str = None,
         # Force prefers-color-scheme
-        forced_colors: str = None
+        forced_colors: str = None,
+        # Sandbox mode - don't shutdown on errors
+        sandbox_mode: bool = False
     ):
         """
         Initialize GA-Scrap with comprehensive Playwright features
@@ -109,6 +111,7 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
             color_scheme: 'light', 'dark', or 'no-preference'
             reduced_motion: 'reduce' or 'no-preference'
             forced_colors: 'active' or 'none'
+            sandbox_mode: Don't shutdown on errors, just log and continue (default: False)
         """
         # Basic configuration
         self.headless = headless
@@ -135,6 +138,7 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
         self.color_scheme = color_scheme
         self.reduced_motion = reduced_motion
         self.forced_colors = forced_colors
+        self.sandbox_mode = sandbox_mode
 
         # Internal state
         self.playwright: Optional[Playwright] = None
@@ -184,6 +188,60 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         )
         self.logger = logging.getLogger('GA-Scrap')
+
+    def _safe_execute(self, operation_name: str, func: Callable, *args, **kwargs):
+        """
+        Safely execute operations with error handling for sandbox mode
+
+        Args:
+            operation_name: Name of the operation for logging
+            func: Function to execute
+            *args: Arguments for the function
+            **kwargs: Keyword arguments for the function
+
+        Returns:
+            Result of function execution or None if error in sandbox mode
+        """
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            error_msg = f"❌ Error in {operation_name}: {str(e)}"
+            self.log(error_msg, "error")
+
+            if self.sandbox_mode:
+                self.log(f"🏖️ Sandbox mode: Continuing despite error in {operation_name}", "warning")
+                self.log(f"💡 Fix the issue and try again. Browser remains active.", "info")
+                return None
+            else:
+                # In non-sandbox mode, re-raise the error
+                raise
+
+    async def _safe_execute_async(self, operation_name: str, func: Callable, *args, **kwargs):
+        """
+        Safely execute async operations with error handling for sandbox mode
+
+        Args:
+            operation_name: Name of the operation for logging
+            func: Async function to execute
+            *args: Arguments for the function
+            **kwargs: Keyword arguments for the function
+
+        Returns:
+            Result of function execution or None if error in sandbox mode
+        """
+        try:
+            return await func(*args, **kwargs)
+        except Exception as e:
+            error_msg = f"❌ Error in {operation_name}: {str(e)}"
+            self.log(error_msg, "error")
+
+            if self.sandbox_mode:
+                self.log(f"🏖️ Sandbox mode: Continuing despite error in {operation_name}", "warning")
+                self.log(f"💡 Fix the issue and try again. Browser remains active.", "info")
+                return None
+            else:
+                # In non-sandbox mode, re-raise the error
+                raise
     
     def log(self, message: str, level: str = "info"):
         """
@@ -388,26 +446,55 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
         try:
             # Save performance metrics if available
             if self.page and self.performance_metrics:
-                await self._save_performance_metrics()
+                try:
+                    await self._save_performance_metrics()
+                except Exception as e:
+                    if self.sandbox_mode:
+                        self.log(f"⚠️ Could not save performance metrics: {e}", "warning")
+                    else:
+                        self.log(f"⚠️ Could not save performance metrics: {e}", "warning")
 
             # Close all pages
             for page in self.pages:
                 try:
-                    await page.close()
-                except:
-                    pass
+                    if not page.is_closed():
+                        await page.close()
+                except Exception as e:
+                    if self.sandbox_mode:
+                        self.log(f"⚠️ Could not close page: {e}", "debug")
 
+            # Close context
             if self.context:
-                await self.context.close()
-                self.log("🔒 Browser context closed", "info")
+                try:
+                    await self.context.close()
+                    self.log("🔒 Browser context closed", "info")
+                except Exception as e:
+                    if self.sandbox_mode:
+                        self.log(f"⚠️ Context already closed or error: {e}", "debug")
+                    else:
+                        self.log(f"⚠️ Error closing context: {e}", "warning")
 
+            # Close browser
             if self.browser:
-                await self.browser.close()
-                self.log("🔒 Browser closed", "info")
+                try:
+                    await self.browser.close()
+                    self.log("🔒 Browser closed", "info")
+                except Exception as e:
+                    if self.sandbox_mode:
+                        self.log(f"⚠️ Browser already closed or error: {e}", "debug")
+                    else:
+                        self.log(f"⚠️ Error closing browser: {e}", "warning")
 
+            # Stop playwright
             if self.playwright:
-                await self.playwright.stop()
-                self.log("🔒 Playwright stopped", "info")
+                try:
+                    await self.playwright.stop()
+                    self.log("🔒 Playwright stopped", "info")
+                except Exception as e:
+                    if self.sandbox_mode:
+                        self.log(f"⚠️ Playwright already stopped or error: {e}", "debug")
+                    else:
+                        self.log(f"⚠️ Error stopping Playwright: {e}", "warning")
 
             # Reset state
             self.playwright = None
@@ -426,7 +513,10 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
             self.cdp_sessions = []
 
         except Exception as e:
-            self.log(f"⚠️  Error during cleanup: {str(e)}", "warning")
+            if self.sandbox_mode:
+                self.log(f"🏖️ Cleanup completed with minor issues (sandbox mode): {str(e)}", "debug")
+            else:
+                self.log(f"⚠️ Error during cleanup: {str(e)}", "warning")
     
     async def new_page(self) -> Page:
         """
@@ -456,11 +546,20 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
         """
         target_page = page or self.page
         if not target_page:
-            raise RuntimeError("No page available. Call start() first.")
+            if self.sandbox_mode:
+                self.log("❌ No page available. Call start() first.", "error")
+                self.log("🏖️ Sandbox mode: Browser remains active. Fix and try again.", "warning")
+                return None
+            else:
+                raise RuntimeError("No page available. Call start() first.")
 
-        self.log(f"🔗 Navigating to: {url}", "info")
-        await target_page.goto(url)
-        return target_page
+        async def _navigate():
+            self.log(f"🔗 Navigating to: {url}", "info")
+            await target_page.goto(url)
+            self.log(f"✅ Successfully navigated to: {url}", "success")
+            return target_page
+
+        return await self._safe_execute_async("navigation", _navigate)
 
     async def get_text(self, selector: str, page: Optional[Page] = None) -> str:
         """
@@ -513,11 +612,12 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
             page: Page to use (default: main page)
         """
         target_page = page or self.page
-        try:
+
+        async def _click():
             await target_page.click(selector)
             self.log(f"✅ Clicked: {selector}", "info")
-        except Exception as e:
-            self.log(f"Could not click '{selector}': {e}", "error")
+
+        return await self._safe_execute_async("click", _click)
 
     async def type_text(self, selector: str, text: str, page: Optional[Page] = None):
         """
@@ -529,11 +629,12 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
             page: Page to use (default: main page)
         """
         target_page = page or self.page
-        try:
+
+        async def _type():
             await target_page.fill(selector, text)
             self.log(f"✅ Typed text in: {selector}", "info")
-        except Exception as e:
-            self.log(f"Could not type in '{selector}': {e}", "error")
+
+        return await self._safe_execute_async("type_text", _type)
 
     async def wait_for(self, selector: str, timeout: int = None, page: Optional[Page] = None):
         """
@@ -566,13 +667,12 @@ class GAScrap(AdvancedPlaywrightFeatures, ComprehensivePlaywrightFeatures):
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"screenshot_{timestamp}.png"
 
-        try:
+        async def _screenshot():
             await target_page.screenshot(path=filename, **options)
             self.log(f"📸 Screenshot saved: {filename}", "success")
             return filename
-        except Exception as e:
-            self.log(f"Could not take screenshot: {e}", "error")
-            return None
+
+        return await self._safe_execute_async("screenshot", _screenshot)
 
     # ==================== EVENT HANDLERS ====================
 

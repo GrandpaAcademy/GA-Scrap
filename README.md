@@ -34,6 +34,7 @@ A powerful Playwright-based scraper helper that makes web scraping easy and enjo
 - **🔍 Advanced Locators** - Text, role, label, placeholder-based selection
 - **📜 Infinite Scroll** - Automatic content loading detection
 - **🛠️ Developer Tools** - Console capture, error tracking, debugging
+- **🏖️ Sandbox Mode** - Errors don't shutdown browser, perfect for development
 
 ### 📈 200+ Playwright Features
 See [PLAYWRIGHT_FEATURES.md](PLAYWRIGHT_FEATURES.md) for the complete list of all implemented features.
@@ -65,6 +66,7 @@ result = asyncio.run(scrape())
 ```
 
 See [SYNC_USAGE.md](SYNC_USAGE.md) for complete synchronous interface documentation.
+See [SANDBOX_MODE.md](SANDBOX_MODE.md) for sandbox mode documentation.
 
 ## 🚀 Quick Start
 
@@ -82,6 +84,17 @@ with SyncGAScrap() as scraper:
 ```
 
 **That's it!** No `async`/`await`, no `asyncio.run()` - just simple, clean Python code!
+
+### 🏖️ Sandbox Mode for Development
+
+```python
+# Errors don't crash the browser - perfect for development!
+with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")
+    scraper.click("#might-not-exist")  # Error logged, continues
+    scraper.screenshot("still_works.png")  # Still works!
+    # Browser stays active for debugging
+```
 
 ### 🔗 Method Chaining Support
 
