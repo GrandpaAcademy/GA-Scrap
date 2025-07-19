@@ -53,7 +53,7 @@ ga-scrap quick "https://quotes.toscrape.com" ".quote .text" --all
 
 ```bash
 # Create a new scraper app
-ga-scrap create my-first-scraper
+ga-scrap new my-first-scraper
 
 # Navigate to the app directory
 cd ga_scrap_apps/my-first-scraper
@@ -75,7 +75,7 @@ ga-scrap quick "URL" "selector" --all        # Get all matching elements
 ga-scrap quick "URL" "selector" --headless   # Run without visible browser
 
 # Create a new app
-ga-scrap create <app_name> [--template basic|advanced|ecommerce|social]
+ga-scrap new <app_name> [--template basic|advanced|ecommerce|social]
 
 # List all apps
 ga-scrap list

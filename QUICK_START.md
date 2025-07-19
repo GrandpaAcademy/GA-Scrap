@@ -46,7 +46,7 @@ ga-scrap quick "https://quotes.toscrape.com" ".quote .text" --all
 ### 1. Create a New App (Traditional way)
 
 ```bash
-ga-scrap create my-first-scraper
+ga-scrap new my-first-scraper
 ```
 
 This creates a new scraper app with:
@@ -138,8 +138,8 @@ ga-scrap quick "URL" "selector" --all        # Get all matching elements
 ga-scrap quick "URL" "selector" --headless   # Run without visible browser
 
 # Create apps
-ga-scrap create my-scraper --template advanced
-ga-scrap create shop-scraper --template ecommerce
+ga-scrap new my-scraper --template advanced
+ga-scrap new shop-scraper --template ecommerce
 
 # Manage apps
 ga-scrap list                    # List all apps
@@ -226,7 +226,7 @@ pip install -r requirements.txt
 
 ## Next Steps
 
-1. **Create your first scraper**: `ga-scrap create my-scraper`
+1. **Create your first scraper**: `ga-scrap new my-scraper`
 2. **Start development**: `ga-scrap dev`
 3. **Edit main.py** to scrape your target site
 4. **Check examples** for inspiration

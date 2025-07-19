@@ -37,15 +37,15 @@ def cli():
 
 @cli.command()
 @click.argument('app_name')
-@click.option('--template', '-t', default='basic', 
+@click.option('--template', '-t', default='basic',
               type=click.Choice(['basic', 'advanced', 'ecommerce', 'social']),
               help='Template to use for the new app')
 @click.option('--description', '-d', default='', help='App description')
 @click.option('--overwrite', is_flag=True, help='Overwrite existing app')
-def create(app_name, template, description, overwrite):
+def new(app_name, template, description, overwrite):
     """Create a new scraper app"""
     print_banner()
-    
+
     manager = AppManager()
     success = manager.create_app(
         app_name=app_name,
@@ -53,7 +53,33 @@ def create(app_name, template, description, overwrite):
         description=description,
         overwrite=overwrite
     )
-    
+
+    if success:
+        print(f"\n{Fore.GREEN}🎉 Next steps:{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}1. cd ga_scrap_apps/{app_name}{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}2. ga-scrap dev  # Start with hot reload{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}3. Edit main.py to customize your scraper{Style.RESET_ALL}")
+
+# Keep 'create' as an alias for backward compatibility
+@cli.command()
+@click.argument('app_name')
+@click.option('--template', '-t', default='basic',
+              type=click.Choice(['basic', 'advanced', 'ecommerce', 'social']),
+              help='Template to use for the new app')
+@click.option('--description', '-d', default='', help='App description')
+@click.option('--overwrite', is_flag=True, help='Overwrite existing app')
+def create(app_name, template, description, overwrite):
+    """Create a new scraper app (alias for 'new')"""
+    print(f"{Fore.YELLOW}💡 'create' is deprecated, use 'ga-scrap new' instead{Style.RESET_ALL}")
+
+    manager = AppManager()
+    success = manager.create_app(
+        app_name=app_name,
+        template=template,
+        description=description,
+        overwrite=overwrite
+    )
+
     if success:
         print(f"\n{Fore.GREEN}🎉 Next steps:{Style.RESET_ALL}")
         print(f"{Fore.CYAN}1. cd ga_scrap_apps/{app_name}{Style.RESET_ALL}")
@@ -198,10 +224,10 @@ def examples():
    ga-scrap quick "https://example.com" "h1"
 
 {Fore.CYAN}1. Create a new basic scraper:{Style.RESET_ALL}
-   ga-scrap create my-scraper
+   ga-scrap new my-scraper
 
 {Fore.CYAN}2. Create an e-commerce scraper:{Style.RESET_ALL}
-   ga-scrap create shop-scraper --template ecommerce
+   ga-scrap new shop-scraper --template ecommerce
 
 {Fore.CYAN}3. Start development with hot reload:{Style.RESET_ALL}
    cd ga_scrap_apps/my-scraper
@@ -221,6 +247,7 @@ def examples():
 
 {Fore.YELLOW}💡 Tips:{Style.RESET_ALL}
 - Use 'ga-scrap quick' for instant scraping
+- Use 'ga-scrap new' to create apps (shorter than 'create')
 - All scrapers run with visible browser by default
 - Use hot reload for faster development
 - Check out different templates for specific use cases

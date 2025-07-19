@@ -158,7 +158,7 @@ python test_easy_mode.py
 # Test CLI commands
 ga-scrap doctor
 ga-scrap quick "https://example.com" "h1"
-ga-scrap create test-app
+ga-scrap new test-app
 ga-scrap list
 
 # Test examples
