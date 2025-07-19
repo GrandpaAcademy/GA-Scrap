@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture - GA-Scrap Documentation</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../../index.html">
+                <i class="bi bi-spider text-warning"></i> GA-Scrap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="getting-started.html">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="architecture.html">Architecture</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="playground.html">Playground</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="doc-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 doc-sidebar">
+                    <div class="doc-nav">
+                        <h6 class="text-muted text-uppercase fw-bold mb-3">Architecture</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link active" href="#overview">Overview</a>
+                            <a class="nav-link" href="#design-principles">Design Principles</a>
+                            <a class="nav-link" href="#core-components">Core Components</a>
+                            <a class="nav-link" href="#data-flow">Data Flow</a>
+                            <a class="nav-link" href="#interfaces">Interface Layers</a>
+                            <a class="nav-link" href="#error-handling">Error Handling</a>
+                            <a class="nav-link" href="#performance">Performance</a>
+                            <a class="nav-link" href="#extensibility">Extensibility</a>
+                            <a class="nav-link" href="#comparison">vs Other Tools</a>
+                        </nav>
+                        
+                        <h6 class="text-muted text-uppercase fw-bold mb-3 mt-4">Technical Details</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link" href="#class-hierarchy">Class Hierarchy</a>
+                            <a class="nav-link" href="#method-resolution">Method Resolution</a>
+                            <a class="nav-link" href="#state-management">State Management</a>
+                            <a class="nav-link" href="#memory-management">Memory Management</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="col-lg-9 doc-content">
+                    <div class="mb-4">
+                        <h1 class="display-4 fw-bold">
+                            <i class="bi bi-cpu text-primary"></i> Architecture
+                        </h1>
+                        <p class="lead">How GA-Scrap Works Under the Hood</p>
+                        <p class="text-muted">Understanding the design and implementation</p>
+                    </div>
+
+                    <!-- Overview -->
+                    <section id="overview" class="mb-5">
+                        <h2><i class="bi bi-diagram-3"></i> Architecture Overview</h2>
+                        <p>GA-Scrap is built on a layered architecture that provides multiple interfaces while maintaining full Playwright compatibility and adding powerful error-handling capabilities.</p>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">GA-Scrap Architecture Stack</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <div class="mb-3 p-3 bg-light border rounded">
+                                                <strong>🎯 User Interface Layer</strong><br>
+                                                <small>SyncGAScrap | GAScrap (Async) | CLI Tools | Hot Reload</small>
+                                            </div>
+                                            <div class="mb-3 p-3 bg-light border rounded">
+                                                <strong>🛡️ Sandbox & Error Handling Layer</strong><br>
+                                                <small>Error Recovery | Method Wrapping | Safe Execution</small>
+                                            </div>
+                                            <div class="mb-3 p-3 bg-light border rounded">
+                                                <strong>🔧 GA-Scrap Core Layer</strong><br>
+                                                <small>Method Abstraction | State Management | Configuration</small>
+                                            </div>
+                                            <div class="mb-3 p-3 bg-light border rounded">
+                                                <strong>🎭 Playwright Integration Layer</strong><br>
+                                                <small>Direct API Access | Browser Management | Context Handling</small>
+                                            </div>
+                                            <div class="p-3 bg-dark text-white border rounded">
+                                                <strong>🌐 Browser Engine Layer</strong><br>
+                                                <small>Chromium | Firefox | WebKit</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Design Principles -->
+                    <section id="design-principles" class="mb-5">
+                        <h2><i class="bi bi-lightbulb"></i> Design Principles</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-4">
+                                <div class="card border-primary h-100">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">1. Simplicity First</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-success"></i> No async/await complexity</li>
+                                            <li><i class="bi bi-check text-success"></i> Intuitive method names</li>
+                                            <li><i class="bi bi-check text-success"></i> Minimal configuration</li>
+                                            <li><i class="bi bi-check text-success"></i> Clear error messages</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">2. Full Compatibility</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-success"></i> 100% Playwright API access</li>
+                                            <li><i class="bi bi-check text-success"></i> No feature limitations</li>
+                                            <li><i class="bi bi-check text-success"></i> Direct object access</li>
+                                            <li><i class="bi bi-check text-success"></i> Backward compatibility</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="card border-warning h-100">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0">3. Error Resilience</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-warning"></i> Sandbox mode protection</li>
+                                            <li><i class="bi bi-check text-warning"></i> Graceful error handling</li>
+                                            <li><i class="bi bi-check text-warning"></i> Development-friendly</li>
+                                            <li><i class="bi bi-check text-warning"></i> Detailed error logging</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Core Components -->
+                    <section id="core-components" class="mb-5">
+                        <h2><i class="bi bi-boxes"></i> Core Components</h2>
+
+                        <div class="accordion" id="componentsAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#component1">
+                                        <i class="bi bi-gear"></i> &nbsp; SyncGAScrap - Synchronous Interface
+                                    </button>
+                                </h2>
+                                <div id="component1" class="accordion-collapse collapse show" data-bs-parent="#componentsAccordion">
+                                    <div class="accordion-body">
+                                        <pre><code class="language-python">class SyncGAScrap:
+    """Main synchronous interface for GA-Scrap"""
+    
+    def __init__(self, sandbox_mode=False, **kwargs):
+        self.sandbox_mode = sandbox_mode
+        self.playwright = None
+        self.browser = None
+        self.context = None
+        self.page = None
+        
+    def __enter__(self):
+        self.start()
+        return self
+        
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.stop()
+        
+    def _safe_execute(self, method, *args, **kwargs):
+        """Execute method with sandbox protection"""
+        if self.sandbox_mode:
+            try:
+                return method(*args, **kwargs)
+            except Exception as e:
+                self._log_error(e)
+                return None
+        else:
+            return method(*args, **kwargs)</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#component2">
+                                        <i class="bi bi-shield"></i> &nbsp; Sandbox Error Handler
+                                    </button>
+                                </h2>
+                                <div id="component2" class="accordion-collapse collapse" data-bs-parent="#componentsAccordion">
+                                    <div class="accordion-body">
+                                        <pre><code class="language-python">class SandboxErrorHandler:
+    """Handles errors gracefully in sandbox mode"""
+    
+    def __init__(self, debug=False):
+        self.debug = debug
+        self.error_count = 0
+        
+    def handle_error(self, error, method_name, args):
+        """Process and log errors without crashing"""
+        self.error_count += 1
+        
+        error_info = {
+            "method": method_name,
+            "error_type": type(error).__name__,
+            "message": str(error),
+            "args": args,
+            "timestamp": datetime.now()
+        }
+        
+        if self.debug:
+            self._detailed_log(error_info)
+        else:
+            self._simple_log(error_info)
+            
+        return None  # Safe return value</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#component3">
+                                        <i class="bi bi-lightning"></i> &nbsp; Hot Reload System
+                                    </button>
+                                </h2>
+                                <div id="component3" class="accordion-collapse collapse" data-bs-parent="#componentsAccordion">
+                                    <div class="accordion-body">
+                                        <pre><code class="language-python">class HotReloadWatcher:
+    """File system watcher for hot reload functionality"""
+    
+    def __init__(self, script_path, patterns, exclude_patterns):
+        self.script_path = script_path
+        self.patterns = patterns
+        self.exclude_patterns = exclude_patterns
+        self.observer = Observer()
+        
+    def start_watching(self):
+        """Start file system monitoring"""
+        event_handler = FileChangeHandler(
+            patterns=self.patterns,
+            exclude_patterns=self.exclude_patterns,
+            callback=self.on_file_change
+        )
+        
+        self.observer.schedule(event_handler, ".", recursive=True)
+        self.observer.start()
+        
+    def on_file_change(self, event):
+        """Handle file change events"""
+        if self.should_reload(event.src_path):
+            self.restart_script()</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Data Flow -->
+                    <section id="data-flow" class="mb-5">
+                        <h2><i class="bi bi-arrow-right-circle"></i> Data Flow</h2>
+
+                        <h4>Request Flow</h4>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div class="text-center">
+                                                <div class="badge bg-primary p-3">
+                                                    <i class="bi bi-person"></i><br>
+                                                    User Code
+                                                </div>
+                                            </div>
+                                            <i class="bi bi-arrow-right text-muted"></i>
+                                            <div class="text-center">
+                                                <div class="badge bg-success p-3">
+                                                    <i class="bi bi-gear"></i><br>
+                                                    GA-Scrap
+                                                </div>
+                                            </div>
+                                            <i class="bi bi-arrow-right text-muted"></i>
+                                            <div class="text-center">
+                                                <div class="badge bg-warning p-3">
+                                                    <i class="bi bi-shield"></i><br>
+                                                    Sandbox
+                                                </div>
+                                            </div>
+                                            <i class="bi bi-arrow-right text-muted"></i>
+                                            <div class="text-center">
+                                                <div class="badge bg-info p-3">
+                                                    <i class="bi bi-play"></i><br>
+                                                    Playwright
+                                                </div>
+                                            </div>
+                                            <i class="bi bi-arrow-right text-muted"></i>
+                                            <div class="text-center">
+                                                <div class="badge bg-dark p-3">
+                                                    <i class="bi bi-browser-chrome"></i><br>
+                                                    Browser
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <pre><code class="language-python"># Example flow for scraper.click("button")
+1. User calls: scraper.click("button")
+2. GA-Scrap receives call and validates parameters
+3. Sandbox wrapper checks if sandbox_mode is enabled
+4. If sandbox_mode: try/catch wrapper applied
+5. Playwright method executed: page.click("button")
+6. Browser performs the click action
+7. Result/error flows back through the same chain
+8. User receives result or None (in sandbox mode)</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Interface Layers -->
+                    <section id="interfaces" class="mb-5">
+                        <h2><i class="bi bi-layers"></i> Interface Layers</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <h5>High-Level Interface</h5>
+                                <pre><code class="language-python"># Simple, intuitive methods
+scraper.goto("https://example.com")
+scraper.click("button")
+text = scraper.get_text("h1")
+scraper.screenshot("page.png")</code></pre>
+                                <p class="text-muted">Perfect for beginners and common tasks</p>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Direct Playwright Access</h5>
+                                <pre><code class="language-python"># Full Playwright power
+page = scraper.get_playwright_page()
+await page.evaluate("console.log('test')")
+context = scraper.get_playwright_context()
+await context.set_geolocation({...})</code></pre>
+                                <p class="text-muted">For advanced users and specific features</p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 mt-2">
+                            <div class="col-lg-6">
+                                <h5>Safe Method Execution</h5>
+                                <pre><code class="language-python"># Protected execution
+title = scraper.execute_playwright_method(
+    'page', 'title'
+)
+cookies = scraper.execute_playwright_method(
+    'context', 'cookies'
+)</code></pre>
+                                <p class="text-muted">Sandbox protection for any Playwright method</p>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Method Chaining</h5>
+                                <pre><code class="language-python"># Fluent interface
+result = (scraper
+          .goto("https://example.com")
+          .wait_for_selector(".content")
+          .get_text("h1"))</code></pre>
+                                <p class="text-muted">Readable, chainable operations</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Error Handling -->
+                    <section id="error-handling" class="mb-5">
+                        <h2><i class="bi bi-exclamation-triangle"></i> Error Handling Architecture</h2>
+
+                        <h4>Multi-Layer Error Protection</h4>
+                        <pre><code class="language-python">class ErrorHandlingStrategy:
+    """Multi-layer error handling approach"""
+    
+    def execute_with_protection(self, method, *args, **kwargs):
+        """Execute method with multiple protection layers"""
+        
+        # Layer 1: Parameter validation
+        if not self._validate_parameters(args, kwargs):
+            return self._handle_validation_error()
+        
+        # Layer 2: Sandbox mode check
+        if self.sandbox_mode:
+            try:
+                return self._execute_safely(method, *args, **kwargs)
+            except Exception as e:
+                return self._handle_sandbox_error(e, method.__name__)
+        
+        # Layer 3: Direct execution (production mode)
+        return method(*args, **kwargs)
+    
+    def _handle_sandbox_error(self, error, method_name):
+        """Handle errors in sandbox mode"""
+        self.logger.warning(f"❌ Error in {method_name}: {error}")
+        self.logger.info("🏖️ Sandbox mode: Continuing despite error")
+        
+        # Store error for debugging
+        self.error_history.append({
+            "method": method_name,
+            "error": str(error),
+            "timestamp": datetime.now()
+        })
+        
+        return None  # Safe return value</code></pre>
+                    </section>
+
+                    <!-- Performance -->
+                    <section id="performance" class="mb-5">
+                        <h2><i class="bi bi-speedometer"></i> Performance Considerations</h2>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5>Optimization Strategies</h5>
+                                <ul>
+                                    <li><strong>Lazy Loading:</strong> Browser starts only when needed</li>
+                                    <li><strong>Connection Reuse:</strong> Single browser instance for multiple operations</li>
+                                    <li><strong>Context Pooling:</strong> Efficient context management</li>
+                                    <li><strong>Memory Management:</strong> Automatic cleanup of resources</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Performance Monitoring</h5>
+                                <pre><code class="language-python">class PerformanceMonitor:
+    def __init__(self):
+        self.metrics = {
+            "method_calls": 0,
+            "errors": 0,
+            "execution_time": 0,
+            "memory_usage": 0
+        }
+    
+    def track_method(self, method_name, execution_time):
+        self.metrics["method_calls"] += 1
+        self.metrics["execution_time"] += execution_time
+        
+    def get_stats(self):
+        return {
+            "avg_execution_time": self.metrics["execution_time"] / self.metrics["method_calls"],
+            "error_rate": self.metrics["errors"] / self.metrics["method_calls"],
+            "total_calls": self.metrics["method_calls"]
+        }</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Extensibility -->
+                    <section id="extensibility" class="mb-5">
+                        <h2><i class="bi bi-puzzle"></i> Extensibility</h2>
+
+                        <h4>Plugin Architecture</h4>
+                        <pre><code class="language-python">class GAScrapPlugin:
+    """Base class for GA-Scrap plugins"""
+    
+    def __init__(self, scraper):
+        self.scraper = scraper
+        
+    def before_method(self, method_name, args, kwargs):
+        """Called before any method execution"""
+        pass
+        
+    def after_method(self, method_name, result, args, kwargs):
+        """Called after method execution"""
+        pass
+        
+    def on_error(self, error, method_name, args, kwargs):
+        """Called when an error occurs"""
+        pass
+
+# Example plugin
+class LoggingPlugin(GAScrapPlugin):
+    def before_method(self, method_name, args, kwargs):
+        print(f"🔧 Executing: {method_name}")
+        
+    def after_method(self, method_name, result, args, kwargs):
+        print(f"✅ Completed: {method_name}")
+
+# Usage
+scraper = SyncGAScrap()
+scraper.add_plugin(LoggingPlugin(scraper))</code></pre>
+                    </section>
+
+                    <!-- Comparison -->
+                    <section id="comparison" class="mb-5">
+                        <h2><i class="bi bi-bar-chart"></i> GA-Scrap vs Other Tools</h2>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>GA-Scrap</th>
+                                        <th>Raw Playwright</th>
+                                        <th>Selenium</th>
+                                        <th>BeautifulSoup</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Learning Curve</strong></td>
+                                        <td><span class="badge bg-success">Easy</span></td>
+                                        <td><span class="badge bg-warning">Moderate</span></td>
+                                        <td><span class="badge bg-warning">Moderate</span></td>
+                                        <td><span class="badge bg-success">Easy</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Error Handling</strong></td>
+                                        <td><span class="badge bg-success">Excellent</span></td>
+                                        <td><span class="badge bg-danger">Manual</span></td>
+                                        <td><span class="badge bg-danger">Manual</span></td>
+                                        <td><span class="badge bg-warning">Basic</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Browser Control</strong></td>
+                                        <td><span class="badge bg-success">Full</span></td>
+                                        <td><span class="badge bg-success">Full</span></td>
+                                        <td><span class="badge bg-success">Full</span></td>
+                                        <td><span class="badge bg-danger">None</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Performance</strong></td>
+                                        <td><span class="badge bg-success">Fast</span></td>
+                                        <td><span class="badge bg-success">Fast</span></td>
+                                        <td><span class="badge bg-warning">Slower</span></td>
+                                        <td><span class="badge bg-success">Fast</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Development Speed</strong></td>
+                                        <td><span class="badge bg-success">Very Fast</span></td>
+                                        <td><span class="badge bg-warning">Moderate</span></td>
+                                        <td><span class="badge bg-warning">Moderate</span></td>
+                                        <td><span class="badge bg-success">Fast</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Hot Reload</strong></td>
+                                        <td><span class="badge bg-success">Built-in</span></td>
+                                        <td><span class="badge bg-danger">None</span></td>
+                                        <td><span class="badge bg-danger">None</span></td>
+                                        <td><span class="badge bg-danger">None</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sandbox Mode</strong></td>
+                                        <td><span class="badge bg-success">Built-in</span></td>
+                                        <td><span class="badge bg-danger">None</span></td>
+                                        <td><span class="badge bg-danger">None</span></td>
+                                        <td><span class="badge bg-danger">None</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Technical Details -->
+                    <section id="class-hierarchy" class="mb-5">
+                        <h2><i class="bi bi-diagram-2"></i> Class Hierarchy</h2>
+
+                        <pre><code class="language-python">GAScrapBase
+├── SyncGAScrap (Synchronous Interface)
+│   ├── ErrorHandler
+│   ├── MethodWrapper
+│   └── PlaywrightManager
+├── GAScrap (Asynchronous Interface)
+│   ├── AsyncErrorHandler
+│   ├── AsyncMethodWrapper
+│   └── AsyncPlaywrightManager
+└── HotReloadScraper
+    ├── FileWatcher
+    ├── ProcessManager
+    └── ConfigManager</code></pre>
+                    </section>
+
+                    <!-- Call to Action -->
+                    <div class="text-center my-5 py-5 bg-light rounded">
+                        <h3 class="text-primary">🏗️ Robust Architecture for Reliable Scraping!</h3>
+                        <p class="lead">Built with best practices, error resilience, and developer experience in mind.</p>
+                        <a href="contributing.html" class="btn btn-primary btn-lg me-3">
+                            <i class="bi bi-code-slash"></i> Contribute
+                        </a>
+                        <a href="api-reference.html" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-book"></i> API Reference
+                        </a>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="d-flex justify-content-between mt-5 pt-4 border-top">
+                        <a href="hot-reload.html" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Hot Reload
+                        </a>
+                        <a href="api-reference.html" class="btn btn-primary">
+                            API Reference <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

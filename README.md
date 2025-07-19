@@ -1,57 +1,174 @@
-# GA-Scrap 🚀
+# 🕷️ GA-Scrap
 
-A powerful Playwright-based scraper helper that makes web scraping easy and enjoyable!
+<div align="center">
 
-## ✨ Features
+**The Ultimate Web Scraping Library**  
+*Playwright-powered • Developer-friendly • Production-ready*
 
-### 🚀 Core Features
-- **🖥️ Always runs browser by default** - See what you're scraping in real-time
-- **📱 Create multiple scraper apps** - Organize your scrapers with templates
-- **🔥 Hot reload support** - Edit your code and see changes instantly
-- **🎯 Easy configuration** - YAML/JSON configuration files
-- **🛠️ Built-in utilities** - Data export, logging, error handling
-- **🎨 Beautiful CLI** - Colorful command-line interface
-- **📋 Multiple templates** - Basic, Advanced, E-commerce, Social media
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![Playwright](https://img.shields.io/badge/Playwright-Latest-green.svg)](https://playwright.dev)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)]()
 
-### 🌟 EVERY Playwright Feature Included
-- **🌐 Complete Network Control** - Request/response interception, HAR recording, network throttling
-- **📱 Full Device Emulation** - iPhone, Android, tablets with touch simulation
-- **🎥 Video Recording** - Record your scraping sessions automatically
-- **📊 Performance Monitoring** - Track Core Web Vitals, coverage analysis
-- **♿ Accessibility Testing** - Built-in accessibility checks and ARIA support
-- **🔧 Advanced Interactions** - Drag & drop, smooth mouse movement, keyboard shortcuts
-- **📁 File Operations** - Upload/download files, PDF generation
-- **💾 Storage Management** - Cookies, localStorage, sessionStorage, IndexedDB
-- **🖼️ Frame Support** - Handle iframes and nested frames
-- **⏳ Smart Waiting** - Network idle, custom functions, element visibility
-- **🔐 Security Features** - Permission management, geolocation, secure contexts
-- **🌍 Internationalization** - Locale, timezone, currency formatting
-- **📋 Clipboard Operations** - Copy/paste functionality
-- **🔄 Event Monitoring** - Comprehensive event capture and handling
-- **🎨 Visual Features** - CSS injection, style computation, theming
-- **👷 Worker Support** - Web Workers, Service Workers, background pages
-- **🔌 WebSocket Support** - Real-time communication monitoring
-- **🔍 Advanced Locators** - Text, role, label, placeholder-based selection
-- **📜 Infinite Scroll** - Automatic content loading detection
-- **🛠️ Developer Tools** - Console capture, error tracking, debugging
-- **🏖️ Sandbox Mode** - Errors don't shutdown browser, perfect for development
+</div>
 
-### 📈 200+ Playwright Features
-See [PLAYWRIGHT_FEATURES.md](docs/PLAYWRIGHT_FEATURES.md) for the complete list of all implemented features.
+---
 
-### 🎯 Two Interfaces Available
+## ✨ What Makes GA-Scrap Special?
 
-#### 1. Synchronous Interface (Recommended for beginners)
+<table>
+<tr>
+<td width="50%">
+
+### 🎯 **Simple & Powerful**
 ```python
 from ga_scrap import SyncGAScrap
 
 with SyncGAScrap() as scraper:
     scraper.goto("https://example.com")
     title = scraper.get_text("h1")
-    print(f"Title: {title}")
+    scraper.screenshot("page.png")
 ```
 
-#### 2. Async Interface (For advanced users)
+</td>
+<td width="50%">
+
+### 🏖️ **Error-Resilient Development**
+```python
+# Sandbox mode - errors don't crash!
+with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.click("#might-not-exist")  # Logs error, continues
+    scraper.screenshot("still_works.png")  # Still works!
+```
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🚀 Quick Start
+
+### Installation
+```bash
+git clone https://github.com/GrandpaAcademy/GA-Scrap.git
+cd GA-Scrap
+pip install -r requirements.txt
+playwright install
+```
+
+### Your First Scraper
+```python
+from ga_scrap import SyncGAScrap
+
+with SyncGAScrap() as scraper:
+    scraper.goto("https://quotes.toscrape.com")
+    quotes = scraper.get_all_text(".quote .text")
+    print(f"Found {len(quotes)} quotes!")
+```
+
+**That's it!** No `async`/`await`, no complex setup - just simple Python code.
+
+### 📚 Learn More
+**Comprehensive documentation and examples:**
+
+<div align="center">
+
+**[📖 Full Documentation](docs/web/index.html)** • **[🚀 Real-World Examples](docs/web/examples.html)** • **[🔧 API Reference](docs/web/api-reference.html)**
+
+</div>
+
+---
+
+## 🎯 Core Features
+
+<div align="center">
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| 🔄 **Dual Interface** | Both sync and async APIs | ✅ |
+| 🏖️ **Sandbox Mode** | Error-resilient development | ✅ |
+| 🎭 **Full Playwright** | Complete A-Z feature access | ✅ |
+| 📱 **Device Emulation** | Mobile, tablet, desktop | ✅ |
+| 🌐 **Network Control** | Request/response interception | ✅ |
+| 📸 **Media Capture** | Screenshots, PDFs, videos | ✅ |
+| 🔧 **Developer Tools** | Hot reload, debugging | ✅ |
+| 🎨 **Beautiful CLI** | Colorful command interface | ✅ |
+
+</div>
+
+---
+
+## 📚 Complete Web Documentation
+
+<div align="center">
+
+🌐 **[Visit Our Interactive Documentation Site](docs/web/index.html)** 🌐
+
+*Beautiful • Interactive • Complete*
+
+[![Documentation](https://img.shields.io/badge/Docs-Interactive-brightgreen.svg)](docs/web/index.html)
+[![Examples](https://img.shields.io/badge/Examples-Real%20World-orange.svg)](docs/web/examples.html)
+[![API Reference](https://img.shields.io/badge/API-Complete-blue.svg)](docs/web/api-reference.html)
+
+</div>
+
+### 🎯 **Choose Your Learning Path**
+
+<table>
+<tr>
+<td width="33%" align="center">
+
+### 👶 **Beginner**
+**New to web scraping?**
+
+📖 [**Getting Started**](docs/web/getting-started.html)
+🎯 [**Basic Examples**](docs/web/examples.html)
+🔧 [**Installation Guide**](docs/web/installation.html)
+
+</td>
+<td width="33%" align="center">
+
+### 🧪 **Developer**
+**Building scrapers?**
+
+🏖️ [**Sandbox Mode**](docs/web/sandbox-mode.html)
+🔄 [**Sync Interface**](docs/web/sync-interface.html)
+⚡ [**Hot Reload**](docs/web/hot-reload.html)
+
+</td>
+<td width="33%" align="center">
+
+### 🚀 **Advanced**
+**Need full control?**
+
+🎭 [**Playwright API**](docs/web/playwright-api.html)
+🔧 [**Architecture**](docs/web/architecture.html)
+🤝 [**Contributing**](docs/web/contributing.html)
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🎨 Interface Options
+
+### 🔄 Synchronous (Recommended)
+*Perfect for beginners and most use cases*
+
+```python
+from ga_scrap import SyncGAScrap
+
+with SyncGAScrap() as scraper:
+    scraper.goto("https://example.com")
+    data = scraper.get_text(".content")
+    scraper.screenshot("result.png")
+```
+
+### ⚡ Asynchronous
+*For advanced users and high-performance scenarios*
+
 ```python
 import asyncio
 from ga_scrap import GAScrap
@@ -59,421 +176,172 @@ from ga_scrap import GAScrap
 async def scrape():
     async with GAScrap() as scraper:
         await scraper.goto("https://example.com")
-        title = await scraper.get_text("h1")
-        return title
+        data = await scraper.get_text(".content")
+        await scraper.screenshot("result.png")
 
-result = asyncio.run(scrape())
+asyncio.run(scrape())
 ```
 
-## 📚 Documentation
+---
 
-**📖 [Complete Documentation Index](DOCS_INDEX.md)** - Find the right guide for your needs
+## 🏖️ Sandbox Mode
 
-### 🎯 Quick Links
-- **[Synchronous Interface Guide](docs/SYNC_USAGE.md)** - Easy, no-async syntax
-- **[Sandbox Mode Guide](docs/SANDBOX_MODE.md)** - Development-friendly error handling
-- **[All Playwright Features](docs/PLAYWRIGHT_FEATURES.md)** - Complete feature list
-- **[Examples Directory](examples/)** - Working code examples
-- **[Tests Directory](tests/)** - Validation and demos
-
-## 🚀 Quick Start
-
-### 🎯 Super Simple Syntax (No async/await needed!)
+**The game-changer for development!**
 
 ```python
-from ga_scrap import SyncGAScrap
+# Traditional scraping - one error stops everything
+scraper.click("#button")  # ❌ Element not found → CRASH!
 
-# Create scraper - no async needed!
-with SyncGAScrap() as scraper:
-    scraper.goto("https://example.com")
-    title = scraper.get_text("h1")
-    scraper.screenshot("page.png")
-    print(f"Title: {title}")
-```
-
-**That's it!** No `async`/`await`, no `asyncio.run()` - just simple, clean Python code!
-
-### 🏖️ Sandbox Mode for Development
-
-```python
-# Errors don't crash the browser - perfect for development!
+# GA-Scrap sandbox mode - errors are handled gracefully
 with SyncGAScrap(sandbox_mode=True) as scraper:
-    scraper.goto("https://example.com")
-    scraper.click("#might-not-exist")  # Error logged, continues
-    scraper.screenshot("still_works.png")  # Still works!
-    # Browser stays active for debugging
+    scraper.click("#button")  # ❌ Error logged, execution continues
+    scraper.screenshot("debug.png")  # ✅ Still works perfectly!
 ```
 
-### 🔗 Method Chaining Support
+**Benefits:**
+- 🛡️ **Never crashes** - Browser stays active during errors
+- 📝 **Detailed logging** - Know exactly what went wrong
+- 🔄 **Instant recovery** - Fix and continue immediately
+- 🧪 **Perfect for testing** - Try different approaches safely
+
+---
+
+## 🎭 Complete Playwright Access
+
+**Every Playwright feature from A-Z is available:**
+
+```python
+# High-level GA-Scrap methods
+scraper.goto("https://example.com")
+scraper.screenshot("page.png")
+
+# Direct Playwright access when needed
+page = scraper.get_playwright_page()
+await page.evaluate("document.body.style.background = 'red'")
+
+# Safe method execution with sandbox protection
+result = scraper.execute_playwright_method('page', 'title')
+```
+
+<details>
+<summary><strong>🔤 View A-Z Feature List</strong></summary>
+
+- **A**ccessibility testing
+- **B**rowser management  
+- **C**ookies & context
+- **D**ownloads handling
+- **E**valuate JavaScript
+- **F**orm interactions
+- **G**eolocation control
+- **H**over & interactions
+- **I**njection (CSS/JS)
+- **J**avaScript execution
+- **K**eyboard simulation
+- **L**ocators & selectors
+- **M**ouse operations
+- **N**etwork monitoring
+- **O**ffline mode
+- **P**DF generation
+- **Q**uery selectors
+- **R**ecording (video/HAR)
+- **S**creenshots
+- **T**ouch simulation
+- **U**pload files
+- **V**iewport control
+- **W**aiting strategies
+- **X**Path selectors
+- **Y**ielding control
+- **Z**one/timezone settings
+
+</details>
+
+---
+
+## 🛠️ CLI Tools
+
+```bash
+# Quick scraping
+ga-scrap quick "https://example.com" "h1"
+
+# Create new project
+ga-scrap new my-scraper
+
+# Development with hot reload
+ga-scrap dev
+
+# Run with auto-restart
+ga-scrap run script.py
+```
+
+---
+
+## 🎯 Examples
+
+<details>
+<summary><strong>📰 News Scraper</strong></summary>
 
 ```python
 with SyncGAScrap() as scraper:
-    (scraper
-     .goto("https://example.com")
-     .scroll_to_bottom()
-     .screenshot("bottom.png")
-     .input("input[name='q']", "search term")
-     .click("button[type='submit']")
-     .screenshot("results.png"))
+    scraper.goto("https://news.ycombinator.com")
+    
+    titles = scraper.get_all_text(".titleline > a")
+    scores = scraper.get_all_text(".score")
+    
+    for title, score in zip(titles, scores):
+        print(f"{score}: {title}")
 ```
 
-### Installation
+</details>
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/GrandpaAcademy/GA-Scrap.git
-   cd GA-Scrap
-   ```
-
-2. **Create and activate virtual environment:**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   playwright install
-   ```
-
-4. **Install GA-Scrap:**
-   ```bash
-   pip install -e .
-   ```
-
-### 🚀 SUPER QUICK - One-liner scraping!
-
-```bash
-# Get page title instantly
-ga-scrap quick "https://example.com" "h1"
-
-# Get all quotes from a page
-ga-scrap quick "https://quotes.toscrape.com" ".quote .text" --all
-```
-
-### Create Your First Scraper
-
-```bash
-# Create a new scraper app
-ga-scrap new my-first-scraper
-
-# Navigate to the app directory
-cd ga_scrap_apps/my-first-scraper
-
-# Start development with hot reload
-ga-scrap dev
-```
-
-That's it! Your browser will open and you can start scraping. Edit `main.py` to customize your scraper.
-
-## 📖 Usage
-
-### CLI Commands
-
-```bash
-# 🚀 SUPER QUICK SCRAPING
-ga-scrap quick "URL" "selector"              # Get single element
-ga-scrap quick "URL" "selector" --all        # Get all matching elements
-ga-scrap quick "URL" "selector" --headless   # Run without visible browser
-
-# Create a new app
-ga-scrap new <app_name> [--template basic|advanced|ecommerce|social]
-
-# List all apps
-ga-scrap list
-
-# Start development server with hot reload
-ga-scrap dev [--app-dir <directory>]
-
-# Run any script with hot reload
-ga-scrap run <script.py>
-
-# Show app information
-ga-scrap info <app_name>
-
-# Delete an app
-ga-scrap delete <app_name>
-
-# Show available templates
-ga-scrap templates
-
-# Show usage examples
-ga-scrap examples
-
-# Check installation
-ga-scrap doctor
-```
-
-### Super Simple Usage
+<details>
+<summary><strong>🛒 E-commerce Scraper</strong></summary>
 
 ```python
-import asyncio
-from ga_scrap import SimpleScraper
-
-async def main():
-    async with SimpleScraper() as scraper:
-        # Navigate to website
-        await scraper.go("https://quotes.toscrape.com")
-
-        # Get page title (super easy!)
-        title = await scraper.get("title")
-        scraper.log(f"Title: {title}")
-
-        # Get all quotes (even easier!)
-        quotes = await scraper.get_all(".quote .text")
-        scraper.log(f"Found {len(quotes)} quotes")
-
-        # Take a screenshot
-        await scraper.screenshot()
-
-asyncio.run(main())
+with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example-shop.com")
+    
+    # Handle potential popups gracefully
+    scraper.click(".popup-close")  # Won't crash if not found
+    
+    products = scraper.get_all_text(".product-name")
+    prices = scraper.get_all_text(".product-price")
+    
+    for product, price in zip(products, prices):
+        print(f"{product}: {price}")
 ```
 
-### One-liner Functions
+</details>
+
+<details>
+<summary><strong>📱 Mobile Scraping</strong></summary>
 
 ```python
-from ga_scrap import scrape, scrape_all, scrape_data
-
-# Get single element
-title = await scrape("https://example.com", "h1")
-
-# Get multiple elements
-quotes = await scrape_all("https://quotes.toscrape.com", ".quote .text")
-
-# Get structured data
-data = await scrape_data("https://quotes.toscrape.com", {
-    "title": "title",
-    "quotes": ".quote .text[]",  # [] means get all
-    "authors": ".quote .author[]"
-})
+with SyncGAScrap(device="iPhone 12") as scraper:
+    scraper.goto("https://mobile-site.com")
+    scraper.simulate_touch(100, 200)
+    scraper.screenshot("mobile-view.png")
 ```
 
-## 🎯 Templates
+</details>
 
-### Basic Template
-- Simple scraper setup
-- Visible browser by default
-- Basic navigation and extraction
-- Configuration file
-
-### Advanced Template
-- All basic features
-- Data export (JSON/CSV)
-- Multiple page handling
-- Advanced utilities
-
-### E-commerce Template
-- Product detail extraction
-- Category page scraping
-- Price monitoring
-- Image collection
-
-### Social Media Template
-- Post extraction
-- Profile scraping
-- Engagement metrics
-- Media collection
-
-## 🔥 Hot Reload
-
-GA-Scrap includes powerful hot reload functionality:
-
-```bash
-# Start any script with hot reload
-ga-scrap run my_script.py
-
-# Or use the development server
-ga-scrap dev
-```
-
-When you edit your Python files, the scraper automatically restarts while keeping your browser session active.
-
-## ⚙️ Configuration
-
-Create a `config.yaml` file in your app directory:
-
-```yaml
-app:
-  name: "my-scraper"
-  version: "1.0.0"
-
-browser:
-  headless: false
-  browser_type: "chromium"
-  viewport:
-    width: 1920
-    height: 1080
-  timeout: 30000
-
-scraping:
-  delay_between_requests: 1000
-  max_retries: 3
-
-targets:
-  - name: "example"
-    url: "https://example.com"
-    selectors:
-      title: "h1"
-      links: "a"
-```
-
-## 📁 Project Structure
-
-```
-ga-scrap/
-├── ga_scrap/
-│   ├── __init__.py
-│   ├── core.py          # Main GAScrap class
-│   ├── app_manager.py   # App creation and management
-│   ├── hot_reload.py    # Hot reload functionality
-│   └── cli.py           # Command-line interface
-├── examples/
-│   ├── basic_example.py
-│   ├── advanced_example.py
-│   └── hot_reload_example.py
-├── ga_scrap_apps/       # Your scraper apps go here
-├── requirements.txt
-├── setup.py
-└── README.md
-```
-
-## 🎨 Examples
-
-### Super Simple Scraping
-```python
-from ga_scrap import SimpleScraper
-
-async def scrape_quotes():
-    async with SimpleScraper() as scraper:
-        await scraper.go("https://quotes.toscrape.com/")
-
-        # Get all quotes in one line!
-        quotes = await scraper.get_all(".quote .text")
-        authors = await scraper.get_all(".quote .author")
-
-        for quote, author in zip(quotes, authors):
-            print(f'"{quote}" - {author}')
-```
-
-### One-liner Examples
-```python
-from ga_scrap import scrape, scrape_all, scrape_data
-
-# Get page title
-title = await scrape("https://example.com", "h1")
-
-# Get all quotes
-quotes = await scrape_all("https://quotes.toscrape.com", ".quote .text")
-
-# Get structured data
-data = await scrape_data("https://quotes.toscrape.com", {
-    "title": "title",
-    "quotes": ".quote .text[]",
-    "authors": ".quote .author[]"
-})
-```
-
-### CLI One-liners
-```bash
-# Get page title instantly
-ga-scrap quick "https://example.com" "h1"
-
-# Get all quotes
-ga-scrap quick "https://quotes.toscrape.com" ".quote .text" --all
-
-# Get product names
-ga-scrap quick "https://example-shop.com" ".product-name" --all
-```
-
-## 🛠️ Advanced Features
-
-### Multiple Pages
-```python
-# Create additional pages
-page2 = await scraper.new_page()
-await page2.goto("https://another-site.com")
-
-# Work with multiple pages simultaneously
-await asyncio.gather(
-    scraper.goto("https://site1.com"),
-    page2.goto("https://site2.com")
-)
-```
-
-### Data Export
-```python
-from ga_scrap.utils import DataExporter
-
-exporter = DataExporter()
-exporter.to_json(scraped_data, "results")
-exporter.to_csv(scraped_data, "results")
-```
-
-### Custom Configuration
-```python
-scraper = GAScrap(
-    headless=False,
-    browser_type="firefox",
-    viewport={"width": 1366, "height": 768},
-    user_agent="Custom User Agent",
-    timeout=60000,
-    slow_mo=1000  # Slow down for debugging
-)
-```
+---
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+We love contributions! Check out our [Contributing Guide](docs/web/contributing.html) to get started.
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+MIT License - see [LICENSE](LICENSE) for details.
 
-## 📚 Documentation
+---
 
-- **[Quick Start Guide](QUICK_START.md)** - Get started in minutes
-- **[Examples Directory](examples/)** - Sample scraper applications
-- **CLI Help**: Run `ga-scrap examples` for usage examples
-- **GitHub Issues**: [Report bugs or request features](https://github.com/GrandpaAcademy/GA-Scrap/issues)
+<div align="center">
 
-## 🆘 Support
+**Made with ❤️ by [Grandpa Academy](https://github.com/GrandpaAcademy)**
 
-- Check `ga-scrap doctor` for installation issues
-- Use `ga-scrap examples` for usage examples
-- Enable debug mode: `SimpleScraper(debug=True)`
-- Check the [examples directory](examples/) for sample code
-- Read the [Quick Start Guide](QUICK_START.md)
+[⭐ Star us on GitHub](https://github.com/GrandpaAcademy/GA-Scrap) • [📖 Read the Docs](docs/web/index.html) • [🚀 See Examples](docs/web/examples.html) • [🐛 Report Issues](https://github.com/GrandpaAcademy/GA-Scrap/issues)
 
-## 🤝 Contributing
-
-1. Fork the repository: https://github.com/GrandpaAcademy/GA-Scrap
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and add tests
-4. Commit your changes: `git commit -m 'Add amazing feature'`
-5. Push to the branch: `git push origin feature/amazing-feature`
-6. Submit a pull request
-
-## 🎉 Why GA-Scrap?
-
-- **🚀 Super Easy**: One-liner functions and CLI commands
-- **👀 Beginner Friendly**: See your scraper in action with visible browser
-- **⚡ Developer Friendly**: Hot reload for faster development
-- **🔧 Production Ready**: Easy to switch to headless mode
-- **📱 Organized**: Template system keeps your scrapers organized
-- **💪 Powerful**: Built on Playwright for modern web scraping
-- **🎯 Instant Results**: Get data with single commands
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🏆 Credits
-
-Created by [Grandpa Academy](https://github.com/GrandpaAcademy) with ❤️
-
-Happy Scraping! 🕷️✨
+</div>

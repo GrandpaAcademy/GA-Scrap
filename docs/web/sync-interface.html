@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synchronous Interface - GA-Scrap Documentation</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../../index.html">
+                <i class="bi bi-spider text-warning"></i> GA-Scrap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="getting-started.html">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="sync-interface.html">Sync Interface</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="playground.html">Playground</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="doc-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 doc-sidebar">
+                    <div class="doc-nav">
+                        <h6 class="text-muted text-uppercase fw-bold mb-3">Sync Interface</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link active" href="#overview">Why Synchronous?</a>
+                            <a class="nav-link" href="#quick-start">Quick Start</a>
+                            <a class="nav-link" href="#api-reference">API Reference</a>
+                            <a class="nav-link" href="#method-chaining">Method Chaining</a>
+                            <a class="nav-link" href="#playwright-access">Playwright Access</a>
+                            <a class="nav-link" href="#advanced-examples">Advanced Examples</a>
+                            <a class="nav-link" href="#configuration">Configuration</a>
+                            <a class="nav-link" href="#best-practices">Best Practices</a>
+                        </nav>
+                        
+                        <h6 class="text-muted text-uppercase fw-bold mb-3 mt-4">API Categories</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link" href="#navigation">Navigation</a>
+                            <a class="nav-link" href="#interaction">Element Interaction</a>
+                            <a class="nav-link" href="#data-extraction">Data Extraction</a>
+                            <a class="nav-link" href="#media-files">Media & Files</a>
+                            <a class="nav-link" href="#waiting">Waiting & Timing</a>
+                            <a class="nav-link" href="#page-manipulation">Page Manipulation</a>
+                            <a class="nav-link" href="#device-mobile">Device & Mobile</a>
+                            <a class="nav-link" href="#network-cookies">Network & Cookies</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="col-lg-9 doc-content">
+                    <div class="mb-4">
+                        <h1 class="display-4 fw-bold">
+                            <i class="bi bi-arrow-repeat text-primary"></i> Synchronous Interface
+                        </h1>
+                        <p class="lead">No More async/await - Just Simple Python!</p>
+                        <p class="text-muted">Web scraping as easy as regular Python code</p>
+                    </div>
+
+                    <!-- Overview -->
+                    <section id="overview" class="mb-5">
+                        <h2><i class="bi bi-question-circle"></i> Why Synchronous Interface?</h2>
+                        <p>The synchronous interface eliminates the complexity of <code>async</code>/<code>await</code> syntax, making web scraping accessible to everyone:</p>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card border-danger h-100">
+                                    <div class="card-header bg-danger text-white">
+                                        <h5 class="mb-0"><i class="bi bi-emoji-frown"></i> Traditional Async</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-python">import asyncio
+from playwright.async_api import async_playwright
+
+async def scrape():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        context = await browser.new_context()
+        page = await context.new_page()
+        await page.goto("https://example.com")
+        title = await page.text_content("h1")
+        await browser.close()
+        return title
+
+result = asyncio.run(scrape())</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-emoji-smile"></i> GA-Scrap Sync</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+
+with SyncGAScrap() as scraper:
+    scraper.goto("https://example.com")
+    title = scraper.get_text("h1")</code></pre>
+                                        
+                                        <div class="mt-3">
+                                            <span class="badge bg-success">90% Less Code</span>
+                                            <span class="badge bg-info">No async/await</span>
+                                            <span class="badge bg-warning text-dark">Beginner Friendly</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Start -->
+                    <section id="quick-start" class="mb-5">
+                        <h2><i class="bi bi-play-circle"></i> Quick Start</h2>
+
+                        <h4>Basic Usage</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h6>Method 1: Context Manager (Recommended)</h6>
+                                <pre><code class="language-python">from ga_scrap import SyncGAScrap
+
+with SyncGAScrap() as scraper:
+    scraper.goto("https://example.com")
+    title = scraper.get_text("h1")
+    print(f"Title: {title}")</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h6>Method 2: Manual Start/Stop</h6>
+                                <pre><code class="language-python">scraper = SyncGAScrap()
+scraper.start()
+scraper.goto("https://example.com")
+title = scraper.get_text("h1")
+scraper.stop()</code></pre>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Configuration</h4>
+                        <pre><code class="language-python">scraper = SyncGAScrap(
+    headless=False,        # Show browser
+    sandbox_mode=True,     # Error-resilient mode
+    timeout=30000,         # 30 second timeout
+    browser_type="chromium", # Browser choice
+    debug=True            # Detailed logging
+)</code></pre>
+                    </section>
+
+                    <!-- API Reference -->
+                    <section id="api-reference" class="mb-5">
+                        <h2><i class="bi bi-book"></i> Complete API Reference</h2>
+
+                        <!-- Navigation -->
+                        <div id="navigation" class="mb-4">
+                            <h4><i class="bi bi-compass"></i> Navigation</h4>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Method</th>
+                                            <th>Description</th>
+                                            <th>Example</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>goto(url)</code></td>
+                                            <td>Navigate to URL</td>
+                                            <td><code>scraper.goto("https://example.com")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>go_back()</code></td>
+                                            <td>Go back in history</td>
+                                            <td><code>scraper.go_back()</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>go_forward()</code></td>
+                                            <td>Go forward in history</td>
+                                            <td><code>scraper.go_forward()</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>reload()</code></td>
+                                            <td>Reload current page</td>
+                                            <td><code>scraper.reload()</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>new_page()</code></td>
+                                            <td>Create new tab</td>
+                                            <td><code>page2 = scraper.new_page()</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Element Interaction -->
+                        <div id="interaction" class="mb-4">
+                            <h4><i class="bi bi-cursor"></i> Element Interaction</h4>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Method</th>
+                                            <th>Description</th>
+                                            <th>Example</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>click(selector)</code></td>
+                                            <td>Click element</td>
+                                            <td><code>scraper.click("button")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>click_text(text)</code></td>
+                                            <td>Click by text content</td>
+                                            <td><code>scraper.click_text("Submit")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>double_click(selector)</code></td>
+                                            <td>Double click element</td>
+                                            <td><code>scraper.double_click(".item")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>right_click(selector)</code></td>
+                                            <td>Right click element</td>
+                                            <td><code>scraper.right_click(".menu")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>input(selector, text)</code></td>
+                                            <td>Type text in input</td>
+                                            <td><code>scraper.input("#username", "john")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>clear_input(selector)</code></td>
+                                            <td>Clear input field</td>
+                                            <td><code>scraper.clear_input("#password")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>select_option(selector, value)</code></td>
+                                            <td>Select dropdown option</td>
+                                            <td><code>scraper.select_option("select", "option1")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>hover(selector)</code></td>
+                                            <td>Hover over element</td>
+                                            <td><code>scraper.hover(".dropdown")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>focus(selector)</code></td>
+                                            <td>Focus on element</td>
+                                            <td><code>scraper.focus("input[type='text']")</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Data Extraction -->
+                        <div id="data-extraction" class="mb-4">
+                            <h4><i class="bi bi-download"></i> Data Extraction</h4>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Method</th>
+                                            <th>Description</th>
+                                            <th>Example</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>get_text(selector)</code></td>
+                                            <td>Get text content</td>
+                                            <td><code>title = scraper.get_text("h1")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>get_all_text(selector)</code></td>
+                                            <td>Get all matching texts</td>
+                                            <td><code>texts = scraper.get_all_text(".item")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>get_attribute(selector, attr)</code></td>
+                                            <td>Get element attribute</td>
+                                            <td><code>href = scraper.get_attribute("a", "href")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>get_all_attributes(selector, attr)</code></td>
+                                            <td>Get all matching attributes</td>
+                                            <td><code>links = scraper.get_all_attributes("a", "href")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>get_html(selector)</code></td>
+                                            <td>Get outer HTML</td>
+                                            <td><code>html = scraper.get_html(".content")</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>get_inner_html(selector)</code></td>
+                                            <td>Get inner HTML</td>
+                                            <td><code>inner = scraper.get_inner_html(".container")</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Method Chaining -->
+                    <section id="method-chaining" class="mb-5">
+                        <h2><i class="bi bi-link"></i> Method Chaining</h2>
+                        <p>The synchronous interface supports method chaining for fluent, readable code:</p>
+
+                        <pre><code class="language-python">with SyncGAScrap() as scraper:
+    (scraper
+     .goto("https://example.com")
+     .input("input[name='q']", "search term")
+     .click("button[type='submit']")
+     .wait_for_selector(".results")
+     .scroll_to_bottom()
+     .screenshot("results.png"))</code></pre>
+
+                        <h4 class="mt-4">Complex Chaining Example</h4>
+                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    result = (scraper
+              .goto("https://quotes.toscrape.com")
+              .wait_for_selector(".quote")
+              .scroll_to_bottom()
+              .click(".next")  # Might fail, but continues in sandbox mode
+              .wait_for_selector(".quote")
+              .screenshot("quotes.png")
+              .get_all_text(".quote .text"))
+    
+    print(f"Found {len(result)} quotes")</code></pre>
+                    </section>
+
+                    <!-- Playwright Access -->
+                    <section id="playwright-access" class="mb-5">
+                        <h2><i class="bi bi-gear-wide-connected"></i> Full Playwright Access</h2>
+                        <p>When you need the full power of Playwright, access it directly:</p>
+
+                        <h4>Direct Object Access</h4>
+                        <pre><code class="language-python">with SyncGAScrap() as scraper:
+    scraper.goto("https://example.com")
+    
+    # Get direct Playwright objects
+    page = scraper.get_playwright_page()
+    context = scraper.get_playwright_context()
+    browser = scraper.get_playwright_browser()
+    
+    # Use any Playwright method
+    viewport = page.viewport_size
+    cookies = context.cookies()
+    version = browser.version</code></pre>
+
+                        <h4 class="mt-4">Safe Method Execution</h4>
+                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")
+    
+    # Execute any Playwright method safely
+    title = scraper.execute_playwright_method('page', 'title')
+    cookies = scraper.execute_playwright_method('context', 'cookies')
+    
+    # Helper methods for common operations
+    title = scraper.playwright_page_method('title')
+    cookies = scraper.playwright_context_method('cookies')</code></pre>
+                    </section>
+
+                    <!-- Advanced Examples -->
+                    <section id="advanced-examples" class="mb-5">
+                        <h2><i class="bi bi-cpu"></i> Advanced Examples</h2>
+
+                        <h4>Form Handling</h4>
+                        <pre><code class="language-python">with SyncGAScrap() as scraper:
+    scraper.goto("https://example.com/form")
+    
+    # Fill complex form
+    scraper.input("#username", "john_doe")
+    scraper.input("#password", "secret123")
+    scraper.select_option("#country", "US")
+    scraper.check("#terms")
+    scraper.upload_files("#avatar", ["profile.jpg"])
+    
+    # Submit and wait for response
+    scraper.click("#submit")
+    scraper.wait_for_url("**/success")
+    
+    message = scraper.get_text(".success-message")
+    print(f"Success: {message}")</code></pre>
+
+                        <h4 class="mt-4">Data Extraction Pipeline</h4>
+                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    base_url = "https://example.com"
+    all_data = []
+    
+    for page_num in range(1, 6):  # Pages 1-5
+        url = f"{base_url}/page/{page_num}"
+        scraper.goto(url)
+        
+        # Handle potential errors gracefully
+        scraper.click(".cookie-accept")  # Might not exist
+        scraper.wait_for_selector(".content", timeout=5000)
+        
+        # Extract data
+        items = scraper.get_all_text(".item-title")
+        prices = scraper.get_all_text(".item-price")
+        
+        page_data = list(zip(items, prices))
+        all_data.extend(page_data)
+        
+        print(f"Page {page_num}: {len(page_data)} items")
+    
+    print(f"Total items collected: {len(all_data)}")</code></pre>
+
+                        <h4 class="mt-4">Multi-tab Scraping</h4>
+                        <pre><code class="language-python">with SyncGAScrap() as scraper:
+    # Main page
+    scraper.goto("https://example.com/products")
+    product_links = scraper.get_all_attributes("a.product", "href")
+    
+    # Open details in new tabs
+    for i, link in enumerate(product_links[:5]):  # First 5 products
+        page = scraper.new_page()
+        scraper.goto(link, page=page)
+        
+        # Extract product details
+        title = scraper.get_text("h1", page=page)
+        price = scraper.get_text(".price", page=page)
+        
+        print(f"Product {i+1}: {title} - {price}")
+        
+        # Close tab
+        scraper.close_page(page)</code></pre>
+                    </section>
+
+                    <!-- Configuration -->
+                    <section id="configuration" class="mb-5">
+                        <h2><i class="bi bi-sliders"></i> Configuration Options</h2>
+
+                        <h4>Browser Settings</h4>
+                        <pre><code class="language-python">scraper = SyncGAScrap(
+    browser_type="firefox",           # chromium, firefox, webkit
+    headless=False,                   # Show/hide browser
+    slow_mo=1000,                     # Slow down for debugging
+    timeout=60000,                    # Global timeout
+    viewport={"width": 1920, "height": 1080},
+    user_agent="Custom User Agent",
+    locale="en-US",
+    timezone="America/New_York"
+)</code></pre>
+
+                        <h4 class="mt-4">Development Settings</h4>
+                        <pre><code class="language-python">scraper = SyncGAScrap(
+    sandbox_mode=True,                # Error-resilient mode
+    debug=True,                       # Detailed logging
+    record_video=True,                # Record sessions
+    record_har=True,                  # Record network traffic
+    downloads_path="./downloads"      # Download directory
+)</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="mb-5">
+                        <h2><i class="bi bi-star"></i> Best Practices</h2>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-check-circle"></i> Recommended Patterns</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-python"># Use context manager
+with SyncGAScrap(sandbox_mode=True) as scraper:
+    # Your scraping code here
+    pass
+
+# Enable sandbox mode for development
+scraper = SyncGAScrap(sandbox_mode=True, debug=True)
+
+# Use method chaining for readability
+result = (scraper
+          .goto(url)
+          .wait_for_selector(".content")
+          .get_text(".title"))
+
+# Handle errors gracefully
+with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.click(".optional-popup-close")  # Won't crash if missing
+    data = scraper.get_text(".main-content")  # Continues normally</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card border-warning h-100">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Things to Avoid</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-python"># Don't mix async/await with sync interface
+# ❌ Wrong
+await scraper.goto("https://example.com")  # Don't use await
+
+# ✅ Correct  
+scraper.goto("https://example.com")  # No await needed
+
+# Don't forget to handle optional elements
+# ❌ Risky
+scraper.click(".popup-close")  # Might crash if not found
+
+# ✅ Safe
+with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.click(".popup-close")  # Safe in sandbox mode</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Try in Playground -->
+                    <div class="text-center my-5 py-5 bg-light rounded">
+                        <h3 class="text-primary">🔄 Synchronous Interface: Web Scraping Made Simple!</h3>
+                        <p class="lead">No async/await complexity - just clean, readable Python code.</p>
+                        <!-- <a href="playground.html" class="btn btn-primary btn-lg me-3">
+                            <i class="bi bi-play-circle"></i> Try in Playground
+                        </a> -->
+                        <a href="playwright-api.html" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-gear-wide-connected"></i> Playwright API
+                        </a>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="d-flex justify-content-between mt-5 pt-4 border-top">
+                        <a href="sandbox-mode.html" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Sandbox Mode
+                        </a>
+                        <a href="playwright-api.html" class="btn btn-primary">
+                            Playwright API <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

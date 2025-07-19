@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributing - GA-Scrap Documentation</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../../index.html">
+                <i class="bi bi-spider text-warning"></i> GA-Scrap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="getting-started.html">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contributing.html">Contributing</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="playground.html">Playground</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="doc-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 doc-sidebar">
+                    <div class="doc-nav">
+                        <h6 class="text-muted text-uppercase fw-bold mb-3">Contributing</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link active" href="#welcome">Welcome</a>
+                            <a class="nav-link" href="#ways-to-contribute">Ways to Contribute</a>
+                            <a class="nav-link" href="#getting-started">Getting Started</a>
+                            <a class="nav-link" href="#development-setup">Development Setup</a>
+                            <a class="nav-link" href="#code-guidelines">Code Guidelines</a>
+                            <a class="nav-link" href="#testing">Testing</a>
+                            <a class="nav-link" href="#documentation">Documentation</a>
+                            <a class="nav-link" href="#pull-requests">Pull Requests</a>
+                            <a class="nav-link" href="#community">Community</a>
+                        </nav>
+                        
+                        <h6 class="text-muted text-uppercase fw-bold mb-3 mt-4">Quick Links</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link" href="https://github.com/GrandpaAcademy/GA-Scrap/issues">
+                                <i class="bi bi-bug"></i> Report Issues
+                            </a>
+                            <a class="nav-link" href="https://github.com/GrandpaAcademy/GA-Scrap/discussions">
+                                <i class="bi bi-chat-dots"></i> Discussions
+                            </a>
+                            <a class="nav-link" href="https://github.com/GrandpaAcademy/GA-Scrap/fork">
+                                <i class="bi bi-git"></i> Fork Repository
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="col-lg-9 doc-content">
+                    <div class="mb-4">
+                        <h1 class="display-4 fw-bold">
+                            <i class="bi bi-heart text-danger"></i> Contributing to GA-Scrap
+                        </h1>
+                        <p class="lead">Help Make Web Scraping Better for Everyone</p>
+                        <p class="text-muted">Every contribution matters - from bug reports to new features</p>
+                    </div>
+
+                    <!-- Welcome -->
+                    <section id="welcome" class="mb-5">
+                        <h2><i class="bi bi-hand-thumbs-up"></i> Welcome Contributors!</h2>
+                        <p>Thank you for your interest in contributing to GA-Scrap! We're excited to have you join our community of developers making web scraping more accessible and enjoyable.</p>
+                        
+                        <div class="alert alert-success">
+                            <i class="bi bi-star"></i>
+                            <strong>All contributions are welcome!</strong> Whether you're fixing a typo, adding a feature, or improving documentation - every contribution helps make GA-Scrap better.
+                        </div>
+                    </section>
+
+                    <!-- Ways to Contribute -->
+                    <section id="ways-to-contribute" class="mb-5">
+                        <h2><i class="bi bi-list-check"></i> Ways to Contribute</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-4">
+                                <div class="card border-primary h-100">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-bug"></i> Report Issues</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-success"></i> Bug reports</li>
+                                            <li><i class="bi bi-check text-success"></i> Feature requests</li>
+                                            <li><i class="bi bi-check text-success"></i> Documentation issues</li>
+                                            <li><i class="bi bi-check text-success"></i> Performance problems</li>
+                                        </ul>
+                                        <a href="https://github.com/GrandpaAcademy/GA-Scrap/issues/new" class="btn btn-primary btn-sm">Report Issue</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-code-slash"></i> Code Contributions</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-success"></i> Bug fixes</li>
+                                            <li><i class="bi bi-check text-success"></i> New features</li>
+                                            <li><i class="bi bi-check text-success"></i> Performance improvements</li>
+                                            <li><i class="bi bi-check text-success"></i> Code refactoring</li>
+                                        </ul>
+                                        <a href="#development-setup" class="btn btn-success btn-sm">Start Coding</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="card border-warning h-100">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="bi bi-book"></i> Documentation</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-warning"></i> Improve existing docs</li>
+                                            <li><i class="bi bi-check text-warning"></i> Add examples</li>
+                                            <li><i class="bi bi-check text-warning"></i> Fix typos</li>
+                                            <li><i class="bi bi-check text-warning"></i> Translate content</li>
+                                        </ul>
+                                        <a href="#documentation" class="btn btn-warning btn-sm">Help with Docs</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 mt-2">
+                            <div class="col-lg-6">
+                                <div class="card border-info h-100">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="bi bi-chat-dots"></i> Community Support</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-info"></i> Answer questions in discussions</li>
+                                            <li><i class="bi bi-check text-info"></i> Help other users</li>
+                                            <li><i class="bi bi-check text-info"></i> Share your experiences</li>
+                                            <li><i class="bi bi-check text-info"></i> Create tutorials</li>
+                                        </ul>
+                                        <a href="https://github.com/GrandpaAcademy/GA-Scrap/discussions" class="btn btn-info btn-sm">Join Discussions</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card border-secondary h-100">
+                                    <div class="card-header bg-secondary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-share"></i> Spread the Word</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-secondary"></i> Star the repository</li>
+                                            <li><i class="bi bi-check text-secondary"></i> Share on social media</li>
+                                            <li><i class="bi bi-check text-secondary"></i> Write blog posts</li>
+                                            <li><i class="bi bi-check text-secondary"></i> Give talks/presentations</li>
+                                        </ul>
+                                        <a href="https://github.com/GrandpaAcademy/GA-Scrap" class="btn btn-secondary btn-sm">Star Repository</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Getting Started -->
+                    <section id="getting-started" class="mb-5">
+                        <h2><i class="bi bi-play-circle"></i> Getting Started</h2>
+
+                        <h4>1. Fork and Clone</h4>
+                        <pre><code class="language-bash"># Fork the repository on GitHub, then clone your fork
+git clone https://github.com/YOUR_USERNAME/GA-Scrap.git
+cd GA-Scrap
+
+# Add upstream remote
+git remote add upstream https://github.com/GrandpaAcademy/GA-Scrap.git</code></pre>
+
+                        <h4 class="mt-4">2. Create a Branch</h4>
+                        <pre><code class="language-bash"># Create a new branch for your contribution
+git checkout -b feature/your-feature-name
+
+# Or for bug fixes
+git checkout -b fix/issue-description</code></pre>
+
+                        <h4 class="mt-4">3. Make Your Changes</h4>
+                        <pre><code class="language-bash"># Make your changes and commit them
+git add .
+git commit -m "Add: descriptive commit message"
+
+# Push to your fork
+git push origin feature/your-feature-name</code></pre>
+
+                        <h4 class="mt-4">4. Create Pull Request</h4>
+                        <p>Go to GitHub and create a pull request from your branch to the main repository.</p>
+                    </section>
+
+                    <!-- Development Setup -->
+                    <section id="development-setup" class="mb-5">
+                        <h2><i class="bi bi-tools"></i> Development Setup</h2>
+
+                        <h4>Environment Setup</h4>
+                        <pre><code class="language-bash"># Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install development dependencies
+pip install -r requirements-dev.txt
+
+# Install GA-Scrap in development mode
+pip install -e .
+
+# Install pre-commit hooks (if available)
+pre-commit install</code></pre>
+
+                        <h4 class="mt-4">Project Structure</h4>
+                        <pre><code class="language-text">GA-Scrap/
+├── ga_scrap/              # Main package
+│   ├── __init__.py
+│   ├── sync_scraper.py    # Synchronous interface
+│   ├── async_scraper.py   # Asynchronous interface
+│   ├── core/              # Core functionality
+│   ├── utils/             # Utility functions
+│   └── hot_reload/        # Hot reload system
+├── tests/                 # Test suite
+├── docs/                  # Documentation
+├── examples/              # Example scripts
+├── requirements.txt       # Dependencies
+├── requirements-dev.txt   # Development dependencies
+└── setup.py              # Package setup</code></pre>
+
+                        <h4 class="mt-4">Running Tests</h4>
+                        <pre><code class="language-bash"># Run all tests
+python -m pytest
+
+# Run with coverage
+python -m pytest --cov=ga_scrap
+
+# Run specific test file
+python -m pytest tests/test_sync_scraper.py
+
+# Run tests with verbose output
+python -m pytest -v</code></pre>
+                    </section>
+
+                    <!-- Code Guidelines -->
+                    <section id="code-guidelines" class="mb-5">
+                        <h2><i class="bi bi-code"></i> Code Guidelines</h2>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5>Python Style</h5>
+                                <ul>
+                                    <li>Follow <strong>PEP 8</strong> style guide</li>
+                                    <li>Use <strong>type hints</strong> for function parameters and return values</li>
+                                    <li>Write <strong>docstrings</strong> for all public methods</li>
+                                    <li>Keep line length under <strong>88 characters</strong></li>
+                                    <li>Use <strong>meaningful variable names</strong></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Code Quality</h5>
+                                <ul>
+                                    <li>Write <strong>unit tests</strong> for new features</li>
+                                    <li>Ensure <strong>backward compatibility</strong></li>
+                                    <li>Handle <strong>errors gracefully</strong></li>
+                                    <li>Add <strong>logging</strong> where appropriate</li>
+                                    <li>Keep methods <strong>focused and small</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h5 class="mt-4">Example Code Style</h5>
+                        <pre><code class="language-python">from typing import Optional, List, Dict, Any
+
+class SyncGAScrap:
+    """Synchronous web scraping interface for GA-Scrap.
+    
+    This class provides a simple, synchronous API for web scraping
+    operations using Playwright under the hood.
+    
+    Args:
+        sandbox_mode: Enable error-resilient sandbox mode
+        headless: Run browser in headless mode
+        timeout: Default timeout in milliseconds
+    """
+    
+    def __init__(
+        self, 
+        sandbox_mode: bool = False,
+        headless: bool = True,
+        timeout: int = 30000
+    ) -> None:
+        self.sandbox_mode = sandbox_mode
+        self.headless = headless
+        self.timeout = timeout
+        self._page: Optional[Any] = None
+    
+    def get_text(self, selector: str, timeout: Optional[int] = None) -> Optional[str]:
+        """Extract text content from an element.
+        
+        Args:
+            selector: CSS selector or XPath expression
+            timeout: Override default timeout
+            
+        Returns:
+            Text content of the element, or None if not found
+            
+        Example:
+            >>> scraper.get_text("h1")
+            "Welcome to Example.com"
+        """
+        try:
+            element = self._page.locator(selector)
+            return element.text_content(timeout=timeout or self.timeout)
+        except Exception as e:
+            if self.sandbox_mode:
+                self._log_error(f"Failed to get text for {selector}: {e}")
+                return None
+            raise</code></pre>
+                    </section>
+
+                    <!-- Testing -->
+                    <section id="testing" class="mb-5">
+                        <h2><i class="bi bi-check-circle"></i> Testing</h2>
+
+                        <h4>Writing Tests</h4>
+                        <pre><code class="language-python"># tests/test_sync_scraper.py
+import pytest
+from ga_scrap import SyncGAScrap
+
+class TestSyncGAScrap:
+    """Test suite for SyncGAScrap class."""
+    
+    def test_basic_navigation(self):
+        """Test basic page navigation."""
+        with SyncGAScrap(headless=True) as scraper:
+            scraper.goto("https://httpbin.org/html")
+            title = scraper.get_text("h1")
+            assert title is not None
+            assert "Herman Melville" in title
+    
+    def test_sandbox_mode_error_handling(self):
+        """Test that sandbox mode handles errors gracefully."""
+        with SyncGAScrap(sandbox_mode=True, headless=True) as scraper:
+            scraper.goto("https://httpbin.org/html")
+            
+            # This should not crash in sandbox mode
+            result = scraper.click("#non-existent-element")
+            assert result is None
+            
+            # This should still work
+            title = scraper.get_text("h1")
+            assert title is not None
+    
+    @pytest.mark.parametrize("browser_type", ["chromium", "firefox", "webkit"])
+    def test_multiple_browsers(self, browser_type):
+        """Test functionality across different browsers."""
+        with SyncGAScrap(browser_type=browser_type, headless=True) as scraper:
+            scraper.goto("https://httpbin.org/html")
+            title = scraper.get_text("h1")
+            assert title is not None</code></pre>
+
+                        <h4 class="mt-4">Test Categories</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h6>Unit Tests</h6>
+                                <ul>
+                                    <li>Test individual methods</li>
+                                    <li>Mock external dependencies</li>
+                                    <li>Fast execution</li>
+                                    <li>High coverage</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h6>Integration Tests</h6>
+                                <ul>
+                                    <li>Test real browser interactions</li>
+                                    <li>Use test websites</li>
+                                    <li>Verify end-to-end functionality</li>
+                                    <li>Cross-browser testing</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Documentation -->
+                    <section id="documentation" class="mb-5">
+                        <h2><i class="bi bi-book"></i> Documentation</h2>
+
+                        <h4>Documentation Structure</h4>
+                        <pre><code class="language-text">docs/
+├── web/                   # Web documentation (this site)
+│   ├── *.html            # HTML pages
+│   ├── css/              # Stylesheets
+│   └── js/               # JavaScript
+├── api/                   # API documentation
+├── examples/              # Code examples
+└── guides/               # User guides</code></pre>
+
+                        <h4 class="mt-4">Writing Documentation</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h6>Guidelines</h6>
+                                <ul>
+                                    <li>Use clear, simple language</li>
+                                    <li>Include practical examples</li>
+                                    <li>Add code snippets</li>
+                                    <li>Keep it up-to-date</li>
+                                    <li>Test all examples</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h6>Example Documentation</h6>
+                                <pre><code class="language-markdown"># Method Name
+
+Brief description of what the method does.
+
+## Parameters
+
+- `param1` (type): Description
+- `param2` (type, optional): Description
+
+## Returns
+
+Description of return value and type.
+
+## Example
+
+```python
+# Basic usage
+result = scraper.method_name("value")
+
+# Advanced usage
+result = scraper.method_name(
+    "value", 
+    optional_param=True
+)
+```
+
+## See Also
+
+- [Related Method](link)
+- [Guide](link)</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Pull Requests -->
+                    <section id="pull-requests" class="mb-5">
+                        <h2><i class="bi bi-git"></i> Pull Request Process</h2>
+
+                        <h4>Before Submitting</h4>
+                        <div class="checklist">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled>
+                                <label class="form-check-label">
+                                    Code follows style guidelines
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled>
+                                <label class="form-check-label">
+                                    Tests pass locally
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled>
+                                <label class="form-check-label">
+                                    New tests added for new features
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled>
+                                <label class="form-check-label">
+                                    Documentation updated
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled>
+                                <label class="form-check-label">
+                                    Commit messages are descriptive
+                                </label>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">PR Template</h4>
+                        <pre><code class="language-markdown">## Description
+
+Brief description of changes made.
+
+## Type of Change
+
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Documentation update
+- [ ] Performance improvement
+- [ ] Code refactoring
+
+## Testing
+
+- [ ] Tests pass locally
+- [ ] New tests added
+- [ ] Manual testing completed
+
+## Screenshots (if applicable)
+
+Add screenshots for UI changes.
+
+## Checklist
+
+- [ ] Code follows style guidelines
+- [ ] Self-review completed
+- [ ] Documentation updated
+- [ ] No breaking changes (or clearly documented)</code></pre>
+                    </section>
+
+                    <!-- Community -->
+                    <section id="community" class="mb-5">
+                        <h2><i class="bi bi-people"></i> Community Guidelines</h2>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-heart"></i> Be Respectful</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-success"></i> Treat everyone with respect</li>
+                                            <li><i class="bi bi-check text-success"></i> Be patient with beginners</li>
+                                            <li><i class="bi bi-check text-success"></i> Provide constructive feedback</li>
+                                            <li><i class="bi bi-check text-success"></i> Help create a welcoming environment</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card border-primary h-100">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-lightbulb"></i> Be Helpful</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-primary"></i> Share knowledge and experiences</li>
+                                            <li><i class="bi bi-check text-primary"></i> Answer questions when you can</li>
+                                            <li><i class="bi bi-check text-primary"></i> Provide clear examples</li>
+                                            <li><i class="bi bi-check text-primary"></i> Point to relevant documentation</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Communication Channels</h4>
+                        <div class="row g-4">
+                            <div class="col-lg-4">
+                                <div class="text-center">
+                                    <i class="bi bi-github fs-1 text-dark"></i>
+                                    <h5>GitHub Issues</h5>
+                                    <p>Bug reports and feature requests</p>
+                                    <a href="https://github.com/GrandpaAcademy/GA-Scrap/issues" class="btn btn-outline-dark">View Issues</a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="text-center">
+                                    <i class="bi bi-chat-dots fs-1 text-primary"></i>
+                                    <h5>Discussions</h5>
+                                    <p>Questions and community chat</p>
+                                    <a href="https://github.com/GrandpaAcademy/GA-Scrap/discussions" class="btn btn-outline-primary">Join Discussion</a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="text-center">
+                                    <i class="bi bi-git fs-1 text-success"></i>
+                                    <h5>Pull Requests</h5>
+                                    <p>Code contributions and reviews</p>
+                                    <a href="https://github.com/GrandpaAcademy/GA-Scrap/pulls" class="btn btn-outline-success">View PRs</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Recognition -->
+                    <section class="mb-5">
+                        <h2><i class="bi bi-award"></i> Recognition</h2>
+                        <p>We appreciate all contributions and recognize our contributors:</p>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5>Contributors</h5>
+                                <ul>
+                                    <li>All contributors are listed in <code>CONTRIBUTORS.md</code></li>
+                                    <li>Major contributors get special recognition</li>
+                                    <li>First-time contributors get a welcome badge</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Ways We Say Thanks</h5>
+                                <ul>
+                                    <li>GitHub contributor badges</li>
+                                    <li>Mentions in release notes</li>
+                                    <li>Social media shoutouts</li>
+                                    <li>Special contributor status</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Call to Action -->
+                    <div class="text-center my-5 py-5 bg-light rounded">
+                        <h3 class="text-success">🚀 Ready to Contribute?</h3>
+                        <p class="lead">Join our community and help make GA-Scrap even better!</p>
+                        <a href="https://github.com/GrandpaAcademy/GA-Scrap/fork" class="btn btn-success btn-lg me-3">
+                            <i class="bi bi-git"></i> Fork Repository
+                        </a>
+                        <a href="https://github.com/GrandpaAcademy/GA-Scrap/issues" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-bug"></i> Report Issue
+                        </a>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="d-flex justify-content-between mt-5 pt-4 border-top">
+                        <a href="api-reference.html" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> API Reference
+                        </a>
+                        <a href="../../index.html" class="btn btn-primary">
+                            Home <i class="bi bi-house"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

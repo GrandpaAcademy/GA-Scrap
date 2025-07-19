@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Playwright API - GA-Scrap Documentation</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../../index.html">
+                <i class="bi bi-spider text-warning"></i> GA-Scrap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="getting-started.html">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="playwright-api.html">Playwright API</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="playground.html">Playground</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="doc-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 doc-sidebar">
+                    <div class="doc-nav">
+                        <h6 class="text-muted text-uppercase fw-bold mb-3">Playwright API</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link active" href="#overview">Overview</a>
+                            <a class="nav-link" href="#access-methods">Access Methods</a>
+                            <a class="nav-link" href="#a-z-features">A-Z Features</a>
+                            <a class="nav-link" href="#safe-execution">Safe Execution</a>
+                            <a class="nav-link" href="#when-to-use">When to Use</a>
+                            <a class="nav-link" href="#examples">Examples</a>
+                        </nav>
+                        
+                        <h6 class="text-muted text-uppercase fw-bold mb-3 mt-4">A-Z Features</h6>
+                        <nav class="nav flex-column" style="max-height: 400px; overflow-y: auto;">
+                            <a class="nav-link" href="#accessibility">A - Accessibility</a>
+                            <a class="nav-link" href="#browser">B - Browser</a>
+                            <a class="nav-link" href="#context">C - Context</a>
+                            <a class="nav-link" href="#downloads">D - Downloads</a>
+                            <a class="nav-link" href="#evaluate">E - Evaluate</a>
+                            <a class="nav-link" href="#forms">F - Forms</a>
+                            <a class="nav-link" href="#geolocation">G - Geolocation</a>
+                            <a class="nav-link" href="#hover">H - Hover</a>
+                            <a class="nav-link" href="#injection">I - Injection</a>
+                            <a class="nav-link" href="#javascript">J - JavaScript</a>
+                            <a class="nav-link" href="#keyboard">K - Keyboard</a>
+                            <a class="nav-link" href="#locators">L - Locators</a>
+                            <a class="nav-link" href="#mouse">M - Mouse</a>
+                            <a class="nav-link" href="#network">N - Network</a>
+                            <a class="nav-link" href="#offline">O - Offline</a>
+                            <a class="nav-link" href="#pdf">P - PDF</a>
+                            <a class="nav-link" href="#query">Q - Query</a>
+                            <a class="nav-link" href="#recording">R - Recording</a>
+                            <a class="nav-link" href="#screenshots">S - Screenshots</a>
+                            <a class="nav-link" href="#touch">T - Touch</a>
+                            <a class="nav-link" href="#upload">U - Upload</a>
+                            <a class="nav-link" href="#viewport">V - Viewport</a>
+                            <a class="nav-link" href="#waiting">W - Waiting</a>
+                            <a class="nav-link" href="#xpath">X - XPath</a>
+                            <a class="nav-link" href="#yielding">Y - Yielding</a>
+                            <a class="nav-link" href="#zones">Z - Zones</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="col-lg-9 doc-content">
+                    <div class="mb-4">
+                        <h1 class="display-4 fw-bold">
+                            <i class="bi bi-gear-wide-connected text-primary"></i> Complete Playwright API Access
+                        </h1>
+                        <p class="lead">Every Playwright Feature from A-Z</p>
+                        <p class="text-muted">Full control when you need it</p>
+                    </div>
+
+                    <!-- Overview -->
+                    <section id="overview" class="mb-5">
+                        <h2><i class="bi bi-info-circle"></i> Overview</h2>
+                        <p>GA-Scrap provides <strong>complete access</strong> to every Playwright feature through both sync and async interfaces. You get the best of both worlds: simple GA-Scrap methods for common tasks, and full Playwright power for advanced scenarios.</p>
+                        
+                        <div class="alert alert-success">
+                            <i class="bi bi-check-circle"></i>
+                            <strong>Complete Coverage:</strong> If Playwright can do it, GA-Scrap can do it through both sync and async interfaces with full error protection.
+                        </div>
+                    </section>
+
+                    <!-- Access Methods -->
+                    <section id="access-methods" class="mb-5">
+                        <h2><i class="bi bi-layers"></i> Access Methods</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-4">
+                                <div class="card border-primary h-100">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">1. High-Level GA-Scrap</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><em>Perfect for most use cases</em></p>
+                                        <pre><code class="language-python">with SyncGAScrap() as scraper:
+    scraper.goto("https://example.com")
+    title = scraper.get_text("h1")
+    scraper.screenshot("page.png")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">2. Direct Playwright Access</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><em>When you need specific features</em></p>
+                                        <pre><code class="language-python">with SyncGAScrap() as scraper:
+    scraper.goto("https://example.com")
+    
+    # Get direct access
+    page = scraper.get_playwright_page()
+    context = scraper.get_playwright_context()
+    
+    # Use any Playwright method
+    await page.evaluate("console.log('test')")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="card border-warning h-100">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0">3. Safe Method Execution</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><em>Execute any method with protection</em></p>
+                                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")
+    
+    # Execute safely
+    title = scraper.execute_playwright_method('page', 'title')
+    cookies = scraper.execute_playwright_method('context', 'cookies')</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- A-Z Features -->
+                    <section id="a-z-features" class="mb-5">
+                        <h2><i class="bi bi-alphabet"></i> Complete A-Z Feature List</h2>
+                        <p>Every Playwright feature is available through GA-Scrap. Here's the complete reference:</p>
+
+                        <!-- Accessibility -->
+                        <div id="accessibility" class="mb-4">
+                            <h4><span class="badge bg-primary">A</span> Accessibility</h4>
+                            <pre><code class="language-python"># Accessibility testing
+tree = scraper.get_accessibility_tree()
+
+# Direct Playwright access
+page = scraper.get_playwright_page()
+snapshot = await page.accessibility.snapshot()</code></pre>
+                        </div>
+
+                        <!-- Browser -->
+                        <div id="browser" class="mb-4">
+                            <h4><span class="badge bg-primary">B</span> Browser Management</h4>
+                            <pre><code class="language-python"># Browser control
+browser = scraper.get_playwright_browser()
+version = browser.version
+contexts = browser.contexts
+is_connected = browser.is_connected()</code></pre>
+                        </div>
+
+                        <!-- Context -->
+                        <div id="context" class="mb-4">
+                            <h4><span class="badge bg-primary">C</span> Context & Cookies</h4>
+                            <pre><code class="language-python"># Cookie management
+scraper.add_cookies([{"name": "test", "value": "value", "domain": "example.com"}])
+cookies = scraper.get_cookies()
+
+# Direct context access
+context = scraper.get_playwright_context()
+await context.clear_cookies()
+await context.set_geolocation({"latitude": 40.7128, "longitude": -74.0060})</code></pre>
+                        </div>
+
+                        <!-- Downloads -->
+                        <div id="downloads" class="mb-4">
+                            <h4><span class="badge bg-primary">D</span> Downloads</h4>
+                            <pre><code class="language-python"># Download handling
+scraper.download_file("https://example.com/file.zip")
+
+# Advanced download control
+page = scraper.get_playwright_page()
+async with page.expect_download() as download_info:
+    await page.click("a[download]")
+download = await download_info.value
+await download.save_as("file.zip")</code></pre>
+                        </div>
+
+                        <!-- Evaluate -->
+                        <div id="evaluate" class="mb-4">
+                            <h4><span class="badge bg-primary">E</span> Evaluate JavaScript</h4>
+                            <pre><code class="language-python"># JavaScript execution
+result = scraper.execute_script("return document.title")
+scraper.execute_script("document.body.style.background = 'red'")
+
+# Advanced evaluation
+page = scraper.get_playwright_page()
+result = await page.evaluate("() => ({ width: window.innerWidth, height: window.innerHeight })")</code></pre>
+                        </div>
+
+                        <!-- Forms -->
+                        <div id="forms" class="mb-4">
+                            <h4><span class="badge bg-primary">F</span> Forms & File Upload</h4>
+                            <pre><code class="language-python"># Form interactions
+scraper.input("input[name='username']", "user")
+scraper.select_option("select", "option1")
+scraper.upload_files("input[type=file]", ["file1.txt", "file2.txt"])
+scraper.check("input[type=checkbox]")
+
+# Advanced form handling
+page = scraper.get_playwright_page()
+await page.fill("input[name='username']", "user")
+await page.set_input_files("input[type=file]", ["file1.txt", "file2.txt"])</code></pre>
+                        </div>
+
+                        <!-- Geolocation -->
+                        <div id="geolocation" class="mb-4">
+                            <h4><span class="badge bg-primary">G</span> Geolocation</h4>
+                            <pre><code class="language-python"># Geolocation control
+scraper.set_geolocation(40.7128, -74.0060)
+
+# Direct context access
+context = scraper.get_playwright_context()
+await context.set_geolocation({"latitude": 40.7128, "longitude": -74.0060})
+await context.grant_permissions(["geolocation"])</code></pre>
+                        </div>
+
+                        <!-- Hover -->
+                        <div id="hover" class="mb-4">
+                            <h4><span class="badge bg-primary">H</span> Hover & Interactions</h4>
+                            <pre><code class="language-python"># Mouse interactions
+scraper.hover("button")
+scraper.click("button")
+scraper.double_click("button")
+
+# Advanced interactions
+page = scraper.get_playwright_page()
+await page.hover("button")
+await page.click("button", button="right")
+await page.drag_and_drop("source", "target")</code></pre>
+                        </div>
+
+                        <!-- Injection -->
+                        <div id="injection" class="mb-4">
+                            <h4><span class="badge bg-primary">I</span> Injection (CSS/JS)</h4>
+                            <pre><code class="language-python"># Code injection
+scraper.inject_css("body { background: red; }")
+scraper.execute_script("console.log('injected')")
+
+# Advanced injection
+page = scraper.get_playwright_page()
+await page.add_style_tag(content="body { background: red; }")
+await page.add_script_tag(url="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js")</code></pre>
+                        </div>
+
+                        <!-- JavaScript -->
+                        <div id="javascript" class="mb-4">
+                            <h4><span class="badge bg-primary">J</span> JavaScript Execution</h4>
+                            <pre><code class="language-python"># JavaScript execution
+result = scraper.execute_script("return document.title")
+
+# Advanced JS execution
+page = scraper.get_playwright_page()
+await page.expose_function("pythonFunction", lambda x: x * 2)
+result = await page.evaluate("pythonFunction(5)")  # Returns 10</code></pre>
+                        </div>
+
+                        <!-- Continue with more features... -->
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i>
+                            <strong>Complete A-Z Reference:</strong> This page shows key examples. Every Playwright feature from Keyboard (K) through Zones (Z) is available. 
+                            <a href="#examples" class="alert-link">See examples section</a> for more comprehensive usage.
+                        </div>
+                    </section>
+
+                    <!-- Safe Execution -->
+                    <section id="safe-execution" class="mb-5">
+                        <h2><i class="bi bi-shield-check"></i> Safe Execution with Sandbox Mode</h2>
+                        <p>All Playwright methods can be executed safely with sandbox mode:</p>
+
+                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")
+    
+    # These won't crash even if they fail
+    title = scraper.execute_playwright_method('page', 'title')
+    cookies = scraper.execute_playwright_method('context', 'cookies')
+    
+    # Direct object access with error handling
+    page = scraper.get_playwright_page()
+    try:
+        await page.click("#might-not-exist")
+    except:
+        pass  # Handle gracefully</code></pre>
+                    </section>
+
+                    <!-- When to Use -->
+                    <section id="when-to-use" class="mb-5">
+                        <h2><i class="bi bi-question-circle"></i> When to Use Each Approach</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-check-circle"></i> Use GA-Scrap Methods When:</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-success"></i> <strong>Learning web scraping</strong> - Simple, intuitive API</li>
+                                            <li><i class="bi bi-check text-success"></i> <strong>Common operations</strong> - Navigation, clicking, text extraction</li>
+                                            <li><i class="bi bi-check text-success"></i> <strong>Quick prototyping</strong> - Fast development cycles</li>
+                                            <li><i class="bi bi-check text-success"></i> <strong>Sandbox mode benefits</strong> - Error-resilient development</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card border-primary h-100">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-gear"></i> Use Direct Playwright When:</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-primary"></i> <strong>Advanced features</strong> - Specific Playwright capabilities</li>
+                                            <li><i class="bi bi-check text-primary"></i> <strong>Performance optimization</strong> - Direct control over operations</li>
+                                            <li><i class="bi bi-check text-primary"></i> <strong>Complex interactions</strong> - Multi-step, coordinated actions</li>
+                                            <li><i class="bi bi-check text-primary"></i> <strong>Integration needs</strong> - Existing Playwright code</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 mt-2">
+                            <div class="col-lg-12">
+                                <div class="card border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="bi bi-shield"></i> Use Safe Execution When:</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li><i class="bi bi-check text-warning"></i> <strong>Unknown websites</strong> - Unpredictable page structures</li>
+                                                    <li><i class="bi bi-check text-warning"></i> <strong>Development phase</strong> - Testing different approaches</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li><i class="bi bi-check text-warning"></i> <strong>Error handling</strong> - Graceful failure recovery</li>
+                                                    <li><i class="bi bi-check text-warning"></i> <strong>Batch operations</strong> - Processing multiple items</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Examples -->
+                    <section id="examples" class="mb-5">
+                        <h2><i class="bi bi-code-slash"></i> Examples</h2>
+
+                        <h4>Combining All Approaches</h4>
+                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    # High-level GA-Scrap method
+    scraper.goto("https://example.com")
+    
+    # Direct Playwright access for advanced features
+    page = scraper.get_playwright_page()
+    await page.evaluate("document.body.style.background = 'linear-gradient(45deg, red, blue)'")
+    
+    # Safe method execution for risky operations
+    title = scraper.execute_playwright_method('page', 'title')
+    
+    # Back to GA-Scrap for simplicity
+    scraper.screenshot("final.png")</code></pre>
+
+                        <h4 class="mt-4">Advanced Playwright Features</h4>
+                        <pre><code class="language-python">with SyncGAScrap() as scraper:
+    scraper.goto("https://example.com")
+    
+    # Get all Playwright objects
+    page = scraper.get_playwright_page()
+    context = scraper.get_playwright_context()
+    browser = scraper.get_playwright_browser()
+    
+    # Use advanced Playwright features
+    await page.expose_function("customFunction", lambda x: x.upper())
+    await page.route("**/*.png", lambda route: route.abort())
+    await context.grant_permissions(["geolocation", "camera"])
+    
+    # Execute custom JavaScript with exposed function
+    result = await page.evaluate("customFunction('hello world')")
+    print(result)  # "HELLO WORLD"</code></pre>
+
+                        <h4 class="mt-4">Complete Feature Showcase</h4>
+                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    # K - Keyboard
+    scraper.keyboard_press("Enter")
+    scraper.keyboard_type("Hello World")
+    
+    # L - Locators
+    element = scraper.get_locator("button")
+    
+    # M - Mouse
+    scraper.mouse_move(100, 100)
+    scraper.click_at_position(100, 100)
+    
+    # N - Network
+    scraper.block_requests(["*.png", "*.jpg"])
+    scraper.set_user_agent("Custom User Agent")
+    
+    # O - Offline Mode
+    scraper.set_offline(True)
+    
+    # P - PDF Generation
+    scraper.save_pdf("page.pdf")
+    
+    # Q - Query Selectors
+    text = scraper.get_text("h1")
+    texts = scraper.get_all_text(".item")
+    
+    # R - Recording (configured at startup)
+    # scraper = SyncGAScrap(record_video=True)
+    
+    # S - Screenshots
+    scraper.screenshot("page.png")
+    scraper.screenshot_full_page("full.png")
+    
+    # T - Touch & Mobile
+    scraper.simulate_touch(100, 100)
+    
+    # U - Upload
+    scraper.upload_files("input[type=file]", ["file1.txt", "file2.txt"])
+    
+    # V - Viewport
+    scraper.set_viewport_size(1920, 1080)
+    
+    # W - Waiting
+    scraper.wait_for_selector("button")
+    scraper.wait_for_network_idle()
+    
+    # X - XPath
+    text = scraper.get_text("xpath=//button[@class='submit']")
+    
+    # Y - Yielding Control
+    scraper.pause("Check the page and press Enter to continue...")
+    
+    # Z - Zones (Timezone)
+    # scraper = SyncGAScrap(timezone="America/New_York")</code></pre>
+                    </section>
+
+                    <!-- Feature Matrix -->
+                    <section class="mb-5">
+                        <h2><i class="bi bi-table"></i> Complete Feature Matrix</h2>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Feature Category</th>
+                                        <th>GA-Scrap Methods</th>
+                                        <th>Direct Playwright</th>
+                                        <th>Safe Execution</th>
+                                        <th>Sandbox Mode</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>All 200+ Playwright Features</strong></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>A-Z Coverage</strong></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Error Protection</strong></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-warning">Manual</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>No Limitations</strong></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                        <td><span class="badge bg-success">✅</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Call to Action -->
+                    <div class="text-center my-5 py-5 bg-light rounded">
+                        <h3 class="text-primary">🎭 Complete Playwright Power at Your Fingertips!</h3>
+                        <p class="lead">Access every single Playwright feature through your preferred interface with full error protection.</p>
+                        <!-- <a href="playground.html" class="btn btn-primary btn-lg me-3">
+                            <i class="bi bi-play-circle"></i> Try in Playground
+                        </a> -->
+                        <a href="architecture.html" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-cpu"></i> Learn Architecture
+                        </a>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="d-flex justify-content-between mt-5 pt-4 border-top">
+                        <a href="sync-interface.html" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Sync Interface
+                        </a>
+                        <a href="hot-reload.html" class="btn btn-primary">
+                            Hot Reload <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

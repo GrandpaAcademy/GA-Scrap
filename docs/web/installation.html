@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Guide - GA-Scrap Documentation</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../../index.html">
+                <i class="bi bi-spider text-warning"></i> GA-Scrap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="getting-started.html">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="installation.html">Installation</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="playground.html">Playground</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="doc-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 doc-sidebar">
+                    <div class="doc-nav">
+                        <h6 class="text-muted text-uppercase fw-bold mb-3">Installation</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link active" href="#requirements">System Requirements</a>
+                            <a class="nav-link" href="#quick-install">Quick Installation</a>
+                            <a class="nav-link" href="#windows">Windows Setup</a>
+                            <a class="nav-link" href="#macos">macOS Setup</a>
+                            <a class="nav-link" href="#linux">Linux Setup</a>
+                            <a class="nav-link" href="#docker">Docker Installation</a>
+                            <a class="nav-link" href="#development">Development Setup</a>
+                            <a class="nav-link" href="#testing">Testing Installation</a>
+                            <a class="nav-link" href="#troubleshooting">Troubleshooting</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="col-lg-9 doc-content">
+                    <div class="mb-4">
+                        <h1 class="display-4 fw-bold">
+                            <i class="bi bi-download text-primary"></i> Installation Guide
+                        </h1>
+                        <p class="lead">Get GA-Scrap Running in Minutes</p>
+                        <p class="text-muted">Complete setup guide for all platforms</p>
+                    </div>
+
+                    <!-- System Requirements -->
+                    <section id="requirements" class="mb-5">
+                        <h2><i class="bi bi-cpu"></i> System Requirements</h2>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="card border-primary h-100">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-check-circle"></i> Minimum Requirements</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-python text-warning"></i> <strong>Python 3.8+</strong></li>
+                                            <li><i class="bi bi-git text-danger"></i> <strong>Git</strong> for cloning</li>
+                                            <li><i class="bi bi-memory text-info"></i> <strong>4GB RAM</strong> minimum</li>
+                                            <li><i class="bi bi-hdd text-success"></i> <strong>1GB disk space</strong></li>
+                                            <li><i class="bi bi-wifi text-primary"></i> <strong>Internet connection</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-star"></i> Recommended</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-python text-warning"></i> <strong>Python 3.9+</strong></li>
+                                            <li><i class="bi bi-memory text-info"></i> <strong>8GB+ RAM</strong></li>
+                                            <li><i class="bi bi-hdd text-success"></i> <strong>2GB+ disk space</strong></li>
+                                            <li><i class="bi bi-display text-primary"></i> <strong>1920x1080 display</strong></li>
+                                            <li><i class="bi bi-speedometer text-warning"></i> <strong>Fast internet</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info mt-4">
+                            <h6><i class="bi bi-info-circle"></i> Supported Platforms</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <i class="bi bi-windows text-primary"></i> <strong>Windows</strong> 10/11
+                                </div>
+                                <div class="col-md-4">
+                                    <i class="bi bi-apple text-dark"></i> <strong>macOS</strong> 10.15+
+                                </div>
+                                <div class="col-md-4">
+                                    <i class="bi bi-ubuntu text-warning"></i> <strong>Linux</strong> (Ubuntu 18.04+, CentOS 7+)
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Installation -->
+                    <section id="quick-install" class="mb-5">
+                        <h2><i class="bi bi-lightning"></i> Quick Installation</h2>
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-dark text-white">
+                                        <h5 class="mb-0">1. Clone Repository</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-bash">git clone https://github.com/GrandpaAcademy/GA-Scrap.git
+cd GA-Scrap</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-dark text-white">
+                                        <h5 class="mb-0">2. Create Virtual Environment</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-bash"># Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+
+# On macOS/Linux:
+source venv/bin/activate</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-dark text-white">
+                                        <h5 class="mb-0">3. Install Dependencies</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-bash"># Install Python dependencies
+pip install -r requirements.txt
+
+# Install Playwright browsers
+playwright install</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">4. Verify Installation</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-bash"># Test GA-Scrap
+python -c "from ga_scrap import SyncGAScrap; print('✅ GA-Scrap installed successfully!')"
+
+# Test browser installation
+playwright --version</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Windows Installation -->
+                    <section id="windows" class="mb-5">
+                        <h2><i class="bi bi-windows"></i> Windows Installation</h2>
+
+                        <h4>Prerequisites</h4>
+                        <pre><code class="language-powershell"># Install Python from python.org or Microsoft Store
+# Install Git from git-scm.com
+
+# Verify installations
+python --version
+git --version</code></pre>
+
+                        <h4 class="mt-4">Installation Steps</h4>
+                        <pre><code class="language-powershell"># Clone repository
+git clone https://github.com/GrandpaAcademy/GA-Scrap.git
+cd GA-Scrap
+
+# Create virtual environment
+python -m venv venv
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+playwright install
+
+# Test installation
+python -c "from ga_scrap import SyncGAScrap; print('✅ Windows installation complete!')"</code></pre>
+
+                        <div class="alert alert-warning">
+                            <h6><i class="bi bi-exclamation-triangle"></i> Windows-Specific Issues</h6>
+                            <pre class="mb-0"><code class="language-powershell"># If you get execution policy errors:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# If pip is not found:
+python -m pip install --upgrade pip
+
+# If playwright install fails:
+python -m playwright install</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- macOS Installation -->
+                    <section id="macos" class="mb-5">
+                        <h2><i class="bi bi-apple"></i> macOS Installation</h2>
+
+                        <h4>Prerequisites</h4>
+                        <pre><code class="language-bash"># Install Homebrew (if not installed)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install Python and Git
+brew install python git</code></pre>
+
+                        <h4 class="mt-4">Installation Steps</h4>
+                        <pre><code class="language-bash"># Clone repository
+git clone https://github.com/GrandpaAcademy/GA-Scrap.git
+cd GA-Scrap
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+playwright install
+
+# Test installation
+python -c "from ga_scrap import SyncGAScrap; print('✅ macOS installation complete!')"</code></pre>
+
+                        <div class="alert alert-warning">
+                            <h6><i class="bi bi-exclamation-triangle"></i> macOS-Specific Issues</h6>
+                            <pre class="mb-0"><code class="language-bash"># If you get SSL certificate errors:
+/Applications/Python\ 3.x/Install\ Certificates.command
+
+# If permission denied errors:
+sudo xcode-select --install
+
+# If browser installation fails:
+playwright install --with-deps</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Linux Installation -->
+                    <section id="linux" class="mb-5">
+                        <h2><i class="bi bi-ubuntu"></i> Linux Installation</h2>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4>Ubuntu/Debian</h4>
+                                <pre><code class="language-bash"># Update package list
+sudo apt update
+
+# Install Python and Git
+sudo apt install python3 python3-pip python3-venv git
+
+# Install system dependencies for browsers
+sudo apt install -y \
+    libnss3 \
+    libatk-bridge2.0-0 \
+    libdrm2 \
+    libxkbcommon0 \
+    libgtk-3-0 \
+    libgbm1
+
+# Clone and install GA-Scrap
+git clone https://github.com/GrandpaAcademy/GA-Scrap.git
+cd GA-Scrap
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+playwright install --with-deps</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h4>CentOS/RHEL/Fedora</h4>
+                                <pre><code class="language-bash"># Install Python and Git
+sudo dnf install python3 python3-pip git
+
+# Install system dependencies
+sudo dnf install -y \
+    nss \
+    atk \
+    at-spi2-atk \
+    gtk3 \
+    libdrm \
+    libxkbcommon \
+    mesa-libgbm
+
+# Clone and install GA-Scrap
+git clone https://github.com/GrandpaAcademy/GA-Scrap.git
+cd GA-Scrap
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+playwright install --with-deps</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Docker Installation -->
+                    <section id="docker" class="mb-5">
+                        <h2><i class="bi bi-box"></i> Docker Installation</h2>
+
+                        <h4>Using Docker</h4>
+                        <pre><code class="language-dockerfile"># Dockerfile
+FROM python:3.9-slim
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clone GA-Scrap
+WORKDIR /app
+RUN git clone https://github.com/GrandpaAcademy/GA-Scrap.git .
+
+# Install Python dependencies
+RUN pip install -r requirements.txt
+
+# Install Playwright browsers
+RUN playwright install --with-deps
+
+# Set entrypoint
+CMD ["python", "-c", "from ga_scrap import SyncGAScrap; print('GA-Scrap ready!')"]</code></pre>
+
+                        <h4 class="mt-4">Build and Run</h4>
+                        <pre><code class="language-bash"># Build Docker image
+docker build -t ga-scrap .
+
+# Run container
+docker run -it --rm ga-scrap
+
+# Run with volume mount for your scripts
+docker run -it --rm -v $(pwd)/scripts:/app/scripts ga-scrap</code></pre>
+                    </section>
+
+                    <!-- Development Setup -->
+                    <section id="development" class="mb-5">
+                        <h2><i class="bi bi-code-slash"></i> Development Installation</h2>
+
+                        <h4>For Contributors</h4>
+                        <pre><code class="language-bash"># Clone with development setup
+git clone https://github.com/GrandpaAcademy/GA-Scrap.git
+cd GA-Scrap
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install in development mode
+pip install -e .
+pip install -r requirements-dev.txt  # If exists
+
+# Install pre-commit hooks
+pre-commit install  # If using pre-commit
+
+# Run tests
+python -m pytest tests/</code></pre>
+
+                        <div class="row mt-4">
+                            <div class="col-lg-6">
+                                <h5>VS Code Setup</h5>
+                                <pre><code class="language-json">// .vscode/settings.json
+{
+    "python.defaultInterpreterPath": "./venv/bin/python",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "black"
+}</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>PyCharm Setup</h5>
+                                <ol>
+                                    <li>Open project in PyCharm</li>
+                                    <li>Go to <strong>File > Settings > Project > Python Interpreter</strong></li>
+                                    <li>Select <strong>Add Interpreter > Existing Environment</strong></li>
+                                    <li>Choose <code>venv/bin/python</code></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Testing Installation -->
+                    <section id="testing" class="mb-5">
+                        <h2><i class="bi bi-check-circle"></i> Testing Installation</h2>
+
+                        <h4>Basic Test</h4>
+                        <pre><code class="language-python"># test_installation.py
+from ga_scrap import SyncGAScrap
+
+def test_basic_functionality():
+    try:
+        with SyncGAScrap(headless=True) as scraper:
+            scraper.goto("https://httpbin.org/html")
+            title = scraper.get_text("h1")
+            assert title is not None
+            print("✅ Basic functionality test passed")
+            return True
+    except Exception as e:
+        print(f"❌ Basic functionality test failed: {e}")
+        return False
+
+def test_sandbox_mode():
+    try:
+        with SyncGAScrap(sandbox_mode=True, headless=True) as scraper:
+            scraper.goto("https://httpbin.org/html")
+            scraper.click("#non-existent-element")  # Should not crash
+            scraper.screenshot("test.png")
+            print("✅ Sandbox mode test passed")
+            return True
+    except Exception as e:
+        print(f"❌ Sandbox mode test failed: {e}")
+        return False
+
+if __name__ == "__main__":
+    print("🧪 Testing GA-Scrap installation...")
+    basic_ok = test_basic_functionality()
+    sandbox_ok = test_sandbox_mode()
+    
+    if basic_ok and sandbox_ok:
+        print("🎉 All tests passed! GA-Scrap is ready to use.")
+    else:
+        print("❌ Some tests failed. Check the error messages above.")</code></pre>
+
+                        <h4 class="mt-4">Run Test</h4>
+                        <pre><code class="language-bash">python test_installation.py</code></pre>
+                    </section>
+
+                    <!-- Troubleshooting -->
+                    <section id="troubleshooting" class="mb-5">
+                        <h2><i class="bi bi-tools"></i> Troubleshooting</h2>
+
+                        <div class="accordion" id="troubleshootingAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#issue1">
+                                        "ModuleNotFoundError: No module named 'playwright'"
+                                    </button>
+                                </h2>
+                                <div id="issue1" class="accordion-collapse collapse show" data-bs-parent="#troubleshootingAccordion">
+                                    <div class="accordion-body">
+                                        <pre><code class="language-bash"># Solution: Install Playwright
+pip install playwright
+playwright install</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#issue2">
+                                        "Browser executable not found"
+                                    </button>
+                                </h2>
+                                <div id="issue2" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                                    <div class="accordion-body">
+                                        <pre><code class="language-bash"># Solution: Install browsers
+playwright install chromium firefox webkit
+
+# Or install with system dependencies
+playwright install --with-deps</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#issue3">
+                                        "Permission denied" errors on Linux
+                                    </button>
+                                </h2>
+                                <div id="issue3" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                                    <div class="accordion-body">
+                                        <pre><code class="language-bash"># Solution: Install system dependencies
+sudo apt install -y libnss3 libatk-bridge2.0-0 libdrm2 libxkbcommon0 libgtk-3-0 libgbm1
+
+# Or use with-deps flag
+playwright install --with-deps</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#issue4">
+                                        "SSL certificate verify failed" on macOS
+                                    </button>
+                                </h2>
+                                <div id="issue4" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                                    <div class="accordion-body">
+                                        <pre><code class="language-bash"># Solution: Install certificates
+/Applications/Python\ 3.x/Install\ Certificates.command
+
+# Or update certificates
+pip install --upgrade certifi</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Diagnostic Script</h4>
+                        <pre><code class="language-python"># diagnostic.py
+import sys
+import subprocess
+
+def run_diagnostics():
+    print("🔍 GA-Scrap Installation Diagnostics")
+    print("=" * 40)
+    
+    # Python version
+    print(f"Python version: {sys.version}")
+    
+    # Try importing GA-Scrap
+    try:
+        from ga_scrap import SyncGAScrap
+        print("✅ GA-Scrap import successful")
+    except ImportError as e:
+        print(f"❌ GA-Scrap import failed: {e}")
+    
+    # Try importing Playwright
+    try:
+        from playwright.sync_api import sync_playwright
+        print("✅ Playwright import successful")
+    except ImportError as e:
+        print(f"❌ Playwright import failed: {e}")
+    
+    # Check browser installation
+    try:
+        result = subprocess.run(["playwright", "--version"], 
+                              capture_output=True, text=True)
+        print(f"✅ Playwright CLI: {result.stdout.strip()}")
+    except FileNotFoundError:
+        print("❌ Playwright CLI not found")
+
+if __name__ == "__main__":
+    run_diagnostics()</code></pre>
+                    </section>
+
+                    <!-- Support Resources -->
+                    <section class="mb-5">
+                        <h2><i class="bi bi-question-circle"></i> Support Resources</h2>
+                        
+                        <div class="row g-4">
+                            <div class="col-lg-3">
+                                <div class="card text-center h-100">
+                                    <div class="card-body">
+                                        <i class="bi bi-github fs-1 text-dark"></i>
+                                        <h5 class="card-title">GitHub Issues</h5>
+                                        <p class="card-text">Report bugs and request features</p>
+                                        <a href="https://github.com/GrandpaAcademy/GA-Scrap/issues" class="btn btn-outline-dark">Report Issue</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3">
+                                <div class="card text-center h-100">
+                                    <div class="card-body">
+                                        <i class="bi bi-chat-dots fs-1 text-primary"></i>
+                                        <h5 class="card-title">Discussions</h5>
+                                        <p class="card-text">Ask questions and get help</p>
+                                        <a href="https://github.com/GrandpaAcademy/GA-Scrap/discussions" class="btn btn-outline-primary">Ask Question</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3">
+                                <div class="card text-center h-100">
+                                    <div class="card-body">
+                                        <i class="bi bi-book fs-1 text-success"></i>
+                                        <h5 class="card-title">Playwright Docs</h5>
+                                        <p class="card-text">Official Playwright documentation</p>
+                                        <a href="https://playwright.dev" class="btn btn-outline-success">View Docs</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3">
+                                <div class="card text-center h-100">
+                                    <div class="card-body">
+                                        <i class="bi bi-python fs-1 text-warning"></i>
+                                        <h5 class="card-title">Python Help</h5>
+                                        <p class="card-text">Python installation assistance</p>
+                                        <a href="https://python.org" class="btn btn-outline-warning">Python.org</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Success Message -->
+                    <div class="text-center my-5 py-5 bg-light rounded">
+                        <h3 class="text-success">🎉 Installation Complete!</h3>
+                        <p class="lead">You're ready to start scraping with GA-Scrap!</p>
+                        <a href="getting-started.html" class="btn btn-success btn-lg me-3">
+                            <i class="bi bi-rocket"></i> Get Started
+                        </a>
+                        <!-- <a href="playground.html" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-play-circle"></i> Try Playground
+                        </a> -->
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="d-flex justify-content-between mt-5 pt-4 border-top">
+                        <a href="../../index.html" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Home
+                        </a>
+                        <a href="getting-started.html" class="btn btn-primary">
+                            Getting Started <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

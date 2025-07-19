@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hot Reload - GA-Scrap Documentation</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../../index.html">
+                <i class="bi bi-spider text-warning"></i> GA-Scrap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="getting-started.html">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="hot-reload.html">Hot Reload</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="playground.html">Playground</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="doc-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 doc-sidebar">
+                    <div class="doc-nav">
+                        <h6 class="text-muted text-uppercase fw-bold mb-3">Hot Reload</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link active" href="#overview">What is Hot Reload?</a>
+                            <a class="nav-link" href="#comparison">Traditional vs Hot Reload</a>
+                            <a class="nav-link" href="#quick-start">Quick Start</a>
+                            <a class="nav-link" href="#cli-commands">CLI Commands</a>
+                            <a class="nav-link" href="#project-structure">Project Structure</a>
+                            <a class="nav-link" href="#configuration">Configuration</a>
+                            <a class="nav-link" href="#workflow">Development Workflow</a>
+                            <a class="nav-link" href="#advanced">Advanced Features</a>
+                            <a class="nav-link" href="#ide-integration">IDE Integration</a>
+                            <a class="nav-link" href="#debugging">Debugging</a>
+                            <a class="nav-link" href="#best-practices">Best Practices</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="col-lg-9 doc-content">
+                    <div class="mb-4">
+                        <h1 class="display-4 fw-bold">
+                            <i class="bi bi-lightning text-warning"></i> Hot Reload
+                        </h1>
+                        <p class="lead">Faster Development with Instant Feedback</p>
+                        <p class="text-muted">Edit code, see changes immediately</p>
+                    </div>
+
+                    <!-- Overview -->
+                    <section id="overview" class="mb-5">
+                        <h2><i class="bi bi-info-circle"></i> What is Hot Reload?</h2>
+                        <p>Hot reload automatically restarts your scraper when you edit your code, while keeping the browser session active. This dramatically speeds up development by eliminating manual restarts.</p>
+                        
+                        <div class="alert alert-success">
+                            <i class="bi bi-rocket"></i>
+                            <strong>Speed Boost:</strong> Reduce development iteration time from 30-60 seconds to just 2-5 seconds!
+                        </div>
+                    </section>
+
+                    <!-- Comparison -->
+                    <section id="comparison" class="mb-5">
+                        <h2><i class="bi bi-arrow-left-right"></i> Traditional vs Hot Reload Development</h2>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card border-danger h-100">
+                                    <div class="card-header bg-danger text-white">
+                                        <h5 class="mb-0"><i class="bi bi-emoji-frown"></i> Traditional Development</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ol>
+                                            <li>Write code</li>
+                                            <li>Run script</li>
+                                            <li>Test in browser</li>
+                                            <li>Stop script</li>
+                                            <li>Edit code</li>
+                                            <li><strong>Repeat from step 2</strong> 😫</li>
+                                        </ol>
+                                        <div class="alert alert-danger mt-3">
+                                            <strong>Time per iteration: ~30-60 seconds</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-emoji-smile"></i> Hot Reload Development</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ol>
+                                            <li>Write code</li>
+                                            <li>Run with hot reload</li>
+                                            <li>Edit code</li>
+                                            <li><strong>Changes applied instantly</strong> ✨</li>
+                                        </ol>
+                                        <div class="alert alert-success mt-3">
+                                            <strong>Time per iteration: ~2-5 seconds</strong>
+                                        </div>
+                                        <div class="mt-3">
+                                            <span class="badge bg-success">10x Faster</span>
+                                            <span class="badge bg-info">No Manual Restarts</span>
+                                            <span class="badge bg-warning text-dark">Browser Stays Open</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Start -->
+                    <section id="quick-start" class="mb-5">
+                        <h2><i class="bi bi-play-circle"></i> Quick Start</h2>
+
+                        <h4>Using CLI Command</h4>
+                        <pre><code class="language-bash"># Start any script with hot reload
+ga-scrap run my_scraper.py
+
+# Start development server
+ga-scrap dev
+
+# Run with specific app directory
+ga-scrap dev --app-dir ./my-scraper</code></pre>
+
+                        <h4 class="mt-4">Using Python API</h4>
+                        <pre><code class="language-python">from ga_scrap.hot_reload import HotReloadScraper
+
+# Enable hot reload for your scraper
+scraper = HotReloadScraper("my_scraper.py")
+scraper.start()</code></pre>
+                    </section>
+
+                    <!-- CLI Commands -->
+                    <section id="cli-commands" class="mb-5">
+                        <h2><i class="bi bi-terminal"></i> CLI Commands</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <h5>Basic Hot Reload</h5>
+                                <pre><code class="language-bash"># Run any Python file with hot reload
+ga-scrap run scraper.py
+
+# Run with custom configuration
+ga-scrap run scraper.py --headless --timeout 60000
+
+# Run with sandbox mode
+ga-scrap run scraper.py --sandbox</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Development Server</h5>
+                                <pre><code class="language-bash"># Start development server (looks for main.py)
+ga-scrap dev
+
+# Specify custom entry point
+ga-scrap dev --entry custom_scraper.py
+
+# Run in specific directory
+ga-scrap dev --app-dir ./my-project</code></pre>
+                            </div>
+                        </div>
+
+                        <h5 class="mt-4">Advanced Options</h5>
+                        <pre><code class="language-bash"># Watch specific file patterns
+ga-scrap run scraper.py --watch "*.py,*.json,*.yaml"
+
+# Exclude patterns from watching
+ga-scrap run scraper.py --exclude "*.log,__pycache__/*"
+
+# Set custom restart delay
+ga-scrap run scraper.py --delay 2000  # 2 second delay
+
+# Development with custom browser
+ga-scrap dev --browser firefox</code></pre>
+                    </section>
+
+                    <!-- Project Structure -->
+                    <section id="project-structure" class="mb-5">
+                        <h2><i class="bi bi-folder"></i> Project Structure for Hot Reload</h2>
+
+                        <h4>Recommended Structure</h4>
+                        <pre><code class="language-text">my-scraper/
+├── main.py              # Entry point
+├── config.yaml          # Configuration
+├── scrapers/
+│   ├── __init__.py
+│   ├── product_scraper.py
+│   └── news_scraper.py
+├── utils/
+│   ├── __init__.py
+│   └── helpers.py
+└── data/
+    └── output/</code></pre>
+
+                        <h4 class="mt-4">Example main.py</h4>
+                        <pre><code class="language-python"># main.py
+from ga_scrap import SyncGAScrap
+from scrapers.product_scraper import scrape_products
+from utils.helpers import save_data
+
+def main():
+    """Main scraper function - hot reload will restart this"""
+    print("🚀 Starting scraper...")
+    
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        # Your scraping logic here
+        data = scrape_products(scraper)
+        save_data(data, "products.json")
+        
+        print(f"✅ Scraped {len(data)} products")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+                        <h4 class="mt-4">Example config.yaml</h4>
+                        <pre><code class="language-yaml"># config.yaml
+app:
+  name: "Product Scraper"
+  version: "1.0.0"
+
+browser:
+  headless: false
+  timeout: 30000
+  sandbox_mode: true
+
+scraping:
+  base_url: "https://example.com"
+  delay: 1000
+  max_pages: 10
+
+hot_reload:
+  watch_patterns: ["*.py", "*.yaml", "*.json"]
+  exclude_patterns: ["*.log", "__pycache__/*"]
+  restart_delay: 1000</code></pre>
+                    </section>
+
+                    <!-- Configuration -->
+                    <section id="configuration" class="mb-5">
+                        <h2><i class="bi bi-gear"></i> Configuration</h2>
+
+                        <h4>Hot Reload Settings</h4>
+                        <pre><code class="language-python">from ga_scrap.hot_reload import HotReloadScraper
+
+scraper = HotReloadScraper(
+    script_path="my_scraper.py",
+    watch_patterns=["*.py", "*.yaml"],  # Files to watch
+    exclude_patterns=["*.log"],         # Files to ignore
+    restart_delay=1000,                 # Delay before restart (ms)
+    browser_persist=True,               # Keep browser open
+    debug=True                          # Show reload messages
+)</code></pre>
+
+                        <h4 class="mt-4">Environment Variables</h4>
+                        <pre><code class="language-bash"># Set hot reload preferences
+export GA_SCRAP_HOT_RELOAD=true
+export GA_SCRAP_WATCH_PATTERNS="*.py,*.json"
+export GA_SCRAP_RESTART_DELAY=2000
+
+# Run your scraper
+python my_scraper.py</code></pre>
+                    </section>
+
+                    <!-- Development Workflow -->
+                    <section id="workflow" class="mb-5">
+                        <h2><i class="bi bi-diagram-3"></i> Development Workflow</h2>
+
+                        <h4>Typical Development Session</h4>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <pre><code class="language-bash"># 1. Start development server
+ga-scrap dev
+
+# 2. Edit your code in your favorite editor
+# 3. Save file
+# 4. See changes instantly in browser
+# 5. Repeat steps 2-4</code></pre>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="alert alert-info">
+                                    <i class="bi bi-lightbulb"></i>
+                                    <strong>Pro Tip:</strong> Keep your browser and editor side by side for instant feedback!
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Example Development Flow</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h6>Version 1 - Basic Scraper</h6>
+                                <pre><code class="language-python"># main.py - Version 1
+from ga_scrap import SyncGAScrap
+
+def main():
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        scraper.goto("https://quotes.toscrape.com")
+        quotes = scraper.get_all_text(".quote .text")
+        print(f"Found {len(quotes)} quotes")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                                <p class="text-muted"><strong>Save file → Hot reload triggers → See results</strong></p>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h6>Version 2 - Enhanced Scraper</h6>
+                                <pre><code class="language-python"># main.py - Version 2 (add authors)
+from ga_scrap import SyncGAScrap
+
+def main():
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        scraper.goto("https://quotes.toscrape.com")
+        quotes = scraper.get_all_text(".quote .text")
+        authors = scraper.get_all_text(".quote .author")  # Added this line
+        
+        for quote, author in zip(quotes, authors):
+            print(f'"{quote}" - {author}')
+
+if __name__ == "__main__":
+    main()</code></pre>
+                                <p class="text-muted"><strong>Save file → Hot reload triggers → See enhanced results</strong></p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Advanced Features -->
+                    <section id="advanced" class="mb-5">
+                        <h2><i class="bi bi-cpu"></i> Advanced Features</h2>
+
+                        <h4>Conditional Hot Reload</h4>
+                        <pre><code class="language-python">import os
+from ga_scrap import SyncGAScrap
+
+def main():
+    # Enable hot reload only in development
+    is_dev = os.getenv("ENVIRONMENT") == "development"
+    
+    scraper_config = {
+        "sandbox_mode": is_dev,
+        "headless": not is_dev,
+        "debug": is_dev
+    }
+    
+    with SyncGAScrap(**scraper_config) as scraper:
+        # Your scraping logic
+        pass
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+                        <h4 class="mt-4">State Persistence</h4>
+                        <pre><code class="language-python">import json
+import os
+from ga_scrap import SyncGAScrap
+
+def load_state():
+    """Load previous state if exists"""
+    if os.path.exists("scraper_state.json"):
+        with open("scraper_state.json", "r") as f:
+            return json.load(f)
+    return {"page": 1, "scraped_urls": []}
+
+def save_state(state):
+    """Save current state for hot reload"""
+    with open("scraper_state.json", "w") as f:
+        json.dump(state, f)
+
+def main():
+    # Load previous state
+    state = load_state()
+    
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        # Continue from where we left off
+        start_page = state.get("page", 1)
+        scraped_urls = state.get("scraped_urls", [])
+        
+        for page in range(start_page, 11):  # Pages 1-10
+            url = f"https://example.com/page/{page}"
+            
+            if url in scraped_urls:
+                continue  # Skip already scraped pages
+            
+            scraper.goto(url)
+            data = scraper.get_all_text(".content")
+            
+            # Update state
+            scraped_urls.append(url)
+            state = {"page": page + 1, "scraped_urls": scraped_urls}
+            save_state(state)
+            
+            print(f"Scraped page {page}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+                        <h4 class="mt-4">Multi-File Watching</h4>
+                        <pre><code class="language-python"># scraper_manager.py
+from ga_scrap.hot_reload import HotReloadScraper
+
+class ScraperManager:
+    def __init__(self):
+        self.scraper = HotReloadScraper(
+            script_path="main.py",
+            watch_patterns=[
+                "*.py",           # Python files
+                "config/*.yaml",  # Configuration files
+                "templates/*.html", # Template files
+                "data/*.json"     # Data files
+            ],
+            exclude_patterns=[
+                "*.log",
+                "__pycache__/*",
+                "*.pyc",
+                "output/*"
+            ]
+        )
+    
+    def start(self):
+        print("🔥 Starting hot reload scraper manager...")
+        self.scraper.start()
+
+if __name__ == "__main__":
+    manager = ScraperManager()
+    manager.start()</code></pre>
+                    </section>
+
+                    <!-- IDE Integration -->
+                    <section id="ide-integration" class="mb-5">
+                        <h2><i class="bi bi-code-square"></i> IDE Integration</h2>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5>VS Code Setup</h5>
+                                <pre><code class="language-json">// .vscode/tasks.json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "GA-Scrap Hot Reload",
+            "type": "shell",
+            "command": "ga-scrap",
+            "args": ["run", "${file}"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            }
+        }
+    ]
+}</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>PyCharm Setup</h5>
+                                <ol>
+                                    <li>Go to <strong>Run > Edit Configurations</strong></li>
+                                    <li>Add new <strong>Python</strong> configuration</li>
+                                    <li>Set <strong>Script path</strong> to <code>ga-scrap</code></li>
+                                    <li>Set <strong>Parameters</strong> to <code>run your_script.py</code></li>
+                                    <li>Set <strong>Working directory</strong> to your project folder</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Debugging -->
+                    <section id="debugging" class="mb-5">
+                        <h2><i class="bi bi-bug"></i> Debugging with Hot Reload</h2>
+
+                        <h4>Debug Mode</h4>
+                        <pre><code class="language-bash"># Enable debug output
+ga-scrap run scraper.py --debug
+
+# Show file watching events
+ga-scrap run scraper.py --verbose</code></pre>
+
+                        <h4 class="mt-4">Debug Output Example</h4>
+                        <div class="alert alert-dark">
+                            <pre class="mb-0">🔥 Hot reload started for: scraper.py
+📁 Watching patterns: *.py, *.yaml
+🚫 Excluding patterns: *.log, __pycache__/*
+🚀 Starting scraper...
+
+📝 File changed: scraper.py
+⏳ Waiting 1000ms before restart...
+🔄 Restarting scraper...
+🚀 Starting scraper...
+
+📝 File changed: config.yaml
+⏳ Waiting 1000ms before restart...
+🔄 Restarting scraper...
+🚀 Starting scraper...</pre>
+                        </div>
+
+                        <h4 class="mt-4">Troubleshooting</h4>
+                        <pre><code class="language-python"># Check if hot reload is working
+import os
+print(f"Hot reload enabled: {os.getenv('GA_SCRAP_HOT_RELOAD', 'false')}")
+
+# Manual reload trigger
+from ga_scrap.hot_reload import trigger_reload
+trigger_reload()</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="mb-5">
+                        <h2><i class="bi bi-star"></i> Best Practices</h2>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-check-circle"></i> Do's</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-success"></i> <strong>Use sandbox mode</strong> during development</li>
+                                            <li><i class="bi bi-check text-success"></i> <strong>Keep browser visible</strong> to see changes</li>
+                                            <li><i class="bi bi-check text-success"></i> <strong>Save frequently</strong> to trigger reloads</li>
+                                            <li><i class="bi bi-check text-success"></i> <strong>Use meaningful print statements</strong> for debugging</li>
+                                            <li><i class="bi bi-check text-success"></i> <strong>Structure code in modules</strong> for better organization</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card border-warning h-100">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Don'ts</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-x text-danger"></i> <strong>Don't use hot reload in production</strong></li>
+                                            <li><i class="bi bi-x text-danger"></i> <strong>Don't watch too many files</strong> (performance impact)</li>
+                                            <li><i class="bi bi-x text-danger"></i> <strong>Don't forget to handle state</strong> for long-running scrapers</li>
+                                            <li><i class="bi bi-x text-danger"></i> <strong>Don't rely on hot reload for critical data</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Example Best Practice Setup</h4>
+                        <pre><code class="language-python"># main.py
+import os
+from ga_scrap import SyncGAScrap
+
+def main():
+    # Development configuration
+    is_dev = os.getenv("ENVIRONMENT", "development") == "development"
+    
+    config = {
+        "sandbox_mode": is_dev,
+        "headless": not is_dev,
+        "debug": is_dev,
+        "timeout": 10000 if is_dev else 30000
+    }
+    
+    with SyncGAScrap(**config) as scraper:
+        if is_dev:
+            print("🔥 Development mode with hot reload")
+        
+        # Your scraping logic here
+        scraper.goto("https://example.com")
+        data = scraper.get_text(".content")
+        print(f"Scraped: {data[:100]}...")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                    </section>
+
+                    <!-- Call to Action -->
+                    <div class="text-center my-5 py-5 bg-light rounded">
+                        <h3 class="text-warning">⚡ Hot Reload: Supercharge Your Development!</h3>
+                        <p class="lead">Experience 10x faster development cycles with instant feedback.</p>
+                        <!-- <a href="playground.html" class="btn btn-warning btn-lg me-3">
+                            <i class="bi bi-play-circle"></i> Try in Playground
+                        </a> -->
+                        <a href="architecture.html" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-cpu"></i> Learn Architecture
+                        </a>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="d-flex justify-content-between mt-5 pt-4 border-top">
+                        <a href="playwright-api.html" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Playwright API
+                        </a>
+                        <a href="architecture.html" class="btn btn-primary">
+                            Architecture <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

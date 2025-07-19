@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GA-Scrap - The Ultimate Web Scraping Library</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="docs/web/css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home">
+                <i class="bi bi-spider text-warning"></i> GA-Scrap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Documentation
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="docs/web/getting-started.html">Getting Started</a></li>
+                            <li><a class="dropdown-item" href="docs/web/installation.html">Installation</a></li>
+                            <li><a class="dropdown-item" href="docs/web/examples.html">Examples</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="docs/web/sync-interface.html">Sync Interface</a></li>
+                            <li><a class="dropdown-item" href="docs/web/sandbox-mode.html">Sandbox Mode</a></li>
+                            <li><a class="dropdown-item" href="docs/web/hot-reload.html">Hot Reload</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="docs/web/playwright-api.html">Playwright API</a></li>
+                            <li><a class="dropdown-item" href="docs/web/architecture.html">Architecture</a></li>
+                        </ul>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="docs/web/playground.html">Playground</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/GrandpaAcademy/GA-Scrap" target="_blank">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="display-3 fw-bold mb-4 fade-in-up">
+                            <i class="bi bi-spider text-warning float"></i> <span class="animated-gradient">GA-Scrap</span>
+                        </h1>
+                        <p class="lead mb-4 fade-in-up stagger-1">
+                            The Ultimate Web Scraping Library
+                        </p>
+                        <p class="fs-5 text-muted mb-5 fade-in-up stagger-2">
+                            Playwright-powered • Developer-friendly • Production-ready
+                        </p>
+                        
+                        <div class="d-flex flex-wrap gap-3 mb-5 fade-in-up stagger-3">
+                            <span class="badge bg-primary fs-6 px-3 py-2 glow-on-hover">Python 3.8+</span>
+                            <span class="badge bg-success fs-6 px-3 py-2 glow-on-hover">Playwright Latest</span>
+                            <span class="badge bg-warning text-dark fs-6 px-3 py-2 glow-on-hover">MIT License</span>
+                            <span class="badge bg-info fs-6 px-3 py-2 glow-on-hover">Production Ready</span>
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-3 fade-in-up stagger-4">
+                            <a href="docs/web/getting-started.html" class="btn btn-primary btn-lg magnetic-btn ripple">
+                                <i class="bi bi-rocket"></i> Get Started
+                            </a>
+                            <a href="docs/web/examples.html" class="btn btn-outline-light btn-lg magnetic-btn">
+                                <i class="bi bi-code-slash"></i> View Examples
+                            </a>
+                            <!-- <a href="docs/web/playground.html" class="btn btn-outline-warning btn-lg">
+                                <i class="bi bi-play-circle"></i> Try Online
+                            </a> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 fade-in-right">
+                    <div class="hero-code">
+                        <div class="code-window glow-on-hover">
+                            <div class="code-header">
+                                <div class="code-buttons">
+                                    <span class="code-button red float"></span>
+                                    <span class="code-button yellow float-delayed"></span>
+                                    <span class="code-button green float"></span>
+                                </div>
+                                <span class="code-title">your_first_scraper.py</span>
+                            </div>
+                            <pre><code class="language-python" id="animated-code">
+<span class="code-line" data-delay="0">
+<span class="code-keyword">from</span> <span class="code-module">ga_scrap</span> <span class="code-keyword">import</span> <span class="code-class">SyncGAScrap</span>
+</span>
+
+<span class="code-line" data-delay="1000">
+<span class="code-keyword">with</span> <span class="code-class">SyncGAScrap</span>(<span class="code-param">sandbox_mode</span>=<span class="code-bool">True</span>) <span class="code-keyword">as</span> <span class="code-var">scraper</span>:
+</span>
+<span class="code-line" data-delay="2000">
+    <span class="code-var">scraper</span>.<span class="code-method">goto</span>(<span class="code-string">"https://quotes.toscrape.com"</span>)
+</span>
+<span class="code-line" data-delay="3000">
+    <span class="code-var">quotes</span> = <span class="code-var">scraper</span>.<span class="code-method">get_all_text</span>(<span class="code-string">".quote .text"</span>)
+</span>
+<span class="code-line" data-delay="4000">
+    <span class="code-var">authors</span> = <span class="code-var">scraper</span>.<span class="code-method">get_all_text</span>(<span class="code-string">".quote .author"</span>)
+</span>
+<span class="code-line" data-delay="5000">
+
+</span>
+<span class="code-line" data-delay="6000">
+    <span class="code-keyword">for</span> <span class="code-var">quote</span>, <span class="code-var">author</span> <span class="code-keyword">in</span> <span class="code-builtin">zip</span>(<span class="code-var">quotes</span>, <span class="code-var">authors</span>):
+</span>
+<span class="code-line" data-delay="7000">
+        <span class="code-builtin">print</span>(<span class="code-string">f'"{quote}" - {author}'</span>)
+</span>
+<span class="code-line" data-delay="8000">
+<span class="code-comment"># ✨ That's it! No async/await needed!</span>
+</span>
+</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold fade-in-up">What Makes GA-Scrap Special?</h2>
+                    <p class="lead text-muted fade-in-up stagger-1">Powerful features designed for modern web scraping</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4 fade-in-up stagger-2">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="bi bi-lightning-charge float"></i>
+                        </div>
+                        <h4>Simple & Powerful</h4>
+                        <p>No async/await complexity. Just simple Python code that works.</p>
+                        <a href="docs/web/sync-interface.html" class="btn btn-outline-primary btn-sm">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 fade-in-up stagger-3">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check float-delayed"></i>
+                        </div>
+                        <h4>Error-Resilient</h4>
+                        <p>Sandbox mode prevents crashes during development. Never lose progress again.</p>
+                        <a href="docs/web/sandbox-mode.html" class="btn btn-outline-primary btn-sm">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 fade-in-up stagger-4">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="bi bi-gear-wide-connected float"></i>
+                        </div>
+                        <h4>Complete Playwright</h4>
+                        <p>Access every Playwright feature from A-Z. Full control when you need it.</p>
+                        <a href="docs/web/playwright-api.html" class="btn btn-outline-primary btn-sm">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 fade-in-up stagger-5">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="bi bi-phone float-delayed"></i>
+                        </div>
+                        <h4>Device Emulation</h4>
+                        <p>Mobile, tablet, desktop - scrape any device with built-in emulation.</p>
+                        <a href="docs/web/examples.html#mobile" class="btn btn-outline-primary btn-sm">Learn More</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 fade-in-up stagger-2">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="bi bi-arrow-repeat float"></i>
+                        </div>
+                        <h4>Hot Reload</h4>
+                        <p>Edit code and see changes instantly. Fastest development workflow ever.</p>
+                        <a href="docs/web/hot-reload.html" class="btn btn-outline-primary btn-sm">Learn More</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="bi bi-terminal"></i>
+                        </div>
+                        <h4>Beautiful CLI</h4>
+                        <p>Powerful command-line tools for quick scraping and project management.</p>
+                        <a href="docs/web/cli.html" class="btn btn-outline-primary btn-sm">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold">Choose Your Learning Path</h2>
+                    <p class="lead text-muted">From beginner to expert - we've got you covered</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="learning-path beginner">
+                        <div class="path-header">
+                            <i class="bi bi-mortarboard"></i>
+                            <h3>Beginner</h3>
+                            <p>New to web scraping?</p>
+                        </div>
+                        <div class="path-content">
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle text-success"></i> Getting Started Guide</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Installation Help</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Basic Examples</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Common Patterns</li>
+                            </ul>
+                            <a href="docs/web/getting-started.html" class="btn btn-primary w-100">Start Learning</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="learning-path developer">
+                        <div class="path-header">
+                            <i class="bi bi-code-slash"></i>
+                            <h3>Developer</h3>
+                            <p>Building scrapers?</p>
+                        </div>
+                        <div class="path-content">
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle text-success"></i> Sandbox Mode</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Sync Interface</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Hot Reload</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Real Examples</li>
+                            </ul>
+                            <a href="docs/web/sandbox-mode.html" class="btn btn-success w-100">Build Scrapers</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="learning-path advanced">
+                        <div class="path-header">
+                            <i class="bi bi-cpu"></i>
+                            <h3>Advanced</h3>
+                            <p>Need full control?</p>
+                        </div>
+                        <div class="path-content">
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle text-success"></i> Playwright API</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Architecture</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Performance</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Contributing</li>
+                            </ul>
+                            <a href="docs/web/playwright-api.html" class="btn btn-warning w-100">Master GA-Scrap</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-gradient text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5><i class="bi bi-spider text-warning"></i> GA-Scrap</h5>
+                    <p class="text-muted">The ultimate web scraping library for Python developers.</p>
+                    <div class="d-flex gap-3 social-links">
+                        <a href="https://github.com/GrandpaAcademy/GA-Scrap" class="text-light">
+                            <i class="bi bi-github fs-4"></i>
+                        </a>
+                        <!-- <a href="#" class="text-light">
+                            <i class="bi bi-twitter fs-4"></i>
+                        </a>
+                        <a href="#" class="text-light">
+                            <i class="bi bi-discord fs-4"></i> 
+                        </a> -->
+                    </div>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h6>Documentation</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="docs/web/getting-started.html" class="text-muted">Getting Started</a></li>
+                        <li><a href="docs/web/installation.html" class="text-muted">Installation</a></li>
+                        <li><a href="docs/web/examples.html" class="text-muted">Examples</a></li>
+                        <!-- <li><a href="docs/web/playground.html" class="text-muted">Playground</a></li> -->
+                    </ul>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h6>Features</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="docs/web/sync-interface.html" class="text-muted">Sync Interface</a></li>
+                        <li><a href="docs/web/sandbox-mode.html" class="text-muted">Sandbox Mode</a></li>
+                        <li><a href="docs/web/hot-reload.html" class="text-muted">Hot Reload</a></li>
+                        <li><a href="docs/web/playwright-api.html" class="text-muted">Playwright API</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h6>Advanced</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="docs/web/architecture.html" class="text-muted">Architecture</a></li>
+                        <li><a href="docs/web/performance.html" class="text-muted">Performance</a></li>
+                        <li><a href="docs/web/contributing.html" class="text-muted">Contributing</a></li>
+                        <li><a href="docs/web/api-reference.html" class="text-muted">API Reference</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h6>Community</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted">Discord</a></li>
+                        <li><a href="#" class="text-muted">Discussions</a></li>
+                        <li><a href="#" class="text-muted">Issues</a></li>
+                        <li><a href="#" class="text-muted">Changelog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-muted">© 2024 Grandpa Academy. MIT License.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 text-muted">Made with ❤️ for the Python community</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Custom JS -->
+    <script src="docs/web/js/main.js"></script>
+
+    <!-- Enhanced Animation Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Code Animation
+            const codeLines = document.querySelectorAll('.code-line');
+            let animationStarted = false;
+
+            function startCodeAnimation() {
+                if (animationStarted) return;
+                animationStarted = true;
+
+                codeLines.forEach((line, index) => {
+                    const delay = parseInt(line.getAttribute('data-delay')) || 0;
+                    setTimeout(() => {
+                        line.style.opacity = '1';
+                        line.style.transform = 'translateY(0)';
+                    }, delay);
+                });
+
+                // Restart animation after completion
+                setTimeout(() => {
+                    animationStarted = false;
+                    codeLines.forEach(line => {
+                        line.style.opacity = '0';
+                        line.style.transform = 'translateY(10px)';
+                    });
+                    setTimeout(startCodeAnimation, 2000); // 2 second pause before restart
+                }, 10000); // Total animation duration
+            }
+
+            // Scroll-triggered animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for scroll animations
+            const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right, .slide-in-bottom');
+            console.log('Found animated elements:', animatedElements.length);
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // Fallback: Show elements after 3 seconds if observer doesn't work
+            setTimeout(() => {
+                animatedElements.forEach(el => {
+                    if (!el.classList.contains('visible')) {
+                        el.classList.add('visible');
+                    }
+                });
+            }, 3000);
+
+            // Start code animation when hero section is visible
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                const heroObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setTimeout(startCodeAnimation, 1000); // 1 second delay
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                heroObserver.observe(heroSection);
+            }
+
+            // Add bounce animation to CTA buttons after page load
+            setTimeout(() => {
+                document.querySelectorAll('.btn-primary').forEach(btn => {
+                    btn.classList.add('bounce-in');
+                });
+            }, 1000);
+
+            // Add floating animation to feature icons
+            setTimeout(() => {
+                document.querySelectorAll('.card .bi').forEach((icon, index) => {
+                    if (index % 2 === 0) {
+                        icon.classList.add('float');
+                    } else {
+                        icon.classList.add('float-delayed');
+                    }
+                });
+            }, 2000);
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add pulse animation to important badges
+            setTimeout(() => {
+                document.querySelectorAll('.badge-warning, .badge-success').forEach(badge => {
+                    badge.classList.add('pulse');
+                });
+            }, 3000);
+
+            // Also start immediately if hero is already visible
+            setTimeout(startCodeAnimation, 2000);
+        });
+    </script>
+</body>
+</html>

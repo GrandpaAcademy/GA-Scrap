@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandbox Mode - GA-Scrap Documentation</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../../index.html">
+                <i class="bi bi-spider text-warning"></i> GA-Scrap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="getting-started.html">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="sandbox-mode.html">Sandbox Mode</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="playground.html">Playground</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="doc-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 doc-sidebar">
+                    <div class="doc-nav">
+                        <h6 class="text-muted text-uppercase fw-bold mb-3">Sandbox Mode</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link active" href="#overview">What is Sandbox Mode?</a>
+                            <a class="nav-link" href="#comparison">Traditional vs Sandbox</a>
+                            <a class="nav-link" href="#quick-start">Quick Start</a>
+                            <a class="nav-link" href="#error-handling">Error Handling</a>
+                            <a class="nav-link" href="#development-workflow">Development Workflow</a>
+                            <a class="nav-link" href="#configuration">Configuration</a>
+                            <a class="nav-link" href="#best-practices">Best Practices</a>
+                            <a class="nav-link" href="#advanced">Advanced Features</a>
+                        </nav>
+                        
+                        <h6 class="text-muted text-uppercase fw-bold mb-3 mt-4">Related</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link" href="sync-interface.html">
+                                <i class="bi bi-arrow-repeat"></i> Sync Interface
+                            </a>
+                            <a class="nav-link" href="hot-reload.html">
+                                <i class="bi bi-lightning"></i> Hot Reload
+                            </a>
+                            <a class="nav-link" href="examples.html">
+                                <i class="bi bi-code-slash"></i> Examples
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="col-lg-9 doc-content">
+                    <div class="mb-4">
+                        <h1 class="display-4 fw-bold">
+                            <i class="bi bi-shield-check text-success"></i> Sandbox Mode
+                        </h1>
+                        <p class="lead">Error-Resilient Development Made Easy</p>
+                        <p class="text-muted">Never crash again during development!</p>
+                    </div>
+
+                    <!-- Overview -->
+                    <section id="overview" class="mb-5">
+                        <h2><i class="bi bi-info-circle"></i> What is Sandbox Mode?</h2>
+                        <p>Sandbox mode is GA-Scrap's <strong>game-changing feature</strong> that makes web scraping development completely crash-proof. When enabled, errors are logged and handled gracefully instead of stopping your scraper.</p>
+                        
+                        <div class="alert alert-success">
+                            <i class="bi bi-lightbulb"></i>
+                            <strong>Key Benefit:</strong> Your browser stays active during errors, allowing you to debug and fix issues immediately without restarting.
+                        </div>
+                    </section>
+
+                    <!-- Comparison -->
+                    <section id="comparison" class="mb-5">
+                        <h2><i class="bi bi-arrow-left-right"></i> Traditional vs Sandbox Mode</h2>
+                        
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="card border-danger h-100">
+                                    <div class="card-header bg-danger text-white">
+                                        <h5 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Traditional Scraping</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-python">scraper.goto("https://example.com")
+scraper.click("#button")  # ❌ Element not found
+# 💥 CRASH! Script stops here
+scraper.screenshot("never_reached.png")</code></pre>
+                                        <p class="text-danger mt-3"><strong>Result:</strong> Script crashes, browser closes, you lose progress.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-shield-check"></i> Sandbox Mode</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")
+    scraper.click("#button")  # ❌ Error logged, continues
+    scraper.screenshot("still_works.png")  # ✅ Works!</code></pre>
+                                        <p class="text-success mt-3"><strong>Result:</strong> Error logged, script continues, browser stays open.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Start -->
+                    <section id="quick-start" class="mb-5">
+                        <h2><i class="bi bi-play-circle"></i> Quick Start</h2>
+                        
+                        <h4>Enable Sandbox Mode</h4>
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+
+# Enable sandbox mode - that's it!
+with SyncGAScrap(sandbox_mode=True) as scraper:
+    # Your scraping code here
+    pass</code></pre>
+
+                        <h4 class="mt-4">Both Interfaces Support Sandbox Mode</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h6>Synchronous Interface</h6>
+                                <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")</code></pre>
+                            </div>
+                            <div class="col-lg-6">
+                                <h6>Asynchronous Interface</h6>
+                                <pre><code class="language-python">async with GAScrap(sandbox_mode=True) as scraper:
+    await scraper.goto("https://example.com")</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Error Handling Examples -->
+                    <section id="error-handling" class="mb-5">
+                        <h2><i class="bi bi-bug"></i> Error Handling Examples</h2>
+
+                        <div class="accordion" id="errorExamples">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#example1">
+                                        <i class="bi bi-search"></i> &nbsp; Example 1: Element Not Found
+                                    </button>
+                                </h2>
+                                <div id="example1" class="accordion-collapse collapse show" data-bs-parent="#errorExamples">
+                                    <div class="accordion-body">
+                                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")
+    
+    # These selectors might not exist
+    scraper.click("#non-existent-button")
+    scraper.input("#fake-input", "test")
+    scraper.hover("#missing-element")
+    
+    # This still works perfectly!
+    scraper.screenshot("debug.png")
+    title = scraper.get_text("h1")  # This works
+    print(f"Page title: {title}")</code></pre>
+                                        
+                                        <div class="alert alert-info mt-3">
+                                            <strong>Console Output:</strong>
+                                            <pre class="mb-0 mt-2">❌ Error in click: Page.click: Timeout 30000ms exceeded.
+🏖️ Sandbox mode: Continuing despite error in click
+💡 Fix the issue and try again. Browser remains active.
+
+📸 Screenshot saved: debug.png
+Page title: Example Domain</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#example2">
+                                        <i class="bi bi-wifi-off"></i> &nbsp; Example 2: Network Errors
+                                    </button>
+                                </h2>
+                                <div id="example2" class="accordion-collapse collapse" data-bs-parent="#errorExamples">
+                                    <div class="accordion-body">
+                                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    # Valid page
+    scraper.goto("https://httpbin.org/html")
+    scraper.screenshot("valid_page.png")
+    
+    # Invalid URLs - won't crash!
+    scraper.goto("https://definitely-not-a-real-site-12345.com")
+    scraper.goto("invalid://protocol")
+    
+    # Recovery - back to valid page
+    scraper.goto("https://httpbin.org/json")
+    scraper.screenshot("recovered.png")
+    print("✅ Successfully recovered from errors!")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#example3">
+                                        <i class="bi bi-clock"></i> &nbsp; Example 3: Timeout Errors
+                                    </button>
+                                </h2>
+                                <div id="example3" class="accordion-collapse collapse" data-bs-parent="#errorExamples">
+                                    <div class="accordion-body">
+                                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True, timeout=1000) as scraper:  # 1 second timeout
+    scraper.goto("https://httpbin.org/html")
+    
+    # These will timeout quickly but won't crash
+    scraper.click("#definitely-does-not-exist")
+    scraper.wait_for_selector("#also-does-not-exist")
+    
+    # Immediate recovery
+    scraper.screenshot("after_timeouts.png")
+    print("✅ Timeouts handled gracefully!")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Development Workflow -->
+                    <section id="development-workflow" class="mb-5">
+                        <h2><i class="bi bi-diagram-3"></i> Development Workflow</h2>
+                        
+                        <h4>Perfect for Iterative Development</h4>
+                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")
+    
+    # Try different selectors until you find the right one
+    scraper.click("#submit-btn")        # Might not work
+    scraper.click(".submit-button")     # Might not work  
+    scraper.click("input[type=submit]") # This works!
+    
+    # Browser stays open for inspection
+    scraper.screenshot("final_state.png")</code></pre>
+
+                        <h4 class="mt-4">Debugging Unknown Websites</h4>
+                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True, debug=True) as scraper:
+    scraper.goto("https://unknown-website.com")
+    
+    # Explore the page structure safely
+    scraper.click(".popup-close")      # Handle popups
+    scraper.click(".cookie-accept")    # Handle cookies
+    scraper.click(".newsletter-close") # Handle newsletters
+    
+    # Extract data once page is clean
+    data = scraper.get_all_text(".content")
+    print(f"Found {len(data)} content elements")</code></pre>
+                    </section>
+
+                    <!-- Configuration -->
+                    <section id="configuration" class="mb-5">
+                        <h2><i class="bi bi-gear"></i> Configuration Options</h2>
+
+                        <h4>Sandbox Mode Settings</h4>
+                        <pre><code class="language-python">scraper = SyncGAScrap(
+    sandbox_mode=True,     # Enable sandbox mode
+    timeout=5000,          # Faster timeouts for development
+    debug=True,            # Detailed error logging
+    headless=False         # Keep browser visible for debugging
+)</code></pre>
+
+                        <h4 class="mt-4">Production vs Development</h4>
+                        <pre><code class="language-python">import os
+
+# Use environment variable to control mode
+is_development = os.getenv("ENVIRONMENT") == "development"
+
+scraper = SyncGAScrap(
+    sandbox_mode=is_development,  # Sandbox only in development
+    headless=not is_development,  # Visible only in development
+    debug=is_development          # Debug only in development
+)</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="mb-5">
+                        <h2><i class="bi bi-star"></i> Best Practices</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="card border-success h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-check-circle"></i> When to Use Sandbox Mode</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check text-success"></i> <strong>Development & Testing</strong> - Try different approaches safely</li>
+                                            <li><i class="bi bi-check text-success"></i> <strong>Exploring Unknown Sites</strong> - Handle unexpected page structures</li>
+                                            <li><i class="bi bi-check text-success"></i> <strong>Learning Web Scraping</strong> - Experiment without fear of crashes</li>
+                                            <li><i class="bi bi-check text-success"></i> <strong>Debugging Issues</strong> - Keep browser open for inspection</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card border-warning h-100">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="bi bi-exclamation-triangle"></i> When to Disable Sandbox Mode</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-x text-danger"></i> <strong>Production Deployments</strong> - Fail fast on real errors</li>
+                                            <li><i class="bi bi-x text-danger"></i> <strong>Data Quality Assurance</strong> - Ensure all data is captured</li>
+                                            <li><i class="bi bi-x text-danger"></i> <strong>Automated Pipelines</strong> - Stop on critical failures</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Development Workflow</h4>
+                        <pre><code class="language-python"># Development phase - sandbox mode enabled
+with SyncGAScrap(sandbox_mode=True, debug=True) as scraper:
+    # Develop and test your scraper
+    pass
+
+# Production phase - sandbox mode disabled  
+with SyncGAScrap(sandbox_mode=False) as scraper:
+    # Run your proven scraper
+    pass</code></pre>
+                    </section>
+
+                    <!-- Advanced Features -->
+                    <section id="advanced" class="mb-5">
+                        <h2><i class="bi bi-cpu"></i> Advanced Features</h2>
+
+                        <h4>Error Recovery Patterns</h4>
+                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")
+    
+    # Try multiple strategies
+    success = False
+    
+    # Strategy 1: Try ID selector
+    if scraper.click("#submit-button"):
+        success = True
+    
+    # Strategy 2: Try class selector
+    if not success and scraper.click(".submit-btn"):
+        success = True
+        
+    # Strategy 3: Try text content
+    if not success and scraper.click_text("Submit"):
+        success = True
+        
+    if success:
+        print("✅ Successfully clicked submit button!")
+    else:
+        print("❌ Could not find submit button")</code></pre>
+
+                        <h4 class="mt-4">Conditional Error Handling</h4>
+                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")
+    
+    # Handle optional elements gracefully
+    scraper.click(".cookie-banner .accept")  # Might not exist
+    scraper.click(".popup .close")           # Might not exist
+    scraper.click(".newsletter .dismiss")    # Might not exist
+    
+    # Continue with main scraping logic
+    data = scraper.get_text(".main-content")
+    print(f"Content: {data}")</code></pre>
+                    </section>
+
+                    <!-- Error Types Table -->
+                    <section class="mb-5">
+                        <h2><i class="bi bi-table"></i> Error Types Handled</h2>
+                        <p>Sandbox mode gracefully handles <strong>all types of errors</strong>:</p>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Error Type</th>
+                                        <th>Example</th>
+                                        <th>Sandbox Behavior</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Element Not Found</strong></td>
+                                        <td><code>click("#missing")</code></td>
+                                        <td><span class="text-danger">❌ Logged</span>, <span class="text-success">✅ Continues</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Timeout Errors</strong></td>
+                                        <td><code>wait_for_selector("#slow")</code></td>
+                                        <td><span class="text-danger">❌ Logged</span>, <span class="text-success">✅ Continues</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Network Errors</strong></td>
+                                        <td><code>goto("invalid://url")</code></td>
+                                        <td><span class="text-danger">❌ Logged</span>, <span class="text-success">✅ Continues</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>JavaScript Errors</strong></td>
+                                        <td><code>execute_script("invalid.js")</code></td>
+                                        <td><span class="text-danger">❌ Logged</span>, <span class="text-success">✅ Continues</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Navigation Failures</strong></td>
+                                        <td><code>goto("https://404-site.com")</code></td>
+                                        <td><span class="text-danger">❌ Logged</span>, <span class="text-success">✅ Continues</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Success Stories -->
+                    <section class="mb-5">
+                        <h2><i class="bi bi-trophy"></i> Success Stories</h2>
+                        
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="card border-danger">
+                                    <div class="card-header bg-danger text-white">
+                                        <h5 class="mb-0">Before Sandbox Mode</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-x-circle text-danger"></i> Spent hours restarting scrapers after crashes</li>
+                                            <li><i class="bi bi-x-circle text-danger"></i> Lost progress when single element wasn't found</li>
+                                            <li><i class="bi bi-x-circle text-danger"></i> Difficult to debug unknown website structures</li>
+                                            <li><i class="bi bi-x-circle text-danger"></i> Fear of trying new selectors or approaches</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">After Sandbox Mode</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li><i class="bi bi-check-circle text-success"></i> Continuous development without interruptions</li>
+                                            <li><i class="bi bi-check-circle text-success"></i> Browser stays open for immediate debugging</li>
+                                            <li><i class="bi bi-check-circle text-success"></i> Safe experimentation with different strategies</li>
+                                            <li><i class="bi bi-check-circle text-success"></i> Faster iteration and learning cycles</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Call to Action -->
+                    <div class="text-center my-5 py-5 bg-light rounded">
+                        <h3 class="text-success">🏖️ Sandbox Mode: Making Web Scraping Development Enjoyable!</h3>
+                        <p class="lead">Start using sandbox mode today and never lose development progress again.</p>
+                        <!-- <a href="playground.html" class="btn btn-success btn-lg me-3">
+                            <i class="bi bi-play-circle"></i> Try in Playground
+                        </a> -->
+                        <a href="sync-interface.html" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-arrow-repeat"></i> Learn Sync Interface
+                        </a>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="d-flex justify-content-between mt-5 pt-4 border-top">
+                        <a href="getting-started.html" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Getting Started
+                        </a>
+                        <a href="sync-interface.html" class="btn btn-primary">
+                            Sync Interface <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examples - GA-Scrap Documentation</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../../index.html">
+                <i class="bi bi-spider text-warning"></i> GA-Scrap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="getting-started.html">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="examples.html">Examples</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="playground.html">Playground</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="doc-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 doc-sidebar">
+                    <div class="doc-nav">
+                        <h6 class="text-muted text-uppercase fw-bold mb-3">Quick Examples</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link active" href="#quick-examples">Quick Start</a>
+                            <a class="nav-link" href="#news-scraper">News Scraper</a>
+                            <a class="nav-link" href="#ecommerce">E-commerce</a>
+                            <a class="nav-link" href="#mobile">Mobile Scraping</a>
+                        </nav>
+                        
+                        <h6 class="text-muted text-uppercase fw-bold mb-3 mt-4">Business Use Cases</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link" href="#market-research">Market Research</a>
+                            <a class="nav-link" href="#social-monitoring">Social Monitoring</a>
+                            <a class="nav-link" href="#real-estate">Real Estate</a>
+                        </nav>
+                        
+                        <h6 class="text-muted text-uppercase fw-bold mb-3 mt-4">Advanced Techniques</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link" href="#multi-tab">Multi-tab Scraping</a>
+                            <a class="nav-link" href="#form-automation">Form Automation</a>
+                            <a class="nav-link" href="#data-monitoring">Data Monitoring</a>
+                        </nav>
+                        
+                        <h6 class="text-muted text-uppercase fw-bold mb-3 mt-4">Creative Applications</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link" href="#screenshot-gallery">Screenshot Gallery</a>
+                            <a class="nav-link" href="#music-charts">Music Charts</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="col-lg-9 doc-content">
+                    <div class="mb-4">
+                        <h1 class="display-4 fw-bold">
+                            <i class="bi bi-code-slash text-primary"></i> Examples & Use Cases
+                        </h1>
+                        <p class="lead">Real-World Scraping Examples</p>
+                        <p class="text-muted">Learn by doing with practical examples</p>
+                    </div>
+
+                    <!-- Quick Examples -->
+                    <section id="quick-examples" class="mb-5">
+                        <h2><i class="bi bi-lightning"></i> Quick Examples</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-4">
+                                <div class="card h-100">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-newspaper"></i> News Scraper</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+
+with SyncGAScrap() as scraper:
+    scraper.goto("https://news.ycombinator.com")
+    
+    titles = scraper.get_all_text(".titleline > a")
+    scores = scraper.get_all_text(".score")
+    
+    for title, score in zip(titles, scores):
+        print(f"{score}: {title}")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="card h-100">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-cart"></i> E-commerce</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-python">with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example-shop.com")
+    
+    # Handle popups gracefully
+    scraper.click(".cookie-accept")
+    scraper.click(".popup-close")
+    
+    products = scraper.get_all_text(".product-name")
+    prices = scraper.get_all_text(".product-price")
+    
+    for product, price in zip(products, prices):
+        print(f"{product}: {price}")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="card h-100">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="bi bi-phone"></i> Mobile</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <pre><code class="language-python">with SyncGAScrap(device="iPhone 12") as scraper:
+    scraper.goto("https://mobile-site.com")
+    
+    # Mobile interactions
+    scraper.simulate_touch(100, 200)
+    scraper.swipe(start_x=100, start_y=300, 
+                  end_x=100, end_y=100)
+    
+    content = scraper.get_text(".mobile-content")
+    scraper.screenshot("mobile-view.png")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- News Scraper -->
+                    <section id="news-scraper" class="mb-5">
+                        <h2><i class="bi bi-newspaper"></i> News Scraper</h2>
+                        <p>Extract headlines, scores, and metadata from news websites.</p>
+
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+import json
+from datetime import datetime
+
+def scrape_hacker_news():
+    """Scrape Hacker News front page"""
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        scraper.goto("https://news.ycombinator.com")
+        
+        # Extract story data
+        titles = scraper.get_all_text(".titleline > a")
+        scores = scraper.get_all_text(".score")
+        authors = scraper.get_all_text(".hnuser")
+        times = scraper.get_all_text(".age")
+        
+        # Combine data
+        stories = []
+        for i, (title, score, author, time) in enumerate(zip(titles, scores, authors, times)):
+            stories.append({
+                "rank": i + 1,
+                "title": title,
+                "score": score,
+                "author": author,
+                "time": time,
+                "scraped_at": datetime.now().isoformat()
+            })
+        
+        # Save to file
+        with open("hacker_news.json", "w") as f:
+            json.dump(stories, f, indent=2)
+        
+        print(f"✅ Scraped {len(stories)} stories")
+        return stories
+
+# Run the scraper
+stories = scrape_hacker_news()</code></pre>
+                    </section>
+
+                    <!-- E-commerce -->
+                    <section id="ecommerce" class="mb-5">
+                        <h2><i class="bi bi-cart"></i> E-commerce Product Scraper</h2>
+                        <p>Extract product information with error handling for popups and dynamic content.</p>
+
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+import csv
+import time
+
+def scrape_products(base_url, max_pages=5):
+    """Scrape product catalog with pagination"""
+    all_products = []
+    
+    with SyncGAScrap(sandbox_mode=True, debug=True) as scraper:
+        for page in range(1, max_pages + 1):
+            url = f"{base_url}/products?page={page}"
+            scraper.goto(url)
+            
+            # Handle common popups (won't crash if not found)
+            scraper.click(".cookie-accept")
+            scraper.click(".newsletter-close")
+            scraper.click(".popup-dismiss")
+            
+            # Wait for products to load
+            scraper.wait_for_selector(".product-card", timeout=10000)
+            
+            # Extract product data
+            names = scraper.get_all_text(".product-name")
+            prices = scraper.get_all_text(".product-price")
+            ratings = scraper.get_all_text(".product-rating")
+            images = scraper.get_all_attributes(".product-image", "src")
+            
+            # Process products
+            for name, price, rating, image in zip(names, prices, ratings, images):
+                all_products.append({
+                    "name": name.strip(),
+                    "price": price.strip(),
+                    "rating": rating.strip(),
+                    "image_url": image,
+                    "page": page
+                })
+            
+            print(f"Page {page}: {len(names)} products")
+            
+            # Check if next page exists
+            next_button = scraper.get_element(".next-page")
+            if not next_button:
+                print("No more pages found")
+                break
+            
+            # Small delay between pages
+            time.sleep(1)
+    
+    # Save to CSV
+    with open("products.csv", "w", newline="", encoding="utf-8") as f:
+        if all_products:
+            writer = csv.DictWriter(f, fieldnames=all_products[0].keys())
+            writer.writeheader()
+            writer.writerows(all_products)
+    
+    print(f"✅ Total products scraped: {len(all_products)}")
+    return all_products
+
+# Usage
+products = scrape_products("https://example-shop.com")</code></pre>
+                    </section>
+
+                    <!-- Mobile Scraping -->
+                    <section id="mobile" class="mb-5">
+                        <h2><i class="bi bi-phone"></i> Mobile Device Scraping</h2>
+                        <p>Emulate mobile devices and handle touch interactions.</p>
+
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+
+def scrape_mobile_site():
+    """Scrape mobile-optimized content"""
+    # Available devices: iPhone 12, iPad, Galaxy S21, etc.
+    with SyncGAScrap(device="iPhone 12", sandbox_mode=True) as scraper:
+        scraper.goto("https://m.example.com")
+        
+        # Mobile-specific interactions
+        scraper.simulate_touch(100, 200)  # Tap at coordinates
+        scraper.swipe(start_x=200, start_y=400, end_x=200, end_y=100)  # Swipe up
+        
+        # Handle mobile navigation
+        scraper.click(".mobile-menu-toggle")
+        scraper.wait_for_selector(".mobile-menu")
+        
+        # Extract mobile content
+        content = scraper.get_all_text(".mobile-content")
+        
+        # Take mobile screenshot
+        scraper.screenshot("mobile_view.png")
+        
+        print(f"Mobile content extracted: {len(content)} items")
+        return content
+
+def test_responsive_design():
+    """Test how site looks on different devices"""
+    devices = ["iPhone 12", "iPad", "Galaxy S21", "Desktop Chrome"]
+    
+    for device in devices:
+        with SyncGAScrap(device=device) as scraper:
+            scraper.goto("https://example.com")
+            scraper.screenshot(f"responsive_{device.replace(' ', '_').lower()}.png")
+            
+            # Get viewport info
+            viewport = scraper.get_viewport_size()
+            print(f"{device}: {viewport['width']}x{viewport['height']}")
+
+# Run mobile scraping
+mobile_content = scrape_mobile_site()
+test_responsive_design()</code></pre>
+                    </section>
+
+                    <!-- Market Research -->
+                    <section id="market-research" class="mb-5">
+                        <h2><i class="bi bi-graph-up"></i> Market Research</h2>
+                        <p>Compare competitor prices and analyze market trends.</p>
+
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+import pandas as pd
+from datetime import datetime
+
+def scrape_competitor_prices():
+    """Compare prices across multiple competitors"""
+    competitors = {
+        "Competitor A": "https://competitor-a.com/products",
+        "Competitor B": "https://competitor-b.com/catalog",
+        "Competitor C": "https://competitor-c.com/shop"
+    }
+    
+    all_data = []
+    
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        for company, url in competitors.items():
+            print(f"Scraping {company}...")
+            scraper.goto(url)
+            
+            # Handle different site structures gracefully
+            scraper.click(".cookie-accept")
+            scraper.click(".age-verification-yes")
+            scraper.click(".popup-close")
+            
+            # Extract product data
+            products = scraper.get_all_text(".product-name, .item-title, .product-title")
+            prices = scraper.get_all_text(".price, .cost, .product-price")
+            
+            # Process data
+            for product, price in zip(products, prices):
+                all_data.append({
+                    "company": company,
+                    "product": product.strip(),
+                    "price": price.strip(),
+                    "scraped_at": datetime.now(),
+                    "url": url
+                })
+            
+            print(f"  Found {len(products)} products")
+    
+    # Create DataFrame for analysis
+    df = pd.DataFrame(all_data)
+    df.to_csv("competitor_analysis.csv", index=False)
+    
+    # Basic analysis
+    print("\n📊 Market Analysis:")
+    print(f"Total products analyzed: {len(df)}")
+    print(f"Companies compared: {df['company'].nunique()}")
+    
+    return df
+
+# Run market research
+market_data = scrape_competitor_prices()</code></pre>
+                    </section>
+
+                    <!-- Social Media Monitoring -->
+                    <section id="social-monitoring" class="mb-5">
+                        <h2><i class="bi bi-chat-dots"></i> Social Media Monitoring</h2>
+                        <p>Monitor brand mentions and social media sentiment.</p>
+
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+import re
+from datetime import datetime
+
+def monitor_brand_mentions(brand_name="YourBrand"):
+    """Monitor brand mentions across social platforms"""
+    platforms = {
+        "Twitter-like": "https://social-platform.com/search?q={brand}",
+        "Reddit-like": "https://forum-site.com/search/{brand}",
+        "News": "https://news-aggregator.com/search?q={brand}"
+    }
+    
+    all_mentions = []
+    
+    with SyncGAScrap(sandbox_mode=True, headless=False) as scraper:
+        for platform, url_template in platforms.items():
+            url = url_template.format(brand=brand_name)
+            print(f"Checking {platform}...")
+            
+            scraper.goto(url)
+            
+            # Handle login if needed (platform-specific)
+            if scraper.get_element(".login-prompt"):
+                print(f"  Login required for {platform}, skipping...")
+                continue
+            
+            # Scroll to load more content
+            for _ in range(3):
+                scraper.scroll_to_bottom()
+                scraper.wait(2000)
+            
+            # Extract posts/mentions
+            posts = scraper.get_all_text(".post-content, .comment-text, .article-title")
+            authors = scraper.get_all_text(".post-author, .username, .author-name")
+            timestamps = scraper.get_all_text(".post-time, .timestamp, .date")
+            
+            # Filter for brand mentions
+            for post, author, timestamp in zip(posts, authors, timestamps):
+                if brand_name.lower() in post.lower():
+                    sentiment = analyze_sentiment(post)  # Simple sentiment analysis
+                    
+                    all_mentions.append({
+                        "platform": platform,
+                        "author": author,
+                        "content": post[:200] + "..." if len(post) > 200 else post,
+                        "timestamp": timestamp,
+                        "sentiment": sentiment,
+                        "scraped_at": datetime.now()
+                    })
+            
+            print(f"  Found {len([p for p in posts if brand_name.lower() in p.lower()])} mentions")
+    
+    # Save results
+    import json
+    with open(f"{brand_name}_mentions.json", "w") as f:
+        json.dump(all_mentions, f, indent=2, default=str)
+    
+    print(f"\n📊 Brand Monitoring Summary:")
+    print(f"Total mentions found: {len(all_mentions)}")
+    
+    return all_mentions
+
+def analyze_sentiment(text):
+    """Simple sentiment analysis"""
+    positive_words = ["good", "great", "excellent", "amazing", "love", "best"]
+    negative_words = ["bad", "terrible", "awful", "hate", "worst", "horrible"]
+    
+    text_lower = text.lower()
+    positive_count = sum(1 for word in positive_words if word in text_lower)
+    negative_count = sum(1 for word in negative_words if word in text_lower)
+    
+    if positive_count > negative_count:
+        return "positive"
+    elif negative_count > positive_count:
+        return "negative"
+    else:
+        return "neutral"
+
+# Run brand monitoring
+mentions = monitor_brand_mentions("YourBrand")</code></pre>
+                    </section>
+
+                    <!-- Real Estate -->
+                    <section id="real-estate" class="mb-5">
+                        <h2><i class="bi bi-house"></i> Real Estate Data Collection</h2>
+                        <p>Scrape property listings with detailed information.</p>
+
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+import csv
+import re
+
+def scrape_property_listings(location="New York", max_pages=5):
+    """Scrape real estate listings"""
+    base_url = "https://real-estate-site.com"
+    search_url = f"{base_url}/search?location={location.replace(' ', '+')}"
+    
+    all_properties = []
+    
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        scraper.goto(search_url)
+        
+        # Handle cookie consent
+        scraper.click(".cookie-consent-accept")
+        
+        page = 1
+        while page <= max_pages:
+            print(f"Scraping page {page}...")
+            
+            # Wait for listings to load
+            scraper.wait_for_selector(".property-card", timeout=10000)
+            
+            # Extract property data
+            titles = scraper.get_all_text(".property-title")
+            prices = scraper.get_all_text(".property-price")
+            addresses = scraper.get_all_text(".property-address")
+            details = scraper.get_all_text(".property-details")
+            images = scraper.get_all_attributes(".property-image", "src")
+            links = scraper.get_all_attributes(".property-link", "href")
+            
+            # Process each property
+            for title, price, address, detail, image, link in zip(
+                titles, prices, addresses, details, images, links
+            ):
+                # Extract bedrooms/bathrooms from details
+                beds_match = re.search(r'(\d+)\s*bed', detail, re.I)
+                baths_match = re.search(r'(\d+)\s*bath', detail, re.I)
+                sqft_match = re.search(r'([\d,]+)\s*sq\s*ft', detail, re.I)
+                
+                property_data = {
+                    "title": title.strip(),
+                    "price": price.strip(),
+                    "address": address.strip(),
+                    "bedrooms": beds_match.group(1) if beds_match else None,
+                    "bathrooms": baths_match.group(1) if baths_match else None,
+                    "square_feet": sqft_match.group(1).replace(',', '') if sqft_match else None,
+                    "details": detail.strip(),
+                    "image_url": image,
+                    "listing_url": link,
+                    "location": location,
+                    "page": page
+                }
+                
+                all_properties.append(property_data)
+            
+            print(f"  Found {len(titles)} properties")
+            
+            # Try to go to next page
+            next_button = scraper.get_element(".next-page, .pagination-next")
+            if not next_button or not scraper.click(".next-page, .pagination-next"):
+                print("No more pages available")
+                break
+            
+            page += 1
+            scraper.wait_for_selector(".property-card", timeout=10000)
+    
+    # Save to CSV
+    if all_properties:
+        with open(f"properties_{location.replace(' ', '_').lower()}.csv", "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=all_properties[0].keys())
+            writer.writeheader()
+            writer.writerows(all_properties)
+    
+    print(f"\n🏠 Real Estate Summary:")
+    print(f"Total properties: {len(all_properties)}")
+    print(f"Average price: {calculate_average_price(all_properties)}")
+    
+    return all_properties
+
+def calculate_average_price(properties):
+    """Calculate average price from property listings"""
+    prices = []
+    for prop in properties:
+        price_str = prop['price']
+        # Extract numeric price (basic parsing)
+        price_match = re.search(r'[\$]?([\d,]+)', price_str)
+        if price_match:
+            price = int(price_match.group(1).replace(',', ''))
+            prices.append(price)
+    
+    return f"${sum(prices) // len(prices):,}" if prices else "N/A"
+
+# Run real estate scraping
+properties = scrape_property_listings("New York")</code></pre>
+                    </section>
+
+                    <!-- Multi-tab Scraping -->
+                    <section id="multi-tab" class="mb-5">
+                        <h2><i class="bi bi-window-stack"></i> Multi-tab Scraping</h2>
+                        <p>Efficiently scrape multiple pages simultaneously.</p>
+
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+import concurrent.futures
+import time
+
+def scrape_product_details():
+    """Scrape detailed product information using multiple tabs"""
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        # Get product links from main catalog
+        scraper.goto("https://shop.com/catalog")
+        product_links = scraper.get_all_attributes("a.product-link", "href")[:10]  # First 10
+        
+        detailed_products = []
+        
+        # Method 1: Sequential tab processing
+        for i, link in enumerate(product_links):
+            print(f"Processing product {i+1}/{len(product_links)}")
+            
+            # Create new tab for each product
+            product_page = scraper.new_page()
+            scraper.goto(link, page=product_page)
+            
+            # Extract detailed information
+            title = scraper.get_text("h1", page=product_page)
+            price = scraper.get_text(".price", page=product_page)
+            description = scraper.get_text(".description", page=product_page)
+            specs = scraper.get_all_text(".spec-item", page=product_page)
+            reviews_count = scraper.get_text(".reviews-count", page=product_page)
+            
+            # Get all product images
+            images = scraper.get_all_attributes("img.product-image", "src", page=product_page)
+            
+            detailed_products.append({
+                "title": title,
+                "price": price,
+                "description": description[:500] + "..." if len(description) > 500 else description,
+                "specifications": specs,
+                "reviews_count": reviews_count,
+                "images": images,
+                "url": link
+            })
+            
+            # Close tab to save memory
+            scraper.close_page(product_page)
+            
+            # Small delay between requests
+            time.sleep(1)
+        
+        return detailed_products
+
+def scrape_multiple_categories():
+    """Scrape multiple product categories efficiently"""
+    categories = [
+        "electronics",
+        "clothing", 
+        "home-garden",
+        "sports",
+        "books"
+    ]
+    
+    all_category_data = {}
+    
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        # Open a tab for each category
+        category_pages = {}
+        
+        for category in categories:
+            page = scraper.new_page()
+            category_pages[category] = page
+            scraper.goto(f"https://shop.com/category/{category}", page=page)
+        
+        # Scrape each category
+        for category, page in category_pages.items():
+            print(f"Scraping {category} category...")
+            
+            # Extract category data
+            products = scraper.get_all_text(".product-name", page=page)
+            prices = scraper.get_all_text(".product-price", page=page)
+            
+            all_category_data[category] = {
+                "products": list(zip(products, prices)),
+                "count": len(products)
+            }
+            
+            print(f"  {category}: {len(products)} products")
+        
+        # Close all category tabs
+        for page in category_pages.values():
+            scraper.close_page(page)
+    
+    return all_category_data
+
+# Run multi-tab scraping
+print("=== Product Details Scraping ===")
+products = scrape_product_details()
+
+print("\n=== Category Scraping ===")
+categories = scrape_multiple_categories()</code></pre>
+                    </section>
+
+                    <!-- Form Automation -->
+                    <section id="form-automation" class="mb-5">
+                        <h2><i class="bi bi-ui-checks"></i> Form Automation</h2>
+                        <p>Automate complex form filling and submission.</p>
+
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+
+def automate_job_application():
+    """Automate job application form"""
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        scraper.goto("https://company.com/careers/apply")
+
+        # Fill personal information
+        scraper.input("#first-name", "John")
+        scraper.input("#last-name", "Doe")
+        scraper.input("#email", "john.doe@email.com")
+        scraper.input("#phone", "+1-555-0123")
+
+        # Upload resume
+        scraper.upload_files("#resume", ["resume.pdf"])
+
+        # Fill dropdowns and checkboxes
+        scraper.select_option("#experience-level", "3-5 years")
+        scraper.check("#remote-work")
+
+        # Fill text areas
+        scraper.input("#cover-letter", """
+        Dear Hiring Manager,
+        I am excited to apply for this position...
+        """)
+
+        # Handle dynamic sections
+        if scraper.get_element(".additional-questions"):
+            scraper.input("#question-1", "My answer to question 1")
+            scraper.input("#question-2", "My answer to question 2")
+
+        # Submit application
+        scraper.click("#submit-application")
+        scraper.wait_for_text("Application submitted successfully")
+
+        confirmation = scraper.get_text(".confirmation-message")
+        return confirmation
+
+# Run automation
+result = automate_job_application()
+print(f"Application result: {result}")</code></pre>
+                    </section>
+
+                    <!-- Data Monitoring -->
+                    <section id="data-monitoring" class="mb-5">
+                        <h2><i class="bi bi-graph-up-arrow"></i> Data Monitoring & Alerts</h2>
+                        <p>Monitor data changes and send alerts.</p>
+
+                        <pre><code class="language-python">import time
+from datetime import datetime
+from ga_scrap import SyncGAScrap
+
+def monitor_stock_prices():
+    """Monitor stock prices and alert on changes"""
+    target_stocks = {
+        "AAPL": 150.00,  # Alert if below $150
+        "GOOGL": 2500.00,  # Alert if below $2500
+        "TSLA": 800.00   # Alert if below $800
+    }
+
+    while True:
+        with SyncGAScrap(headless=True, sandbox_mode=True) as scraper:
+            alerts = []
+
+            for symbol, target_price in target_stocks.items():
+                scraper.goto(f"https://finance.yahoo.com/quote/{symbol}")
+
+                # Extract current price
+                price_text = scraper.get_text("[data-symbol='{symbol}'] [data-field='regularMarketPrice']")
+                current_price = float(price_text.replace("$", "").replace(",", ""))
+
+                print(f"{symbol}: ${current_price}")
+
+                # Check if alert needed
+                if current_price < target_price:
+                    alerts.append(f"{symbol} is below target: ${current_price} < ${target_price}")
+
+            # Send alerts if any
+            if alerts:
+                send_alert(alerts)
+
+            # Wait 5 minutes before next check
+            time.sleep(300)
+
+def send_alert(alerts):
+    """Send alert notification"""
+    print("🚨 ALERT:", alerts)
+    # In real implementation, send email/SMS/Slack notification
+
+# Start monitoring (uncomment to run)
+# monitor_stock_prices()</code></pre>
+                    </section>
+
+                    <!-- Screenshot Gallery -->
+                    <section id="screenshot-gallery" class="mb-5">
+                        <h2><i class="bi bi-camera"></i> Website Screenshot Gallery</h2>
+                        <p>Create automated screenshot galleries of websites.</p>
+
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+import os
+
+def create_website_gallery():
+    """Create screenshot gallery of popular websites"""
+    websites = [
+        {"name": "GitHub", "url": "https://github.com"},
+        {"name": "Stack Overflow", "url": "https://stackoverflow.com"},
+        {"name": "Reddit", "url": "https://reddit.com"},
+        {"name": "Hacker News", "url": "https://news.ycombinator.com"},
+        {"name": "Dev.to", "url": "https://dev.to"}
+    ]
+
+    # Create gallery directory
+    os.makedirs("website_gallery", exist_ok=True)
+
+    with SyncGAScrap(viewport={"width": 1920, "height": 1080}) as scraper:
+        for i, site in enumerate(websites):
+            print(f"Capturing {site['name']}...")
+
+            scraper.goto(site['url'])
+            scraper.wait_for_load_state("networkidle")
+
+            # Take full page screenshot
+            filename = f"website_gallery/{i+1:02d}_{site['name'].replace(' ', '_').lower()}.png"
+            scraper.screenshot_full_page(filename)
+
+            print(f"  Saved: {filename}")
+
+    print("✅ Gallery creation complete!")
+
+# Create gallery
+create_website_gallery()</code></pre>
+                    </section>
+
+                    <!-- Music Charts -->
+                    <section id="music-charts" class="mb-5">
+                        <h2><i class="bi bi-music-note-beamed"></i> Music Chart Tracker</h2>
+                        <p>Track music charts and trending songs.</p>
+
+                        <pre><code class="language-python">from ga_scrap import SyncGAScrap
+import json
+from datetime import datetime
+
+def track_music_charts():
+    """Track music charts and save data"""
+    with SyncGAScrap(sandbox_mode=True) as scraper:
+        scraper.goto("https://music-charts.com/top-100")
+
+        # Extract chart data
+        positions = scraper.get_all_text(".chart-position")
+        songs = scraper.get_all_text(".song-title")
+        artists = scraper.get_all_text(".artist-name")
+
+        # Create chart data
+        chart = []
+        for pos, song, artist in zip(positions, songs, artists):
+            chart.append({
+                "position": int(pos),
+                "song": song,
+                "artist": artist,
+                "date": datetime.now().isoformat(),
+                "chart": "Top 100"
+            })
+
+        # Save to file
+        filename = f"music_chart_{datetime.now().strftime('%Y%m%d')}.json"
+        with open(filename, "w") as f:
+            json.dump(chart, f, indent=2)
+
+        print(f"📊 Tracked {len(chart)} songs")
+        print(f"💾 Saved to {filename}")
+
+        return chart
+
+# Track charts
+chart_data = track_music_charts()</code></pre>
+                    </section>
+
+                    <!-- Try in Playground -->
+                    <!-- <div class="text-center my-5 py-5 bg-light rounded">
+                        <h3 class="text-primary">🎮 Try These Examples in the Playground!</h3>
+                        <p class="lead">Copy any example above and run it in our interactive playground.</p>
+                        <a href="playground.html" class="btn btn-primary btn-lg">
+                            <i class="bi bi-play-circle"></i> Open Playground
+                        </a>
+                    </div> -->
+
+                    <!-- Navigation -->
+                    <div class="d-flex justify-content-between mt-5 pt-4 border-top">
+                        <a href="getting-started.html" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Getting Started
+                        </a>
+                        <a href="sync-interface.html" class="btn btn-primary">
+                            Sync Interface <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

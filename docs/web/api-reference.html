@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - GA-Scrap Documentation</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../../index.html">
+                <i class="bi bi-spider text-warning"></i> GA-Scrap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="getting-started.html">Getting Started</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="api-reference.html">API Reference</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="playground.html">Playground</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <div class="search-container">
+                            <input type="text" id="api-search" class="form-control" placeholder="Search API...">
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-outline-light btn-sm ms-2">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="doc-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 doc-sidebar">
+                    <div class="doc-nav">
+                        <h6 class="text-muted text-uppercase fw-bold mb-3">API Reference</h6>
+                        <nav class="nav flex-column">
+                            <a class="nav-link active" href="#overview">Overview</a>
+                            <a class="nav-link" href="#constructor">Constructor</a>
+                            <a class="nav-link" href="#lifecycle">Lifecycle Methods</a>
+                            <a class="nav-link" href="#navigation">Navigation</a>
+                            <a class="nav-link" href="#interaction">Element Interaction</a>
+                            <a class="nav-link" href="#data-extraction">Data Extraction</a>
+                            <a class="nav-link" href="#waiting">Waiting & Timing</a>
+                            <a class="nav-link" href="#media">Media & Files</a>
+                            <a class="nav-link" href="#page-manipulation">Page Manipulation</a>
+                            <a class="nav-link" href="#device-mobile">Device & Mobile</a>
+                            <a class="nav-link" href="#network">Network & Cookies</a>
+                            <a class="nav-link" href="#javascript">JavaScript</a>
+                            <a class="nav-link" href="#playwright-access">Playwright Access</a>
+                            <a class="nav-link" href="#utilities">Utilities</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="col-lg-9 doc-content">
+                    <div class="mb-4">
+                        <h1 class="display-4 fw-bold">
+                            <i class="bi bi-book text-primary"></i> API Reference
+                        </h1>
+                        <p class="lead">Complete Method Documentation</p>
+                        <p class="text-muted">Every method, parameter, and return value</p>
+                    </div>
+
+                    <!-- Overview -->
+                    <section id="overview" class="mb-5">
+                        <h2><i class="bi bi-info-circle"></i> Overview</h2>
+                        <p>GA-Scrap provides a comprehensive API that covers all web scraping needs. All methods are available in both synchronous and asynchronous interfaces.</p>
+                        
+                        <div class="alert alert-info">
+                            <i class="bi bi-lightbulb"></i>
+                            <strong>Convention:</strong> This reference shows the synchronous interface. For async, simply add <code>await</code> before method calls and use <code>GAScrap</code> instead of <code>SyncGAScrap</code>.
+                        </div>
+                    </section>
+
+                    <!-- Constructor -->
+                    <section id="constructor" class="mb-5">
+                        <h2><i class="bi bi-gear"></i> Constructor</h2>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">SyncGAScrap()</h4>
+                            </div>
+                            <div class="card-body">
+                                <p>Creates a new GA-Scrap instance with the specified configuration.</p>
+                                
+                                <h6>Parameters:</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Parameter</th>
+                                                <th>Type</th>
+                                                <th>Default</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><code>sandbox_mode</code></td>
+                                                <td>bool</td>
+                                                <td>False</td>
+                                                <td>Enable error-resilient sandbox mode</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>headless</code></td>
+                                                <td>bool</td>
+                                                <td>True</td>
+                                                <td>Run browser in headless mode</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>browser_type</code></td>
+                                                <td>str</td>
+                                                <td>"chromium"</td>
+                                                <td>Browser engine: "chromium", "firefox", "webkit"</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>timeout</code></td>
+                                                <td>int</td>
+                                                <td>30000</td>
+                                                <td>Default timeout in milliseconds</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>viewport</code></td>
+                                                <td>dict</td>
+                                                <td>{"width": 1280, "height": 720}</td>
+                                                <td>Browser viewport size</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>user_agent</code></td>
+                                                <td>str</td>
+                                                <td>None</td>
+                                                <td>Custom user agent string</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>device</code></td>
+                                                <td>str</td>
+                                                <td>None</td>
+                                                <td>Device to emulate (e.g., "iPhone 12")</td>
+                                            </tr>
+                                            <tr>
+                                                <td><code>debug</code></td>
+                                                <td>bool</td>
+                                                <td>False</td>
+                                                <td>Enable detailed logging</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h6>Example:</h6>
+                                <pre><code class="language-python">from ga_scrap import SyncGAScrap
+
+# Basic usage
+scraper = SyncGAScrap()
+
+# Development configuration
+scraper = SyncGAScrap(
+    sandbox_mode=True,
+    headless=False,
+    debug=True,
+    timeout=60000
+)
+
+# Mobile device emulation
+scraper = SyncGAScrap(
+    device="iPhone 12",
+    sandbox_mode=True
+)</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Lifecycle Methods -->
+                    <section id="lifecycle" class="mb-5">
+                        <h2><i class="bi bi-arrow-repeat"></i> Lifecycle Methods</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">start()</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Initialize browser and create context.</p>
+                                        <pre><code class="language-python">scraper = SyncGAScrap()
+scraper.start()
+# Use scraper methods
+scraper.stop()</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">stop()</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Close browser and cleanup resources.</p>
+                                        <pre><code class="language-python"># Context manager (recommended)
+with SyncGAScrap() as scraper:
+    # Automatically calls start() and stop()
+    pass</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Navigation -->
+                    <section id="navigation" class="mb-5">
+                        <h2><i class="bi bi-compass"></i> Navigation Methods</h2>
+
+                        <div class="accordion" id="navigationAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#nav1">
+                                        goto(url, **kwargs)
+                                    </button>
+                                </h2>
+                                <div id="nav1" class="accordion-collapse collapse show" data-bs-parent="#navigationAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Navigate to a URL</strong></p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>url</code> (str): Target URL</li>
+                                            <li><code>wait_until</code> (str): When to consider navigation complete ("load", "domcontentloaded", "networkidle")</li>
+                                            <li><code>timeout</code> (int): Navigation timeout in milliseconds</li>
+                                        </ul>
+                                        <pre><code class="language-python">scraper.goto("https://example.com")
+scraper.goto("https://example.com", wait_until="networkidle")
+scraper.goto("https://example.com", timeout=60000)</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nav2">
+                                        go_back() / go_forward() / reload()
+                                    </button>
+                                </h2>
+                                <div id="nav2" class="accordion-collapse collapse" data-bs-parent="#navigationAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Browser navigation controls</strong></p>
+                                        <pre><code class="language-python">scraper.go_back()     # Navigate back in history
+scraper.go_forward()  # Navigate forward in history
+scraper.reload()      # Reload current page</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Element Interaction -->
+                    <section id="interaction" class="mb-5">
+                        <h2><i class="bi bi-cursor"></i> Element Interaction</h2>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Parameters</th>
+                                        <th>Description</th>
+                                        <th>Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>click(selector)</code></td>
+                                        <td>selector, button="left", timeout=None</td>
+                                        <td>Click an element</td>
+                                        <td><code>scraper.click("button")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>click_text(text)</code></td>
+                                        <td>text, timeout=None</td>
+                                        <td>Click element by text content</td>
+                                        <td><code>scraper.click_text("Submit")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>double_click(selector)</code></td>
+                                        <td>selector, timeout=None</td>
+                                        <td>Double click an element</td>
+                                        <td><code>scraper.double_click(".item")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>right_click(selector)</code></td>
+                                        <td>selector, timeout=None</td>
+                                        <td>Right click an element</td>
+                                        <td><code>scraper.right_click(".menu")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>input(selector, text)</code></td>
+                                        <td>selector, text, timeout=None</td>
+                                        <td>Type text into input field</td>
+                                        <td><code>scraper.input("#username", "john")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>clear_input(selector)</code></td>
+                                        <td>selector, timeout=None</td>
+                                        <td>Clear input field</td>
+                                        <td><code>scraper.clear_input("#password")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>select_option(selector, value)</code></td>
+                                        <td>selector, value, timeout=None</td>
+                                        <td>Select dropdown option</td>
+                                        <td><code>scraper.select_option("select", "option1")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>check(selector)</code></td>
+                                        <td>selector, timeout=None</td>
+                                        <td>Check checkbox/radio button</td>
+                                        <td><code>scraper.check("#terms")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>uncheck(selector)</code></td>
+                                        <td>selector, timeout=None</td>
+                                        <td>Uncheck checkbox</td>
+                                        <td><code>scraper.uncheck("#newsletter")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>hover(selector)</code></td>
+                                        <td>selector, timeout=None</td>
+                                        <td>Hover over element</td>
+                                        <td><code>scraper.hover(".dropdown")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>focus(selector)</code></td>
+                                        <td>selector, timeout=None</td>
+                                        <td>Focus on element</td>
+                                        <td><code>scraper.focus("input")</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Data Extraction -->
+                    <section id="data-extraction" class="mb-5">
+                        <h2><i class="bi bi-download"></i> Data Extraction</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <h5>Text Extraction</h5>
+                                <pre><code class="language-python"># Single element
+title = scraper.get_text("h1")
+price = scraper.get_text(".price")
+
+# Multiple elements
+items = scraper.get_all_text(".item")
+links = scraper.get_all_text("a")</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Attribute Extraction</h5>
+                                <pre><code class="language-python"># Single attribute
+href = scraper.get_attribute("a", "href")
+src = scraper.get_attribute("img", "src")
+
+# Multiple attributes
+urls = scraper.get_all_attributes("a", "href")
+images = scraper.get_all_attributes("img", "src")</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 mt-2">
+                            <div class="col-lg-6">
+                                <h5>HTML Extraction</h5>
+                                <pre><code class="language-python"># Outer HTML
+html = scraper.get_html(".content")
+
+# Inner HTML
+inner = scraper.get_inner_html(".container")</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Element Information</h5>
+                                <pre><code class="language-python"># Check if element exists
+exists = scraper.element_exists(".popup")
+
+# Get element count
+count = scraper.count_elements(".item")
+
+# Get element properties
+visible = scraper.is_visible(".modal")
+enabled = scraper.is_enabled("button")</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Waiting & Timing -->
+                    <section id="waiting" class="mb-5">
+                        <h2><i class="bi bi-clock"></i> Waiting & Timing</h2>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Parameters</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>wait(milliseconds)</code></td>
+                                        <td>milliseconds (int)</td>
+                                        <td>Wait for specified time</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>wait_for_selector(selector)</code></td>
+                                        <td>selector, timeout=None, state="visible"</td>
+                                        <td>Wait for element to appear</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>wait_for_text(text)</code></td>
+                                        <td>text, timeout=None</td>
+                                        <td>Wait for text to appear on page</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>wait_for_url(pattern)</code></td>
+                                        <td>pattern, timeout=None</td>
+                                        <td>Wait for URL to match pattern</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>wait_for_load_state(state)</code></td>
+                                        <td>state="load", timeout=None</td>
+                                        <td>Wait for page load state</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>wait_for_network_idle()</code></td>
+                                        <td>timeout=None</td>
+                                        <td>Wait for network to be idle</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h5>Examples:</h5>
+                        <pre><code class="language-python"># Wait for element
+scraper.wait_for_selector(".loading", state="hidden")  # Wait for loading to disappear
+scraper.wait_for_selector(".results")  # Wait for results to appear
+
+# Wait for navigation
+scraper.wait_for_url("**/success")  # Wait for success page
+scraper.wait_for_load_state("networkidle")  # Wait for network idle
+
+# Wait for content
+scraper.wait_for_text("Welcome")  # Wait for welcome message</code></pre>
+                    </section>
+
+                    <!-- Media & Files -->
+                    <section id="media" class="mb-5">
+                        <h2><i class="bi bi-camera"></i> Media & Files</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <h5>Screenshots</h5>
+                                <pre><code class="language-python"># Basic screenshot
+scraper.screenshot("page.png")
+
+# Full page screenshot
+scraper.screenshot_full_page("full.png")
+
+# Element screenshot
+scraper.screenshot_element(".chart", "chart.png")
+
+# Custom options
+scraper.screenshot("page.png", 
+                  quality=90, 
+                  type="jpeg")</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>File Operations</h5>
+                                <pre><code class="language-python"># Upload files
+scraper.upload_files("input[type=file]", 
+                     ["file1.txt", "file2.pdf"])
+
+# Download files
+scraper.download_file("https://example.com/file.zip")
+
+# PDF generation
+scraper.save_pdf("page.pdf")
+
+# Set download directory
+scraper.set_download_path("./downloads")</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Page Manipulation -->
+                    <section id="page-manipulation" class="mb-5">
+                        <h2><i class="bi bi-window"></i> Page Manipulation</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <h5>Scrolling</h5>
+                                <pre><code class="language-python"># Scroll to element
+scraper.scroll_to_element(".footer")
+
+# Scroll by amount
+scraper.scroll_by(0, 500)  # x, y pixels
+
+# Scroll to position
+scraper.scroll_to_position(0, 1000)
+
+# Scroll to bottom/top
+scraper.scroll_to_bottom()
+scraper.scroll_to_top()</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Page Control</h5>
+                                <pre><code class="language-python"># Viewport control
+scraper.set_viewport_size(1920, 1080)
+size = scraper.get_viewport_size()
+
+# Page information
+url = scraper.get_current_url()
+title = scraper.get_page_title()
+
+# Multi-tab support
+page2 = scraper.new_page()
+scraper.goto("https://example.com", page=page2)
+scraper.close_page(page2)</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Device & Mobile -->
+                    <section id="device-mobile" class="mb-5">
+                        <h2><i class="bi bi-phone"></i> Device & Mobile</h2>
+
+                        <pre><code class="language-python"># Device emulation
+scraper = SyncGAScrap(device="iPhone 12")
+
+# Touch interactions
+scraper.simulate_touch(100, 200)
+scraper.swipe(start_x=100, start_y=300, end_x=100, end_y=100)
+
+# Orientation
+scraper.set_orientation("landscape")
+
+# Geolocation
+scraper.set_geolocation(40.7128, -74.0060)
+
+# Device metrics
+scraper.set_device_scale_factor(2.0)</code></pre>
+                    </section>
+
+                    <!-- Network & Cookies -->
+                    <section id="network" class="mb-5">
+                        <h2><i class="bi bi-wifi"></i> Network & Cookies</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <h5>Cookie Management</h5>
+                                <pre><code class="language-python"># Get cookies
+cookies = scraper.get_cookies()
+
+# Add cookies
+scraper.add_cookies([{
+    "name": "session",
+    "value": "abc123",
+    "domain": "example.com"
+}])
+
+# Clear cookies
+scraper.clear_cookies()</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Network Control</h5>
+                                <pre><code class="language-python"># Block requests
+scraper.block_requests(["*.png", "*.jpg"])
+
+# Set user agent
+scraper.set_user_agent("Custom Agent")
+
+# Offline mode
+scraper.set_offline(True)
+
+# Network monitoring
+requests = scraper.get_network_requests()</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- JavaScript -->
+                    <section id="javascript" class="mb-5">
+                        <h2><i class="bi bi-code"></i> JavaScript Execution</h2>
+
+                        <pre><code class="language-python"># Execute JavaScript
+result = scraper.execute_script("return document.title")
+scraper.execute_script("document.body.style.background = 'red'")
+
+# Execute with arguments
+result = scraper.execute_script("return arguments[0] + arguments[1]", 5, 10)
+
+# Inject CSS
+scraper.inject_css("body { font-size: 20px; }")
+
+# Add script tag
+scraper.add_script_tag(url="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js")</code></pre>
+                    </section>
+
+                    <!-- Playwright Access -->
+                    <section id="playwright-access" class="mb-5">
+                        <h2><i class="bi bi-gear-wide-connected"></i> Direct Playwright Access</h2>
+
+                        <pre><code class="language-python"># Get Playwright objects
+page = scraper.get_playwright_page()
+context = scraper.get_playwright_context()
+browser = scraper.get_playwright_browser()
+
+# Safe method execution
+title = scraper.execute_playwright_method('page', 'title')
+cookies = scraper.execute_playwright_method('context', 'cookies')
+
+# Helper methods
+title = scraper.playwright_page_method('title')
+cookies = scraper.playwright_context_method('cookies')
+
+# Use any Playwright feature
+await page.evaluate("console.log('Direct Playwright access')")
+await context.set_geolocation({"latitude": 40.7128, "longitude": -74.0060})</code></pre>
+                    </section>
+
+                    <!-- Utilities -->
+                    <section id="utilities" class="mb-5">
+                        <h2><i class="bi bi-tools"></i> Utility Methods</h2>
+
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <h5>Debugging</h5>
+                                <pre><code class="language-python"># Pause for debugging
+scraper.pause("Check the page and press Enter...")
+
+# Get page source
+source = scraper.get_page_source()
+
+# Console logs
+logs = scraper.get_console_logs()
+
+# Performance metrics
+metrics = scraper.get_performance_metrics()</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Configuration</h5>
+                                <pre><code class="language-python"># Get current configuration
+config = scraper.get_config()
+
+# Update timeout
+scraper.set_timeout(60000)
+
+# Check sandbox mode
+is_sandbox = scraper.is_sandbox_mode()
+
+# Get error history (sandbox mode)
+errors = scraper.get_error_history()</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Method Chaining -->
+                    <section class="mb-5">
+                        <h2><i class="bi bi-link"></i> Method Chaining</h2>
+                        <p>Most methods support chaining for fluent, readable code:</p>
+
+                        <pre><code class="language-python"># Chain multiple operations
+result = (scraper
+          .goto("https://example.com")
+          .wait_for_selector(".content")
+          .scroll_to_bottom()
+          .click(".load-more")
+          .wait_for_selector(".new-content")
+          .get_all_text(".item"))</code></pre>
+                    </section>
+
+                    <!-- Error Handling -->
+                    <section class="mb-5">
+                        <h2><i class="bi bi-exclamation-triangle"></i> Error Handling</h2>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5>Sandbox Mode</h5>
+                                <pre><code class="language-python"># Enable sandbox mode for error resilience
+with SyncGAScrap(sandbox_mode=True) as scraper:
+    scraper.goto("https://example.com")
+    
+    # These won't crash if they fail
+    scraper.click("#might-not-exist")
+    scraper.input("#fake-input", "test")
+    
+    # This will still work
+    title = scraper.get_text("h1")</code></pre>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5>Manual Error Handling</h5>
+                                <pre><code class="language-python"># Traditional try/catch
+try:
+    scraper.click("#button")
+except Exception as e:
+    print(f"Click failed: {e}")
+
+# Check if element exists first
+if scraper.element_exists("#button"):
+    scraper.click("#button")
+else:
+    print("Button not found")</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Call to Action -->
+                    <div class="text-center my-5 py-5 bg-light rounded">
+                        <h3 class="text-primary">📚 Complete API at Your Fingertips!</h3>
+                        <p class="lead">Every method documented with examples and best practices.</p>
+                        <!-- <a href="playground.html" class="btn btn-primary btn-lg me-3">
+                            <i class="bi bi-play-circle"></i> Try in Playground
+                        </a> -->
+                        <a href="examples.html" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-code-slash"></i> See Examples
+                        </a>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="d-flex justify-content-between mt-5 pt-4 border-top">
+                        <a href="architecture.html" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Architecture
+                        </a>
+                        <a href="contributing.html" class="btn btn-primary">
+                            Contributing <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    
+    <!-- API Search functionality -->
+    <script>
+        document.getElementById('api-search').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(searchTerm) || searchTerm === '') {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
