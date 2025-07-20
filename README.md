@@ -51,6 +51,10 @@ with SyncGAScrap(sandbox_mode=True) as scraper:
 
 ### Installation
 ```bash
+pip install ga-scrap
+```
+<b>OR</b>
+```bash
 git clone https://github.com/GrandpaAcademy/GA-Scrap.git
 cd GA-Scrap
 pip install -r requirements.txt
