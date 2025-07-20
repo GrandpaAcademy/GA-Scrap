@@ -448,6 +448,63 @@ data = scrape_with_retry("https://example.com")
 
 ---
 
+## 📚 Template Library
+
+GA-Scrap includes a comprehensive template library with production-ready solutions for common scraping scenarios:
+
+### 🛒 E-commerce Templates
+- **Product Catalog Scraper** - Extract product data with pagination and filtering
+- **Price Monitor** - Monitor prices and send alerts when thresholds are met
+- **Review Analyzer** - Scrape and analyze product reviews with sentiment analysis
+
+### 🔗 API Integration Templates
+- **Webhook Scraper** - Integrate scraping with webhooks for real-time processing
+- **Database Exporter** - Export data to SQLite, MySQL, PostgreSQL, MongoDB
+- **REST API Integration** - Combine scraping with APIs for data enrichment
+
+### 🔐 Authentication Templates
+- **Login Session Manager** - Handle various authentication flows and sessions
+- **Multi-Step Auth** - Complex auth including CAPTCHA, 2FA, email verification
+
+### ⚡ Performance & Monitoring Templates
+- **Production Scraper** - Production-ready scraping with error handling and retries
+- **Monitoring Dashboard** - Real-time monitoring and alerting system
+
+### 🎯 Advanced Interactions Templates
+- **Infinite Scroll Scraper** - Handle infinite scroll and dynamic content
+- **File Operations** - File uploads, downloads, and processing workflows
+- **Multi-Tab Workflow** - Complex multi-tab workflows and parallel processing
+
+### 🏢 Industry-Specific Templates
+- **Job Board Scraper** - Specialized scraper for job listings with filtering
+- **Real Estate Scraper** - Property listings with market analysis features
+
+### 🧪 Testing & Development Templates
+- **Scraper Testing Framework** - Comprehensive testing with automated validation
+- **Hot Reload Development** - Development environment with hot reload
+
+### Using Templates
+
+```python
+# Example: Using the E-commerce Product Catalog Template
+from examples.templates.ecommerce.product_catalog_scraper import ProductCatalogScraper
+
+scraper = ProductCatalogScraper()
+products = scraper.scrape_catalog(
+    base_url="https://example-store.com",
+    max_pages=5,
+    filters={"category": "electronics", "min_price": 100}
+)
+
+# Save results
+scraper.save_products("electronics_products.json")
+scraper.generate_report()
+```
+
+**📁 Find all templates in:** `examples/templates/`
+
+---
+
 <div align="center">
 
 **🎯 Ready to Build Your Own Scrapers?**
